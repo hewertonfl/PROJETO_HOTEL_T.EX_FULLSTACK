@@ -28,10 +28,10 @@
                         <div class="row">
                             <input
                                 type="text"
-                                v-model="value"
+                                v-model="nome"
                                 placeholder="Digite seu nome"
                                 @change="
-                                    avaliacao.addName(value),
+                                    avaliacao.addName(nome),
                                         avaliacao.addRoom(dados.title),
                                         avaliacao.addID(dados.id)
                                 "
@@ -63,11 +63,7 @@
                         ></textarea>
                         <button
                             @click="
-                                storageAvaliacoes.setStorage(
-                                    avaliacao.readRating()
-                                ),
-                                    updateAvaliacao(),
-                                    starsMean(dados.id),
+                                publication(nome, dados.id, mensagem, estrelas),
                                     $emit('signal')
                             "
                             type="button"
@@ -114,6 +110,9 @@ export default {
             modal: false,
             media: '',
             avaliacoes: '',
+            nome: '',
+            mensagem: '',
+            estrela: '',
         }
     },
     methods: {
@@ -140,10 +139,10 @@ export default {
                     this.media = m.toFixed(1)
                     localStorage.setItem(`starsMean_${id}`, this.media)
                 } else {
-                    this.media = 'Sem avaliações'
+                    this.media = ''
                 }
             } else {
-                this.media = 'Sem avaliações'
+                this.media = ''
             }
 
             return this.media
@@ -165,6 +164,29 @@ export default {
         updateAvaliacao() {
             this.avaliacoes = this.storageAvaliacoes.getStorage()
             return this.avaliacoes
+        },
+        validation(name, id) {
+            let flag = false
+            this.storageAvaliacoes.getStorage().forEach((element) => {
+                if (element.name == name && element.id == id) {
+                    flag = true
+                } else {
+                    flag = false
+                }
+            })
+            return flag
+        },
+        publication(name, id, comments, stars) {
+            if (!name || !comments || !stars) {
+                alert('Favor preencher todos os campos')
+            } else if (!this.validation(name, id)) {
+                this.storageAvaliacoes.setStorage(this.avaliacao.readRating())
+                this.updateAvaliacao()
+                this.starsMean(id)
+                alert('Avaliação publicada com sucesso')
+            } else {
+                alert('O usuário ja avaliou este quarto')
+            }
         },
     },
 

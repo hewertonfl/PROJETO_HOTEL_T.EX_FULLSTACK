@@ -2,7 +2,7 @@
     <div class="stars">
         <i class="fa-solid fa-star"></i>
         <span v-if="stars(id)">{{ stars(id) }}</span>
-        <span v-else>Sem avaliações</span>
+        <span v-else> Sem avaliações</span>
     </div>
 </template>
 
