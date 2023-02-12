@@ -11,8 +11,14 @@
             <div class="inferior-text-top">
                 <h3 class="titulo-h3">{{ accommodation.title }}</h3>
                 <div class="star-container">
-                    <ComponenteEstrela :id="accommodation.id" />
-                    <ComponenteModalComentarios :dados="accommodation" />
+                    <ComponenteEstrela
+                        :id="accommodation.id"
+                        :key="componentStars"
+                    />
+                    <ComponenteModalComentarios
+                        :dados="accommodation"
+                        @signal="update()"
+                    />
                 </div>
 
                 <p>{{ accommodation.description }}</p>
@@ -55,6 +61,7 @@ export default {
     data() {
         return {
             comentarios: '',
+            componentStars: 0,
         }
     },
     methods: {
@@ -66,6 +73,9 @@ export default {
         },
         counter: function () {
             this.$store.commit('counter')
+        },
+        update: function () {
+            this.componentStars += 1
         },
     },
 }

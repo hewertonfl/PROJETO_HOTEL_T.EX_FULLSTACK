@@ -1,11 +1,10 @@
 export default class Avaliacao {
-    name
-    id
-    room
-    stars
-    comments
-    constructor(id) {
-        id ? (this.id = id++) : (this.id = 0)
+    constructor(name, id, room, stars, comments) {
+        this.name = name
+        this.id = id
+        this.room = room
+        this.stars = stars
+        this.comments = comments
     }
     addName(name) {
         this.name = name
@@ -19,12 +18,14 @@ export default class Avaliacao {
     addStars(stars) {
         this.stars = stars
     }
+    addID(id) {
+        this.id = id
+    }
     readRating() {
         let rating = {}
 
         if (localStorage.getItem('avaliacoes')) {
             this.local = JSON.parse(localStorage.getItem('avaliacoes'))
-            this.id = this.local[this.local.length - 1]['id'] + 1
         }
 
         rating.name = this.name

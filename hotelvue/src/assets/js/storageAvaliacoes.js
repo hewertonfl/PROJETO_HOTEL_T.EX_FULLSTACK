@@ -1,14 +1,14 @@
 import Avaliacao from './avaliacao.js'
 
 export default class StorageAvaliacoes extends Avaliacao {
-    storage = []
-    lista
-    dadosLista
-    constructor(lista) {
+    constructor(lista, dadosLista, storage) {
         super()
         this.lista = lista
+        this.dadosLista = dadosLista
+        this.storage = storage
     }
     setStorage(lista) {
+        this.storage = []
         if (localStorage.getItem('avaliacoes')) {
             this.storage = JSON.parse(localStorage.getItem('avaliacoes'))
             this.storage.push(lista)

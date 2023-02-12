@@ -1,5 +1,7 @@
 <template>
-    <button type="button" @click="abrirModal">Deixe um comentário</button>
+    <button type="button" @click="abrirModal(), starsMean(dados.id)">
+        Deixe um comentário
+    </button>
 
     <div v-if="modal" class="overlay">
         <div class="popup">
@@ -13,7 +15,7 @@
                     <h2>{{ dados.title }}</h2>
                     <p>{{ dados.description }}</p>
                     <p class="media" v-if="media">
-                        <span>{{ this.media.toFixed(1) }}</span>
+                        <span>{{ media }}</span>
                     </p>
                 </div>
                 <div class="comentarios">
@@ -21,12 +23,13 @@
                         <h2>Deixe seu Comentário</h2>
                         <div class="row">
                             <input
-                                v-model="nome"
                                 type="text"
+                                v-model="value"
                                 placeholder="Digite seu nome"
                                 @change="
-                                    avaliacao.addName(nome),
-                                        avaliacao.addRoom(dados.title)
+                                    avaliacao.addName(value),
+                                        avaliacao.addRoom(dados.title),
+                                        avaliacao.addID(dados.id)
                                 "
                                 required
                             />
@@ -56,20 +59,24 @@
                         ></textarea>
                         <button
                             @click="
-                                imprimir(),
-                                    storageAvaliacoes.setStorage(
-                                        avaliacao.readRating()
-                                    ),
-                                    mediaQuarto()
+                                storageAvaliacoes.setStorage(
+                                    avaliacao.readRating()
+                                ),
+                                    updateAvaliacao(),
+                                    starsMean(dados.id),
+                                    $emit('signal')
                             "
                             type="button"
                         >
                             Publicar Comentário
                         </button>
                     </form>
-                    <div class="comentarios-clientes">
+                    <div
+                        class="comentarios-clientes"
+                        :key="componentComentarios"
+                    >
                         <div
-                            v-for="avaliacao in storageAvaliacoes.getStorage()"
+                            v-for="avaliacao in avaliacoes"
                             :key="avaliacao.id"
                         >
                             <div
@@ -81,7 +88,7 @@
                                 </p>
                                 <p class="nome">{{ avaliacao.name }}</p>
                                 <p class="mensagem">
-                                    {{ avaliacao.mensagem }}
+                                    {{ avaliacao.comments }}
                                 </p>
                             </div>
                         </div>
@@ -94,7 +101,6 @@
 
 <script>
 import Avaliacao from '@/assets/js/avaliacao.js'
-import ListaAvaliacoes from '@/assets/js/listaAvaliacoes'
 import StorageAvaliacoes from '@/assets/js/storageAvaliacoes'
 export default {
     name: 'ComponenteModais',
@@ -103,30 +109,40 @@ export default {
         return {
             modal: false,
             media: '',
+            avaliacoes: '',
         }
     },
     methods: {
-        imprimir() {
-            console.log(this.avaliacao.readRating())
-        },
         closeModal() {
             this.modal = false
         },
         abrirModal() {
             this.modal = true
         },
-        mediaQuarto() {
+        starsMean(id) {
             let soma = 0
+            let counter = 0
             let m
-            this.storageAvaliacoes.getStorage().forEach((element) => {
-                soma += Number(element.stars)
-            })
-            m = soma / this.storageAvaliacoes.getStorage().length
-            localStorage.setItem('starsMean', m)
 
-            this.media = m
+            if (this.storageAvaliacoes.getStorage().length != 0) {
+                this.storageAvaliacoes.getStorage().forEach((element) => {
+                    if (element.id == id) {
+                        soma += Number(element.stars)
+                        counter++
+                    }
+                })
+                if (counter != 0) {
+                    m = soma / counter
+                    this.media = m.toFixed(1)
+                    localStorage.setItem(`starsMean_${id}`, this.media)
+                } else {
+                    this.media = ''
+                }
+            } else {
+                this.media = ''
+            }
 
-            return m
+            return this.media
         },
         mostrarEstrelas(estrelas) {
             switch (estrelas) {
@@ -142,12 +158,19 @@ export default {
                     return '☆☆☆☆☆'
             }
         },
+        updateAvaliacao() {
+            this.avaliacoes = this.storageAvaliacoes.getStorage()
+            return this.avaliacoes
+        },
     },
 
     mounted() {
         this.avaliacao = new Avaliacao()
-        this.listaAvaliacao = new ListaAvaliacoes()
         this.storageAvaliacoes = new StorageAvaliacoes()
+        localStorage.getItem('avaliacoes')
+            ? (this.avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')))
+            : null
+        console.log(this.avaliacoes)
     },
 }
 </script>

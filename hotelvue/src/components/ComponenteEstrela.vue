@@ -1,18 +1,27 @@
 <template>
-    <div class="stars"><i class="fa-solid fa-star"></i> {{ starsMean() }}</div>
+    <div class="stars">
+        <i class="fa-solid fa-star"></i>
+        {{ stars(id) }}
+    </div>
 </template>
 
 <script>
 export default {
     name: 'ComponenteEstrela',
     props: ['id'],
+    data() {
+        return {
+            starsMean: '',
+        }
+    },
     methods: {
-        starsMean() {
-            let media
-            localStorage.getItem('starsMean')
-                ? (media = localStorage.getItem('starsMean'))
-                : (media = 0)
-            return media
+        stars(id) {
+            let stars = ''
+            localStorage.getItem(`starsMean_${id}`)
+                ? (stars = localStorage.getItem(`starsMean_${id}`))
+                : (stars = '')
+            this.starsMean = stars
+            return stars
         },
     },
 }
