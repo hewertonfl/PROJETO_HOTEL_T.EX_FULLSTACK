@@ -1,5 +1,9 @@
 <template>
-    <button type="button" @click="abrirModal(), starsMean(dados.id)">
+    <button
+        type="button"
+        @click="abrirModal(), starsMean(dados.id)"
+        style="padding: 5px"
+    >
         Deixe um comentário
     </button>
 
@@ -136,10 +140,10 @@ export default {
                     this.media = m.toFixed(1)
                     localStorage.setItem(`starsMean_${id}`, this.media)
                 } else {
-                    this.media = ''
+                    this.media = 'Sem avaliações'
                 }
             } else {
-                this.media = ''
+                this.media = 'Sem avaliações'
             }
 
             return this.media

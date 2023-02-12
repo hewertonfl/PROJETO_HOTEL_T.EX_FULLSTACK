@@ -1,7 +1,8 @@
 <template>
     <div class="stars">
         <i class="fa-solid fa-star"></i>
-        {{ stars(id) }}
+        <span v-if="stars(id)">{{ stars(id) }}</span>
+        <span v-else>Sem avaliações</span>
     </div>
 </template>
 

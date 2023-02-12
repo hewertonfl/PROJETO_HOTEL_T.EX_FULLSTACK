@@ -90,6 +90,10 @@ export default createStore({
             img: '',
             valorTotal: '',
         },
+        modalProperties: {
+            detalhes: false,
+            servicos: false,
+        },
         contador: 0,
     },
     getters: {
