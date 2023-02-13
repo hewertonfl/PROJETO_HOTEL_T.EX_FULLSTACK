@@ -105,6 +105,7 @@ import StorageAvaliacoes from '@/assets/js/storageAvaliacoes'
 export default {
     name: 'ComponenteModais',
     props: ['dados'],
+    emits: ['signal'],
     data() {
         return {
             modal: false,
@@ -112,7 +113,8 @@ export default {
             avaliacoes: '',
             nome: '',
             mensagem: '',
-            estrela: '',
+            estrelas: '',
+            componentComentarios: '',
         }
     },
     methods: {
@@ -185,7 +187,7 @@ export default {
                 this.starsMean(id)
                 alert('Avaliação publicada com sucesso')
             } else {
-                alert('O usuário ja avaliou este quarto')
+                alert('O usuário já avaliou este quarto')
             }
         },
     },

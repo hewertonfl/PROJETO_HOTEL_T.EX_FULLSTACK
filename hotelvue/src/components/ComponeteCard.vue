@@ -56,7 +56,7 @@ import ComponenteModalComentarios from './ComponenteModalComentarios.vue'
 import ComponenteEstrela from './ComponenteEstrela.vue'
 
 export default {
-    name: 'ComponetCard',
+    name: 'ComponeteCard',
     components: { ComponenteModalComentarios, ComponenteEstrela },
     data() {
         return {
