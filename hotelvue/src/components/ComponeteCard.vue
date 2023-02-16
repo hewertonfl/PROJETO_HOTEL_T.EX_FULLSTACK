@@ -10,6 +10,17 @@
         <div class="inferior-text display-g">
             <div class="inferior-text-top">
                 <h3 class="titulo-h3">{{ accommodation.title }}</h3>
+                <div class="star-container">
+                    <ComponenteEstrela
+                        :id="accommodation.id"
+                        :key="componentStars"
+                    />
+                    <ComponenteModalComentarios
+                        :dados="accommodation"
+                        @signal="update()"
+                    />
+                </div>
+
                 <p>{{ accommodation.description }}</p>
             </div>
             <div class="inferior-text-button display-f justify-csb">
@@ -41,9 +52,18 @@
 </template>
 
 <script>
-export default {
-    name: 'ComponetCard',
+import ComponenteModalComentarios from './ComponenteModalComentarios.vue'
+import ComponenteEstrela from './ComponenteEstrela.vue'
 
+export default {
+    name: 'ComponeteCard',
+    components: { ComponenteModalComentarios, ComponenteEstrela },
+    data() {
+        return {
+            comentarios: '',
+            componentStars: 0,
+        }
+    },
     methods: {
         changeOrder: function (i, id) {
             this.$store.commit('order', i)
@@ -51,10 +71,20 @@ export default {
                 this.counter()
             }
         },
-
         counter: function () {
             this.$store.commit('counter')
+        },
+        update: function () {
+            this.componentStars += 1
         },
     },
 }
 </script>
+
+<style scoped>
+.star-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+</style>
