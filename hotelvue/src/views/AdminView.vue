@@ -98,8 +98,7 @@ import Produtos from '@/assets/classes/Produtos.js'
         },
         mounted(){
             const produto = new Produtos('Agua', 20, 5);
-            produto.adicionarProdutos()
-            console.log(produto.pegarProdutos())
+            produto.adicionar({produto})
         }
     }
 </script>

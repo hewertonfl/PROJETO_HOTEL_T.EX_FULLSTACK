@@ -4,23 +4,44 @@ export default class Produtos{
     private quantidade: number;
     itens: Array<object>
     
-    constructor(nome: string, valor: number, quantidade: number, itens: Array<object>){
+    constructor(nome: string, valor: number, quantidade: number){
         this.nome = nome
         this.valor = valor
         this.quantidade = quantidade
-        this.itens = []
     }
 
-    atribuirNome(nome:string){
+    // getters
+    get getNome(){
+        return this.nome
+    }
+
+    get getValor(){
+        return this.valor
+    }
+    
+    get getQuantidade(){
+        return this.quantidade
+    }      
+
+    //setters
+    set setNome(nome:string){
         this.nome = nome
     }
 
-    adicionarProdutos(nome: string, valor: number, quantidade: number) {
-        this.itens.push({nome: 'Agua', valor: 20, quantidade: 5})
-        console.log(typeof this.itens)
+    set setValor(valor:number){
+        this.valor = valor
+    }
+    
+    set setQuantidade(quantidade:number){
+        this.quantidade = quantidade
+    }    
+
+    // methods
+    adicionar(produto: Produtos) {
+        this.itens.push(produto)
     }
 
-    pegarProdutos(){
+    listarProdutos(){
         return this.itens
     }
 }
