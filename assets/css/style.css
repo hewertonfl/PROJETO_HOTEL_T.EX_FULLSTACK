@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    background: blue;
+    color: white;    
+}
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+main form{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+main form input, main form select{
+    padding: 10px;
+    margin-right: 3px;
+    font-size: 1.2rem;
+}
+main form button{
+    padding: 10px 30px;
+    background: blue;
+    color: white;
+    border-color: blue;
+    font-size: 1.2rem;
+}
+.itensAdicionados{
+    width: 70%;
+    padding: 10px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
+}
+.itensConsumidos{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    margin-bottom: 20px;
+}
+.excluir{
+    cursor: pointer;
+}

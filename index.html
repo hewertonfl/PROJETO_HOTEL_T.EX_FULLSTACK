@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h2>Área Administrativa - Consumo</h2>
+    </header>
+    <main>
+        <form id="formulario">
+            <select id="itens">
+                <option>Selecione um item</option>
+                <optgroup label="Bebidas">
+                    <option value="agua">Água</option>
+                    <option value="cerveja">Cerveja</option>
+                    <option value="refrigerante">Refrigerante</option>
+                </optgroup>
+                <optgroup label="Comidas">
+                    <option value="chocolate_de_barra">Chocolate de Barra</option>
+                    <option value="batata_chips">Batata Chips</option>
+                    <option value="amendoim">Amendoim</option>                
+                    <option value="lanche">Lanche</option>                
+                    <option value="almoco">Almoço</option>                
+                    <option value="pao_de_queijo">Pão de Queijo</option>  
+                </optgroup>              
+            </select>    
+            <select id="local">
+                <option>Local do consumo</option>                
+                <option value="bar">Bar</option>
+                <option value="frigobar">Frigobar</option>
+                <option value="cesta">Cesta</option>
+            </select>
+            <input type="number" id='quantidade' placeholder="Quantidade" min="1"> 
+            <button>Adicionar Item</button>                  
+        </form>
+        <div id="itensAdicionados" class="itensAdicionados"></div>
+    </main>
+    
+    <script type="module" src="./assets/js/script.js"></script>
+</body>
+</html>
