@@ -3,14 +3,12 @@ import LocalStorage from './LocalStorage.js'
 
 export default class ElementosInterface{
 
-
-
     static listarProdutos(produtos: Produto[], tag: HTMLElement){
         const listar = produtos.map(produto => {
             return `
             <div class='itensConsumidos'>
-                <p>🔸Item: ${produto.item.replaceAll('_', ' ')} | 🔸Local: ${produto.local} | 🔸Quantidade: ${produto.quantidade}</p>
-                <span class='excluir' data-id=${produto.id}>🗑️</span>
+                <p>🔸Item: ${produto.item.replaceAll('_', ' ')} | 🔸Local: ${produto.local} | 🔸Quantidade: ${produto.quantidade} | 🔸Preço: ${produto.preco}</p>
+                <span class='excluir' id=${produto.id}>🗑️</span>
             </div>
             `
         })
@@ -18,13 +16,13 @@ export default class ElementosInterface{
     }
 
     static removerItem(tag: HTMLElement, produtos: Produto[]){
-        tag.addEventListener('click', (e) => {
-            console.log(e.target)
-            if(e.target.classList.contains('excluir')){
-                e.target.parentElement.remove()
+
+        tag.addEventListener('click', (e)=> {
+            const target = e.target as Element;
+            if(target.classList.contains('excluir')){
+                target.parentElement!.remove()
             }
-            let itemID = e.target.dataset.id
-            console.log(itemID)
+            let itemID = target.id
             const filtro = produtos.filter(item => item.id !== Number(itemID))         
             LocalStorage.adicionarLocalStorage(filtro)
         })

@@ -4,6 +4,7 @@ export default class Produto{
     public item: string
     public local: string
     public quantidade: number
+    public preco: number
 
     constructor(id:number, data: Date, item: string, local: string, quantidade: number){
         this.id = id
@@ -11,25 +12,6 @@ export default class Produto{
         this.item = item
         this.local = local
         this.quantidade = quantidade
+        this.preco = Math.round(Math.random() * 20)
     }
-
-    get getId(){
-        return this.id
-    }    
-
-    get getData(){
-        return this.data
-    }
-
-    get getItem(){
-        return this.item
-    }
-    
-    get getLocal(){
-        return this.local
-    }  
-    
-    get getQuantidade(){
-        return this.quantidade
-    }     
 }
