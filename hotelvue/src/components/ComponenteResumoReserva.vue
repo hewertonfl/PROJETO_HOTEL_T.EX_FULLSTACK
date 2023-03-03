@@ -57,7 +57,9 @@
             <p style="text-align: start">
                 Consumo: {{ this.moeda(this.consumo) }}
             </p>
-            <p style="text-align: start">Valor c/desconto: {{ desconto }}</p>
+            <!-- <p style="text-align: start">
+                Desconto: {{ desconto }}
+            </p> -->
             <p>Valor total: {{ this.total() }}</p>
         </div>
         <button
@@ -203,19 +205,24 @@ export default {
         },
         total() {
             let adultos
-            if (this.$store.getters.bookingData.adultos == 1) {
+            if (
+                this.$store.getters.bookingData.adultos == 1 ||
+                this.$store.getters.bookingData.adultos == 0
+            ) {
                 adultos = 1
             } else {
                 adultos =
                     1 +
                     (Number(this.$store.getters.bookingData.adultos) - 1) * 0.15
             }
-            const totalReserva = this.moeda(
+            const valor =
                 (this.totalServicos() +
+                    this.consumo +
                     Number(this.$store.getters.bookingData.quartoPreco) *
                         this.$store.getters.bookingData.noites) *
-                    adultos
-            )
+                adultos
+            this.desconto = this.moeda(valor / 0.85 - valor)
+            const totalReserva = this.moeda(valor)
             return totalReserva ? totalReserva : 0
         },
         limpar() {

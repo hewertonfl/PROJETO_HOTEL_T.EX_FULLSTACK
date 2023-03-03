@@ -21,7 +21,7 @@
             :min="item.min"
             :max="item.max"
             :placeholder="item.placeholder"
-            value=""
+            value="1"
             v-model="value"
             @change="updateDadosReserva(item.id, value)"
             required

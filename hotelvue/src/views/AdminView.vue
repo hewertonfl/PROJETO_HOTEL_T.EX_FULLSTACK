@@ -16,14 +16,14 @@
                             @change="
                                 produtos.adicionarProdutos(
                                     item.nome,
-                                    10 * Number(item.var),
+                                    valorCalc(10, item.var),
                                     Number(item.var),
-                                    'Frigobar'
+                                    'frigobar'
                                 )
                             "
                         />
                     </td>
-                    <td>Preço: R${{ item.var? 10 * Number(item.var): 0 }},00</td>
+                    <td>Preço: R${{ valorCalc(10, item.var) }},00</td>
                 </tr>
             </table>
         </section>
@@ -42,14 +42,14 @@
                             @change="
                                 produtos.adicionarProdutos(
                                     item.nome,
-                                    10 * Number(item.var),
+                                    valorCalc(10, item.var),
                                     Number(item.var),
                                     'cesta'
                                 )
                             "
                         />
                     </td>
-                    <td>Preço: R${{ item.var? item.var = 10 * Number(item.var): item.var = 0 }},00</td>
+                    <td>Preço: R${{ valorCalc(10, item.var) }},00</td>
                 </tr>
             </table>
         </section>
@@ -57,7 +57,7 @@
             <h3>Bar</h3>
             <table>
                 <tr v-for="item in bar" :key="item">
-                    <td><th>{{ item.nome }}:</th></td>
+                    <td>{{ item.nome }}:</td>
                     <td>
                         <input
                             type="number"
@@ -68,14 +68,14 @@
                             @change="
                                 produtos.adicionarProdutos(
                                     item.nome,
-                                    priceCalc(10,item.var),
+                                    valorCalc(10, item.var),
                                     Number(item.var),
                                     'bar'
                                 )
                             "
                         />
                     </td>
-                    <td>Preço: R${{ item.var? item.var = 10 * Number(item.var): 0  }},00</td>
+                    <td>Preço: R${{ valorCalc(10, item.var) }},00</td>
                 </tr>
             </table>
         </section>
@@ -97,17 +97,19 @@ export default {
             fCerveja: 0,
             fRefrigerante: 0,
 
-            cChocolate: null,
-            cBatata: null,
-            cAmendoim: null,
+            cChocolate: 0,
+            cBatata: 0,
+            cAmendoim: 0,
 
-            bCafe: null,
-            bPaoQueijo: null,
-            bAgua: null,
-            bLanche: null,
-            bAlmoco: null,
-            bCerveja: null,
-            bRefrigerante: null,
+            bCafe: 0,
+            bPaoQueijo: 0,
+            bAgua: 0,
+            bLanche: 0,
+            bAlmoco: 0,
+            bCerveja: 0,
+            bRefrigerante: 0,
+
+            preco: '',
 
             frigobar: [
                 { nome: 'Água', var: 'fAgua' },
@@ -133,15 +135,13 @@ export default {
     mounted() {
         this.produtos = new Produtos()
         this.storageProdutos = new StorageProdutos()
-        this.fAgua = 0
     },
     methods: {
-        priceCalc(price, qtd) {
-            console.log(qtd)
-            if (qtd) {
-                return price * qtd
+        valorCalc(qtd, price) {
+            if (typeof price == 'string') {
+                return (this.preco = 0)
             }
-            return 0
+            return (this.preco = qtd * price)
         },
     },
 }
