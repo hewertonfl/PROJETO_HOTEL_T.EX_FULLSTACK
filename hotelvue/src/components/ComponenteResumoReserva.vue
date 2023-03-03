@@ -3,10 +3,10 @@
         <h2>Resumo da Reserva</h2>
         <div class="resumo-box">
             <ul>
-                    <li>
-                        Apartamento:
-                        <span>{{ $store.getters.bookingData.acomodacao }}</span>
-                    </li>
+                <li>
+                    Apartamento:
+                    <span>{{ $store.getters.bookingData.acomodacao }}</span>
+                </li>
                 <div>
                     <li>
                         Check-in:
@@ -25,18 +25,21 @@
                         <span>{{ $store.getters.bookingData.noites }}</span>
                     </li>
                 </div>
-                    <li>
-                        Serviços:
-                        <ul>
-                            <li
-                                v-for="servico in $store.state.dadosReserva
-                                    .servicos"
-                                :key="servico.nome"
-                            ><span>
-                                ✅ {{ servico.nome }} - {{ this.moeda(servico.preco) }}</span>
-                            </li>
-                        </ul>
-                    </li>
+                <li>
+                    Serviços:
+                    <ul>
+                        <li
+                            v-for="servico in $store.state.dadosReserva
+                                .servicos"
+                            :key="servico.nome"
+                        >
+                            <span>
+                                ✅ {{ servico.nome }} -
+                                {{ this.moeda(servico.preco) }}</span
+                            >
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <CompServicos />
@@ -51,6 +54,10 @@
                     placeholder="Digite o código"
                 />
             </details>
+            <p style="text-align: start">
+                Consumo: {{ this.moeda(this.consumo) }}
+            </p>
+            <p style="text-align: start">Valor c/desconto: {{ desconto }}</p>
             <p>Valor total: {{ this.total() }}</p>
         </div>
         <button
@@ -66,6 +73,7 @@
 
 <script>
 import CompServicos from './CompServicos.vue'
+import StorageProdutos from '@/assets/js/build/classes/storageProdutos.js'
 export default {
     name: 'ComponenteResumoReserva',
     cupomAleatorio: '',
@@ -77,6 +85,8 @@ export default {
             cupom: '',
             temCupom: false,
             checkout: this.$store.getters.bookingData.checkout,
+            desconto: 0,
+            consumo: 0,
         }
     },
     methods: {
@@ -135,9 +145,9 @@ export default {
                     }
                 } else {
                     if (
-                        (this.$store.getters.bookingData.cupomDesconto.length &&
-                            this.$store.getters.bookingData.cupomDesconto !==
-                                this.cupom)
+                        this.$store.getters.bookingData.cupomDesconto.length &&
+                        this.$store.getters.bookingData.cupomDesconto !==
+                            this.cupom
                     ) {
                         alert('Cupom inválido! Tente outro.')
                         return
@@ -150,7 +160,8 @@ export default {
                             'cupom',
                             this.$store.getters.bookingData.cupomDesconto
                         )
-                        this.$store.commit('storeQuartoPreco', roomPrice * 0.9)
+                        this.desconto = roomPrice * 0.9
+                        this.$store.commit('storeQuartoPreco', this.desconto)
                         this.temCupom = true
                     }
                 }
@@ -226,6 +237,15 @@ export default {
                 currency: 'BRL',
             })
         },
+
+        calcConsumo() {
+            let lista = this.storageProdutos.getStorage()
+            let soma = 0
+            lista.forEach((element) => {
+                soma += element.valor
+            })
+            this.consumo = soma
+        },
     },
     updated() {
         console.log(this.cupom)
@@ -236,12 +256,8 @@ export default {
         } else {
             this.temCupom = true
         }
-    },
-    watch: {
-        checkout(vl) {
-            this.noites()
-            console.log(vl)
-        },
+        this.storageProdutos = new StorageProdutos()
+        this.calcConsumo()
     },
 }
 </script>

@@ -1,24 +1,13 @@
 export default class StorageProdutos {
-    constructor(lista, dadosLista, storage) {
+    constructor(lista) {
         this.lista = lista;
-        this.dadosLista = dadosLista;
-        this.storage = storage;
     }
     setStorage(lista) {
-        this.storage = [];
-        let ls = localStorage.getItem('consumo');
-        if (ls) {
-            this.storage = JSON.parse(ls);
-            this.storage.push(lista);
-        }
-        else {
-            this.storage.push(lista);
-        }
-        localStorage.setItem('consumo', JSON.stringify(this.storage));
+        localStorage.setItem('consumo', JSON.stringify(lista));
     }
     getStorage() {
         let ls = localStorage.getItem('consumo');
-        ls ? (this.dadosLista = JSON.parse(ls)) : (this.dadosLista = []);
-        return this.dadosLista;
+        ls ? (ls = JSON.parse(ls)) : null;
+        return ls;
     }
 }

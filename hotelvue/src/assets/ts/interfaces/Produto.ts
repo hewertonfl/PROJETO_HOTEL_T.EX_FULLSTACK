@@ -4,7 +4,8 @@ export interface Produto {
     adicionarProdutos?: (
         nome: string,
         valor: number,
-        quantidade: number
+        quantidade: number,
+        categoria: string
     ) => void
     listaProdutos?: (categoria: object) => void
     frigobarListagem?: (nome: string, valor: number, quantidade: number) => void

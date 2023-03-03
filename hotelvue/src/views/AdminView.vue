@@ -3,258 +3,99 @@
         <h2>🔸Checklist dos itens consumidos no quarto🔸</h2>
         <section>
             <h3>Frigobar</h3>
-            <div>
-                <div>
-                    <label for="agua">Água</label>
-                    <input
-                        type="number"
-                        id="agua"
-                        v-model="fAgua"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            frigobar.frigobarListagem(
-                                'Água',
-                                10 * Number(fAgua),
-                                Number(fAgua)
-                            )
-                        "
-                    />
-                </div>
-                <div>
-                    <label for="cerveja">Cerveja</label>
-                    <input
-                        type="number"
-                        id="cerveja"
-                        v-model="fCerveja"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            frigobar.frigobarListagem(
-                                'Cerveja',
-                                10 * Number(fCerveja),
-                                Number(fCerveja)
-                            )
-                        "
-                    />
-                </div>
-                <div>
-                    <label for="refrigerante">Refrigerante</label>
-                    <input
-                        type="number"
-                        id="refrigerante"
-                        v-model="fRefrigerante"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            frigobar.frigobarListagem(
-                                'Refrigerante',
-                                10 * Number(fRefrigerante),
-                                Number(fRefrigerante)
-                            )
-                        "
-                    />
-                </div>
-            </div>
+            <table>
+                <tr v-for="item in frigobar" :key="item.nome">
+                    <td>{{ item.nome }}:</td>
+                    <td>
+                        <input
+                            type="number"
+                            :id="item.nome"
+                            v-model="item.var"
+                            placeholder="Quantidade"
+                            min="0"
+                            @change="
+                                produtos.adicionarProdutos(
+                                    item.nome,
+                                    10 * Number(item.var),
+                                    Number(item.var),
+                                    'Frigobar'
+                                )
+                            "
+                        />
+                    </td>
+                    <td>Preço: R${{ item.var? 10 * Number(item.var): 0 }},00</td>
+                </tr>
+            </table>
         </section>
         <section>
             <h3>Cesta</h3>
-            <div>
-                <div>
-                    <label for="chocolate">Barra de Chocolate</label>
-                    <input
-                        type="number"
-                        id="chocolate"
-                        v-model="cChocolate"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            cesta.cestaListagem(
-                                'Chocolate',
-                                10 * Number(cChocolate),
-                                Number(cChocolate)
-                            )
-                        "
-                    />
-                </div>
-                <div>
-                    <label for="batata">Batata Chips</label>
-                    <input
-                        type="number"
-                        id="batata"
-                        v-model="cBatata"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            cesta.cestaListagem(
-                                'Batata',
-                                10 * Number(cBatata),
-                                Number(cBatata)
-                            )
-                        "
-                    />
-                </div>
-                <div>
-                    <label for="amendoim">Amendoim</label>
-                    <input
-                        type="number"
-                        id="amendoim"
-                        v-model="cAmendoim"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            cesta.cestaListagem(
-                                'Amendoim',
-                                10 * Number(cAmendoim),
-                                Number(cAmendoim)
-                            )
-                        "
-                    />
-                </div>
-            </div>
+            <table>
+                <tr v-for="item in cesta" :key="item">
+                    <td>{{ item.nome }}:</td>
+                    <td>
+                        <input
+                            type="number"
+                            :id="item.nome"
+                            v-model="item.var"
+                            placeholder="Quantidade"
+                            min="0"
+                            @change="
+                                produtos.adicionarProdutos(
+                                    item.nome,
+                                    10 * Number(item.var),
+                                    Number(item.var),
+                                    'cesta'
+                                )
+                            "
+                        />
+                    </td>
+                    <td>Preço: R${{ item.var? item.var = 10 * Number(item.var): item.var = 0 }},00</td>
+                </tr>
+            </table>
         </section>
         <section>
             <h3>Bar</h3>
-            <div>
-                <div>
-                    <label for="cafe">Café</label>
-                    <input
-                        type="number"
-                        id="cafe"
-                        v-model="bCafe"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            bar.BarListagem(
-                                'Café',
-                                10 * Number(bCafe),
-                                Number(bCafe)
-                            )
-                        "
-                    />
-                </div>
-                <div>
-                    <label for="pao_queijo">Pão de Queijo</label>
-                    <input
-                        type="number"
-                        id="pao_queijo"
-                        v-model="bPaoQueijo"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            bar.BarListagem(
-                                'Pão de queijo',
-                                10 * Number(bPaoQueijo),
-                                Number(bPaoQueijo)
-                            )
-                        "
-                    />
-                </div>
-                <div>
-                    <label for="agua">Água</label>
-                    <input
-                        type="number"
-                        id="agua"
-                        v-model="bAgua"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            bar.BarListagem(
-                                'Água',
-                                10 * Number(bAgua),
-                                Number(bAgua)
-                            )
-                        "
-                    />
-                </div>
-                <div>
-                    <label for="lanche">Lanche</label>
-                    <input
-                        type="number"
-                        id="lanche"
-                        v-model="bLanche"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            bar.BarListagem(
-                                'Lanche',
-                                10 * Number(bLanche),
-                                Number(bLanche)
-                            )
-                        "
-                    />
-                </div>
-                <div>
-                    <label for="almoco">ALmoço</label>
-                    <input
-                        type="number"
-                        id="almoco"
-                        v-model="bAlmoco"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            bar.BarListagem(
-                                'Almoço',
-                                10 * Number(bAlmoco),
-                                Number(bAlmoco)
-                            )
-                        "
-                    />
-                </div>
-                <div>
-                    <label for="cerveja">Cerveja</label>
-                    <input
-                        type="number"
-                        id="cerveja"
-                        v-model="bCerveja"
-                        placeholder="Quantidade"
-                        min="0"
-                    />
-                </div>
-                <div>
-                    <label for="refrigerante">Refrigerante</label>
-                    <input
-                        type="number"
-                        id="refrigerante"
-                        v-model="bRefrigerante"
-                        placeholder="Quantidade"
-                        min="0"
-                        @change="
-                            bar.BarListagem(
-                                '',
-                                10 * Number(bAlmoco),
-                                Number(bRefrigerante)
-                            )
-                        "
-                    />
-                </div>
-            </div>
+            <table>
+                <tr v-for="item in bar" :key="item">
+                    <td><th>{{ item.nome }}:</th></td>
+                    <td>
+                        <input
+                            type="number"
+                            :id="item.nome"
+                            v-model="item.var"
+                            placeholder="Quantidade"
+                            min="0"
+                            @change="
+                                produtos.adicionarProdutos(
+                                    item.nome,
+                                    priceCalc(10,item.var),
+                                    Number(item.var),
+                                    'bar'
+                                )
+                            "
+                        />
+                    </td>
+                    <td>Preço: R${{ item.var? item.var = 10 * Number(item.var): 0  }},00</td>
+                </tr>
+            </table>
         </section>
-        <button
-            @click="
-                storageProdutos.setStorage(frigobar.itens),
-                    storageProdutos.setStorage(bar.itens),
-                    storageProdutos.setStorage(cesta.itens)
-            "
-        >
+        <button @click="storageProdutos.setStorage(produtos.getItems())">
             Cadastrar
         </button>
     </main>
 </template>
 
 <script>
+import Produtos from '@/assets/js/build/classes/Produtos.js'
 import StorageProdutos from '@/assets/js/build/classes/storageProdutos.js'
-import Bar from '@/assets/js/build/classes/Bar.js'
-import Cesta from '@/assets/js/build/classes/Cesta.js'
-import Frigobar from '@/assets/js/build/classes/Frigobar.js'
 
 export default {
     name: 'AdminView',
     data() {
         return {
-            fAgua: '',
-            fCerveja: null,
-            fRefrigerante: null,
+            fAgua: 0,
+            fCerveja: 0,
+            fRefrigerante: 0,
 
             cChocolate: null,
             cBatata: null,
@@ -267,16 +108,41 @@ export default {
             bAlmoco: null,
             bCerveja: null,
             bRefrigerante: null,
+
+            frigobar: [
+                { nome: 'Água', var: 'fAgua' },
+                { nome: 'Cerveja', var: 'fCerveja' },
+                { nome: 'Refrigerante', var: 'fRefrigerante' },
+            ],
+            cesta: [
+                { nome: 'Barra de Chocolate', var: 'cChocolate' },
+                { nome: 'Batata Chips', var: 'cBatata' },
+                { nome: 'Amendoim', var: 'cAmendoim' },
+            ],
+            bar: [
+                { nome: 'Café', var: 'bCafe' },
+                { nome: 'Pão de queijo', var: 'bPaoQueijo' },
+                { nome: 'Água', var: 'bAgua' },
+                { nome: 'Lanche', var: 'bLanche' },
+                { nome: 'Almoço', var: 'bAlmoco' },
+                { nome: 'Cerveja', var: 'bCerveja' },
+                { nome: 'Refrigerante', var: 'bRefrigerante' },
+            ],
         }
     },
     mounted() {
-        this.bar = new Bar()
-        this.cesta = new Cesta()
-        this.frigobar = new Frigobar()
+        this.produtos = new Produtos()
         this.storageProdutos = new StorageProdutos()
-
-        //cesta.cestaListagem('chocolate', 2, 15)
-        //storageProdutos.setStorage(cesta.itens)
+        this.fAgua = 0
+    },
+    methods: {
+        priceCalc(price, qtd) {
+            console.log(qtd)
+            if (qtd) {
+                return price * qtd
+            }
+            return 0
+        },
     },
 }
 </script>
@@ -313,5 +179,15 @@ section div > div input {
     color: #ffffff;
     border-color: #063f57;
     font-size: 1.1rem;
+}
+table td {
+    padding: 0.75rem;
+    width: 33.33%;
+}
+table {
+    width: 50%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-collapse: collapse;
 }
 </style>
