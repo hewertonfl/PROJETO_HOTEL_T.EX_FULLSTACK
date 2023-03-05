@@ -1,7 +1,5 @@
 const conexao = require('../database/conexao')
 
-console.log(conexao)
-
 const listarAdicionais = async () => {
     try {
         const conn = await conexao()

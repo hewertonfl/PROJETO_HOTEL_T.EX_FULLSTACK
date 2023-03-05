@@ -11,6 +11,8 @@ app.use(express.json())
 
 // Rotas
 const {adicionaisRouter} = require('./router')
+const {acomodacoesRouter} = require('./router')
 app.use('/adicionais', adicionaisRouter)
+app.use('/acomodacoes', acomodacoesRouter)
 
 module.exports = app
