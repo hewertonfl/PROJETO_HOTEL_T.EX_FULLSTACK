@@ -1,6 +1,7 @@
 require('dotenv').config({ path: `${__dirname}/../../.env` })
 // console.log(process.env.DB_PASSWORD)
 
+// Configura a conexão
 async function connect() {
     const mysql = require('mysql2/promise')
     const conn = await mysql.createConnection({
@@ -19,8 +20,10 @@ async function showtables() {
     const conn = await connect()
     const [rows] = await conn.query('SHOW TABLES')
     console.log(rows)
+    return JSON.stringify(rows)
 }
 
-showtables()
+console.log('entrou')
+//showtables()
 
-module.exports = { connect }
+module.exports = { connect, showtables }

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 require('dotenv').config({ path: `${__dirname}/../../.env` });
 // console.log(process.env.DB_PASSWORD)
+// Configura a conexão
 function connect() {
     return __awaiter(this, void 0, void 0, function* () {
         const mysql = require('mysql2/promise');
@@ -30,7 +31,9 @@ function showtables() {
         const conn = yield connect();
         const [rows] = yield conn.query('SHOW TABLES');
         console.log(rows);
+        return JSON.stringify(rows);
     });
 }
-showtables();
-module.exports = { connect };
+console.log('entrou');
+//showtables()
+module.exports = { connect, showtables };
