@@ -50,20 +50,20 @@ const cadastrarUsuario = async (req, res) => {
 
 const loginUsuario = async (req, res) => {
     const {email, senha} = req.body
-    const usuario = await usuariosModel.listarUsuarios()
+    const usuario = await usuariosModel.loginUsuario(email)
 
     if(!email || !senha){
         return res.status(400).json({message: 'Preencha email e senha.'})
     }
 
-    const buscarUsuario = usuario.find(usuario => usuario.email === email)
-
-    if(!buscarUsuario){
+    if(!usuario){
         return res.status(400).json({message: 'Usuário não encontrado.'})
     }
 
+    // // Verificar Status
+
     try {
-        if(await bcrypt.compare(senha, buscarUsuario.senha)){
+        if(await bcrypt.compare(senha, usuario.senha)){
             // redirecionar
             return res.status(200).json({message: 'Logado com sucesso!'})
         }

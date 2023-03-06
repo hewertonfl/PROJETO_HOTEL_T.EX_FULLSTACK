@@ -30,18 +30,20 @@ const cadastrarUsuario = async (dados) => {
     }  
 }
 
-// const loginUsuario = async (email) => {
-//     try {
-//         const conn = await conexao()
-//         const [rows] = await conn.query(`SELECT * FROM usuario WHERE email = ${email}`)
-//         return rows
-//     } catch (error) {
-//         return error
-//     }  
-// }
+const loginUsuario = async (email) => {
+    try {
+        const conn = await conexao()
+        values = [email]
+        const [rows] = await conn.query(`SELECT * FROM usuario WHERE email=?`, values)
+        return rows
+    } catch (error) {
+        return error
+    }  
+}
 
 module.exports = {
     listarUsuarios,
     listarUsuario,
-    cadastrarUsuario
+    cadastrarUsuario,
+    loginUsuario
 }
