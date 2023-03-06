@@ -72,7 +72,7 @@ export default {
       // };
 
       // this.salvarLocalStorage(dados);
-      window.location.href = "/relatorio";
+      window.location.href = "/consumo";
     },
   },
 };

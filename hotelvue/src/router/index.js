@@ -16,7 +16,7 @@ import ReservaView from '../views/ReservaView.vue'
 
 //Admin
 import LoginAdminView from '../views/admin/LoginAdminView.vue'
-import RelatorioAdminView from '../views/admin/RelatorioAdminView.vue'
+import ConsumoView from '../views/admin/ConsumoView.vue'
 
 const routes = [
     {
@@ -91,10 +91,10 @@ const routes = [
         },
     },
     {
-    path: '/relatorio',
-    name: 'relatorio',
+    path: '/consumo',
+    name: 'consumo',
     components: {
-        default: RelatorioAdminView,
+        default: ConsumoView,
         header: ComponenteHeaderAdmin
     },
 }

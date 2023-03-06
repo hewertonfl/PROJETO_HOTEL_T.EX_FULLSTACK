@@ -13,12 +13,12 @@
                             <router-link :to="{ path: '/' }">Home</router-link>
                         </li>
                         <li>
-                            <router-link :to="{ path: '/relatorio' }"
+                            <router-link :to="{ path: '/consumo' }"
                                 >Hóspedes</router-link
                             >
                         </li>
                         <li>
-                            <router-link :to="{ path: '/relatorio' }"
+                            <router-link :to="{ path: '/consumo' }"
                                 >Reservas</router-link
                             >
                         </li>
