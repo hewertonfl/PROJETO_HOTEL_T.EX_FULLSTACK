@@ -18,7 +18,7 @@
                             >
                         </li>
                         <li>
-                            <router-link :to="{ path: '/consumo' }"
+                            <router-link :to="{ path: '/admin-reservas' }"
                                 >Reservas</router-link
                             >
                         </li>

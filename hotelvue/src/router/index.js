@@ -17,6 +17,7 @@ import ReservaView from '../views/ReservaView.vue'
 //Admin
 import LoginAdminView from '../views/admin/LoginAdminView.vue'
 import ConsumoView from '../views/admin/ConsumoView.vue'
+import ReservasViewAdmin from '../views/admin/ReservasViewAdmin.vue'
 
 const routes = [
     {
@@ -87,17 +88,24 @@ const routes = [
         name: 'admin',
         components: {
             default: LoginAdminView,
-            header: ComponenteHeaderAdmin
         },
     },
     {
-    path: '/consumo',
-    name: 'consumo',
-    components: {
-        default: ConsumoView,
-        header: ComponenteHeaderAdmin
+        path: '/consumo',
+        name: 'consumo',
+        components: {
+            default: ConsumoView,
+            header: ComponenteHeaderAdmin,
+        },
     },
-}
+    {
+        path: '/admin-reservas',
+        name: 'admin-reservas',
+        components: {
+            default: ReservasViewAdmin,
+            header: ComponenteHeaderAdmin,
+        },
+    },
 ]
 
 const router = createRouter({

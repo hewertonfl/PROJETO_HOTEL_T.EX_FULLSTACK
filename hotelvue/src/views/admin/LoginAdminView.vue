@@ -29,6 +29,9 @@
           <button class="btn-entrar" id="btnLogin">Entrar</button>
         </form>
       </div>
+      <div class="voltar">
+        <router-link :to="{ path: '/' }"> ⬅️ Voltar</router-link>
+      </div>
     </div>
     </main>
 </template>
@@ -91,4 +94,7 @@ export default {
     .btn-entrar {
         margin-top: 40px;
     }
+.voltar {
+  font-weight: bold;
+}
 </style>
