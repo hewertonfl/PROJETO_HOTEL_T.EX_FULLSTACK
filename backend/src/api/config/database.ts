@@ -16,14 +16,4 @@ async function connect() {
     return conn
 }
 
-async function showtables() {
-    const conn = await connect()
-    const [rows] = await conn.query('SHOW TABLES')
-    console.log(rows)
-    return JSON.stringify(rows)
-}
-
-console.log('entrou')
-//showtables()
-
-module.exports = { connect, showtables }
+module.exports = { connect }

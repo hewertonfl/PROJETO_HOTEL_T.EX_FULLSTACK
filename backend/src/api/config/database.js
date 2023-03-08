@@ -26,14 +26,4 @@ function connect() {
         return conn;
     });
 }
-function showtables() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const conn = yield connect();
-        const [rows] = yield conn.query('SHOW TABLES');
-        console.log(rows);
-        return JSON.stringify(rows);
-    });
-}
-console.log('entrou');
-//showtables()
-module.exports = { connect, showtables };
+module.exports = { connect };

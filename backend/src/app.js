@@ -9,21 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app = () => __awaiter(void 0, void 0, void 0, function* () {
+(() => __awaiter(void 0, void 0, void 0, function* () {
     const express = require('express');
     const app = express();
-    const db = require('./api/config/database.js');
-    const dbShowdatabases = yield db.showtables();
-    const port = 3000;
-    app.get('/', (req, res) => {
-        //res.send('Hello World!')
-        res.writeHead(200, { 'Content-Type': 'text/json;chatset=utf-8' });
-        res.end(dbShowdatabases);
-    });
-    // require('dotenv').config()
-    // console.log(process.env)
+    // const userModel = require('./api/models/UserModel.js')
+    //const consign = require('consign')
+    const router = require('./api/routes/index.js');
+    const port = '3000';
+    app.use(express.json());
+    app.use('/', router);
     app.listen(port, () => {
         console.log(`Example app listening on port http://localhost:${port}`);
     });
-});
-app();
+}))();
