@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const acomodacoesController = require('./../controlers/acomodacoesController')
+const acomodacoesController = require('./../controllers/acomodacoesController')
 
 router.get('/', acomodacoesController.listarAcomodacoes)
 router.get('/:id', acomodacoesController.listarAcomodacao)

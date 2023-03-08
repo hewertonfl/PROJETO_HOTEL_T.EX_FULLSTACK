@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import api from './../services/api.js'
+import api from '../services/api.js'
 
-import ComponeteCard from './../components/ComponeteCard.vue'
+import ComponeteCard from '../components/ComponeteCard.vue'
 export default {
     name: 'CardTemplate',
     components: {

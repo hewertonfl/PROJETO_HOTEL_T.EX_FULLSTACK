@@ -1,4 +1,3 @@
-const e = require('express')
 const express = require('express')
 const cors = require('cors')
 
@@ -15,8 +14,8 @@ app.use(cors())
 const {adicionaisRouter} = require('./router')
 const {acomodacoesRouter} = require('./router')
 const {usuariosRouter} = require('./router')
-app.use('/adicionais', adicionaisRouter)
-app.use('/acomodacoes', acomodacoesRouter)
-app.use('/usuarios', usuariosRouter)
+app.use('/api/adicionais', adicionaisRouter)
+app.use('/api/acomodacoes', acomodacoesRouter)
+app.use('/api/usuarios', usuariosRouter)
 
 module.exports = app

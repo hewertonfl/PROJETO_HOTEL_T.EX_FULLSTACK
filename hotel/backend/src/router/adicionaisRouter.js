@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 // Controller
-const adicionaisController = require('../controlers/adicionaisController')
+const adicionaisController = require('../controllers/adicionaisController')
 
 router.get('/', adicionaisController.listarAdicionais)
 router.get('/:id', adicionaisController.listarAdicional)

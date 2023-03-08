@@ -3,9 +3,7 @@
     <div class="container-form-image display-f">
       <div class="container-login">
         <form
-          @submit.prevent="validarUsuario(this.email, this.senha)"
-          class="form-login"
-          id="formLogin"
+          class="form-login" method="POST"
         >
           <h2>FAÇA LOGIN</h2>
 
@@ -14,6 +12,7 @@
             type="text"
             placeholder="Digite seu e-mail"
             v-model="email"
+            name="email"
             autofocus
           />
           <span id="alertUserName" style="color: brown"></span>
@@ -22,6 +21,7 @@
           <input
             type="password"
             v-model="senha"
+            name="senha"
             placeholder="Digite sua senha"
           />
           <span id="alertPassword" style="color: brown"></span>
@@ -34,7 +34,8 @@
             >
           </div>
 
-          <button class="btn-entrar" id="btnLogin">Entrar</button>
+
+          <button @click="this.login" type="button" class="btn-entrar" id="btnLogin">Entrar</button>
 
           <h3>Entre com suas redes sociais</h3>
           <div class="social-login display-f">
@@ -64,46 +65,37 @@
 </template>
 
 <script>
+//import api from './../services/api.js'
+//import axios from 'axios'
+
 export default {
   name: "LoginView",
   data() {
     return {
       email: "",
       senha: "",
+      error: null,
+      success: false
     };
   },
   methods: {
-    salvarLocalStorage(dados) {
-      localStorage.setItem("cliente", JSON.stringify(dados));
-    },
-    eCampoVazio(texto) {
-      if (!texto.length) {
-        return true;
-      }
-      return false;
-    },
-    removerAspas(texto) {
-      if (texto.includes('"') || texto.includes("'")) {
-        return texto.replace(/["']+/g, "");
-      }
-      return texto;
-    },
-    validarUsuario(email, senha) {
-      if (this.eCampoVazio(email) || this.eCampoVazio(senha)) {
-        return alert("Preencha todos os campos");
-      }
+    login: async function() {
+      // const auth = { username: this.email, senha: this.senha };
+      // const url = 'http://localhost:3000/api/usuarios/login';
+      // this.success = false;
+      // this.error = null;
 
-      email = this.removerAspas(email).trim();
-      senha = this.removerAspas(senha).trim();
+      // try {
+      //   const res = await axios.post(url, auth).then(res => res.data);
+      //   this.success = true;
+      //   console.log(res)
+      // } catch (err) {
+      //   this.error = err.message;
+      //   console.log(err)
+      // }
+      console.log(this.email, this.senha)
+    }
 
-      const dados = {
-        email,
-        senha,
-      };
-
-      this.salvarLocalStorage(dados);
-      window.location.href = "/";
-    },
   },
-};
+}
 </script>

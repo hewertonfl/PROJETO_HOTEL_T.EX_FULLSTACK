@@ -16,7 +16,6 @@ const listarUsuario = async (req, res) => {
     try {
         const usuario = await usuariosModel.listarUsuario(id)
         return res.status(200).json(usuario)
-        return rows
     } catch (error) {
         return error
     }
@@ -50,22 +49,24 @@ const cadastrarUsuario = async (req, res) => {
 
 const loginUsuario = async (req, res) => {
     const {email, senha} = req.body
-    const usuario = await usuariosModel.loginUsuario(email)
+    const usuario = await usuariosModel.listarUsuarios(email)
 
     if(!email || !senha){
         return res.status(400).json({message: 'Preencha email e senha.'})
     }
 
-    if(!usuario){
+    verificar = usuario.find(usuario => usuario.email === email)
+
+    if(!verificar){
         return res.status(400).json({message: 'Usuário não encontrado.'})
     }
 
     // // Verificar Status
 
     try {
-        if(await bcrypt.compare(senha, usuario.senha)){
+        if(await bcrypt.compare(senha, verificar.senha)){
             // redirecionar
-            return res.status(200).json({message: 'Logado com sucesso!'})
+            return res.status(200).json({message:'Logado com sucesso!'})
         }
         return res.status(400).json({message: 'Usuário inválido!'})
     } catch (error) {
