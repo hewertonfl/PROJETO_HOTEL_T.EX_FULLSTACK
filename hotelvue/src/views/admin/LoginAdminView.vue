@@ -1,6 +1,7 @@
 <template>
     <main>
-        <div class="container-form-image display-f">
+        <div class="container-form-image display-f justify-c">
+          <div><img src="@/assets/images/hotel-login.png" alt=""></div>
       <div class="container-login">
         <form
           @submit.prevent="validarUsuario(this.email, this.senha)"
@@ -9,10 +10,10 @@
         >
           <h2>ÁREA ADMINISTRATIVA</h2>
 
-          <label for="username">ID Funcionário</label>
+          <label for="username">E-mail</label>
           <input
             type="text"
-            placeholder="Digite seu ID"
+            placeholder="Digite seu e-mail"
             v-model="email"
             autofocus
           />
@@ -28,9 +29,6 @@
 
           <button class="btn-entrar" id="btnLogin">Entrar</button>
         </form>
-      </div>
-      <div class="voltar">
-        <router-link :to="{ path: '/' }"> ⬅️ Voltar</router-link>
       </div>
     </div>
     </main>
@@ -82,19 +80,21 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.container-form-image {
+  align-content: center;
+  div img {
+    width: 600px;
+  }
+  margin: 10px auto;
+}
 .container-login {
     display: block;
-    margin: 0 auto;
 }
 .form-login {
     width: 600px;
-    height: 430px;
-    padding: 10px 30px;
+    height: 500px;
 }
     .btn-entrar {
         margin-top: 40px;
     }
-.voltar {
-  font-weight: bold;
-}
 </style>
