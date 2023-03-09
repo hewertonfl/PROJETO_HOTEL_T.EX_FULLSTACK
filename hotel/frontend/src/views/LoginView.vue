@@ -3,7 +3,7 @@
         <div class="container-form-image display-f">
             <div class="container-login">
                 <form
-                 @submit.prevent="Login"
+                 
                     class="form-login"
                     id="formLogin"
                 >
@@ -36,7 +36,7 @@
                         >
                     </div>
 
-                    <button class="btn-entrar" id="btnLogin">Entrar</button>
+                    <button @click.prevent="Login" class="btn-entrar" id="btnLogin">Entrar</button>
 
                     <h3>Entre com suas redes sociais</h3>
                     <div class="social-login display-f">
@@ -75,7 +75,7 @@ const email = ref('')
 const senha = ref('')
 const Login = async () => {
     if (!email.value || !senha.value) {
-        return alert('Please fill in all fields')
+        return alert('Preencha todos os campos!')
     }
     const res = await fetch('http://localhost:3000/usuarios/login', {
         method: 'POST',
@@ -83,63 +83,16 @@ const Login = async () => {
             'Content-Type': 'application/json; charset=utf-8',
         },
 
-        // body: JSON.stringify({ email: email.value, senha: senha.value }),
-    }).then((res) => res.json())
+        body: JSON.stringify({ email: email.value, senha: senha.value }),
+    }).then((res) => res.json()) 
+    console.log(res.message);
 
-    // if (res.success) {
-    //     // localStorage.setItem('token', res.token)
+    if (res.message === 'Logado com sucesso!') {
+        // localStorage.setItem('token', res.token)
         router.push('/')
-    // } else {
-    //     alert("Senha ou email incorretos")
-    // }
-
+    } else {
+        alert("Senha ou email incorretos")
+    }
 
 }
-</script>
-
-
-//<script>
-// export default {
-//   name: "LoginView",
-//   data() {
-//     return {
-//       email: "",
-//       senha: "",
-//     };
-//   },
-//   methods: {
-//     salvarLocalStorage(dados) {
-//       localStorage.setItem("cliente", JSON.stringify(dados));
-//     },
-//     eCampoVazio(texto) {
-//       if (!texto.length) {
-//         return true;
-//       }
-//       return false;
-//     },
-//     removerAspas(texto) {
-//       if (texto.includes('"') || texto.includes("'")) {
-//         return texto.replace(/["']+/g, "");
-//       }
-//       return texto;
-//     },
-//     validarUsuario(email, senha) {
-//       if (this.eCampoVazio(email) || this.eCampoVazio(senha)) {
-//         return alert("Preencha todos os campos");
-//       }
-
-//       email = this.removerAspas(email).trim();
-//       senha = this.removerAspas(senha).trim();
-
-//       const dados = {
-//         email,
-//         senha,
-//       };
-
-//       this.salvarLocalStorage(dados);
-//       window.location.href = "/";
-//     },
-//   },
-// };
-// <!--@submit.prevent="validarUsuario(this.email, this.senha)"-->
 </script>

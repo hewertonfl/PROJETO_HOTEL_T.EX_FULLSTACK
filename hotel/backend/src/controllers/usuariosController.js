@@ -51,43 +51,28 @@ const cadastrarUsuario = async (req, res) => {
 }
 
 const loginUsuario = async (req, res) => {
-    const {email, senha} = req.body
+    const { email, senha } = req.body
     const usuario = await usuariosModel.listarUsuarios(email)
-    const user = usuario.find((user)=>user.email===email)
+    const user = usuario.find((user) => user.email === email)
 
-    if(!email || !senha){
-        return res.status(400).json({message: 'Preencha email e senha.'})
-    }
+    if (user == undefined) {
+        return res.status(400).json({ message: 'Usuário não encontrado.' })
+    } else {
+        //Verificar Status
 
-    if(!user){
-        return res.status(400).json({message: 'Usuário não encontrado.'})
-    }
-
-    // // Verificar Status
-
-    try {
-        if(await bcrypt.compare(senha, user.senha)){
-            // redirecionar
-            return res.status(200).json({message: 'Logado com sucesso!'})
+        try {
+            if (await bcrypt.compare(senha, user.senha)) {
+                // redirecionar
+                return res.status(200).json({ message: 'Logado com sucesso!' })
+            }
+            return res
+                .status(400)
+                .json({ message: 'Usuário ou senha inválida!' })
+        } catch (error) {
+            return error
         }
-        return res.status(400).json({message: 'Usuário inválido!'})
-    } catch (error) {
-        return error
     }
 }
-// const loginUsuario = async (req, res) => {
-//     const { email, senha } = req.body
-//     const usuario = await usuariosModel.loginUsuario(email)
-//      try {
-//         if(await bcrypt.compare(senha, usuario.senha)){
-//             // redirecionar
-//             return res.status(200).json({message: 'Logado com sucesso!'})
-//         }
-//         return res.status(400).json({message: 'Usuário inválido!'})
-//     } catch (error) {
-//         return error
-//     }
-// }
 
 module.exports = {
     listarUsuarios,

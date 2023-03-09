@@ -33,8 +33,8 @@ const cadastrarUsuario = async (dados) => {
 const loginUsuario = async (email) => {
     try {
         const conn = await conexao()
-        const value = email
-        const [rows] = await conn.query(`SELECT * FROM usuario WHERE email=?`, value)
+        const values = [email]
+        const [rows] = await conn.query(`SELECT * FROM usuario WHERE email=?`, values)
         return rows
     } catch (error) {
         return error
