@@ -13,18 +13,18 @@
                             <router-link :to="{ path: '/' }">Home</router-link>
                         </li>
                         <li>
-                            <router-link :to="{ path: '/consumo' }"
+                            <router-link :to="{ path: '/admin/consumo' }"
                                 >Hóspedes</router-link
                             >
                         </li>
                         <li>
-                            <router-link :to="{ path: '/admin-reservas' }"
+                            <router-link :to="{ path: '/admin/reservas' }"
                                 >Reservas</router-link
                             >
                         </li>
                         <li>
                             <router-link :to="{ path: '/admin' }"
-                                >Funcionários</router-link
+                                >Adicionais</router-link
                             >
                         </li>
                     </ul>

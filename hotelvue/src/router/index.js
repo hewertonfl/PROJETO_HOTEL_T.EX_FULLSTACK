@@ -91,7 +91,7 @@ const routes = [
         },
     },
     {
-        path: '/consumo',
+        path: '/admin/consumo',
         name: 'consumo',
         components: {
             default: ConsumoView,
@@ -99,7 +99,7 @@ const routes = [
         },
     },
     {
-        path: '/admin-reservas',
+        path: '/admin/reservas',
         name: 'admin-reservas',
         components: {
             default: ReservasViewAdmin,
