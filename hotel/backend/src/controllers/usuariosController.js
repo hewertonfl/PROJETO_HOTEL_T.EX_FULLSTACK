@@ -11,7 +11,7 @@ const listarUsuarios = async (req, res) => {
 }
 
 const listarUsuario = async (req, res) => {
-    const {id} = req.params
+    const { id } = req.params
 
     try {
         const usuario = await usuariosModel.listarUsuario(id)
@@ -23,26 +23,28 @@ const listarUsuario = async (req, res) => {
 }
 
 const cadastrarUsuario = async (req, res) => {
-    const {nome, sobrenome, email, nivel, status, senha} = req.body
+    const { nome, sobrenome, email, nivel, status, senha } = req.body
 
-    if(!nome || !sobrenome || !email || !nivel || !status || !senha){
-        return res.status(400).json({message: 'Preencha todos os campos.'})        
+    if (!nome || !sobrenome || !email || !nivel || !status || !senha) {
+        return res.status(400).json({ message: 'Preencha todos os campos.' })
     }
 
     const hash = await bcrypt.hash(senha, 10)
 
     const dados = {
-        nome, 
-        sobrenome, 
-        email, 
-        nivel, 
-        status, 
-        senha: hash
+        nome,
+        sobrenome,
+        email,
+        nivel,
+        status,
+        senha: hash,
     }
 
     try {
         const usuario = await usuariosModel.cadastrarUsuario(dados)
-        return res.status(201).json({message: 'Usuário cadastrado com sucesso!'})
+        return res
+            .status(201)
+            .json({ message: 'Usuário cadastrado com sucesso!' })
     } catch (error) {
         return error
     }
@@ -50,20 +52,21 @@ const cadastrarUsuario = async (req, res) => {
 
 const loginUsuario = async (req, res) => {
     const {email, senha} = req.body
-    const usuario = await usuariosModel.loginUsuario(email)
+    const usuario = await usuariosModel.listarUsuarios(email)
+    const user = usuario.find((user)=>user.email===email)
 
     if(!email || !senha){
         return res.status(400).json({message: 'Preencha email e senha.'})
     }
 
-    if(!usuario){
+    if(!user){
         return res.status(400).json({message: 'Usuário não encontrado.'})
     }
 
     // // Verificar Status
 
     try {
-        if(await bcrypt.compare(senha, usuario.senha)){
+        if(await bcrypt.compare(senha, user.senha)){
             // redirecionar
             return res.status(200).json({message: 'Logado com sucesso!'})
         }
@@ -72,10 +75,23 @@ const loginUsuario = async (req, res) => {
         return error
     }
 }
+// const loginUsuario = async (req, res) => {
+//     const { email, senha } = req.body
+//     const usuario = await usuariosModel.loginUsuario(email)
+//      try {
+//         if(await bcrypt.compare(senha, usuario.senha)){
+//             // redirecionar
+//             return res.status(200).json({message: 'Logado com sucesso!'})
+//         }
+//         return res.status(400).json({message: 'Usuário inválido!'})
+//     } catch (error) {
+//         return error
+//     }
+// }
 
 module.exports = {
     listarUsuarios,
     listarUsuario,
     cadastrarUsuario,
-    loginUsuario
+    loginUsuario,
 }

@@ -5,7 +5,7 @@ const router = express.Router()
 const usuariosController = require('./../controllers/usuariosController')
 
 router.get('/', usuariosController.listarUsuarios)
-router.get('/:id', usuariosController.listarUsuario)
+router.get('/id', usuariosController.listarUsuario)
 router.post('/', usuariosController.cadastrarUsuario)
 
 router.post('/login', usuariosController.loginUsuario)

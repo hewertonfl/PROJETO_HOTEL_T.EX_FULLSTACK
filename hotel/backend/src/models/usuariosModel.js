@@ -33,13 +33,14 @@ const cadastrarUsuario = async (dados) => {
 const loginUsuario = async (email) => {
     try {
         const conn = await conexao()
-        values = [email]
-        const [rows] = await conn.query(`SELECT * FROM usuario WHERE email=?`, values)
+        const value = email
+        const [rows] = await conn.query(`SELECT * FROM usuario WHERE email=?`, value)
         return rows
     } catch (error) {
         return error
     }  
 }
+loginUsuario()
 
 module.exports = {
     listarUsuarios,
