@@ -87,11 +87,11 @@ const Login = async () => {
     }).then((res) => res.json()) 
     console.log(res.message);
 
-    if (res.message === 'Logado com sucesso!') {
+    if (res.ativo) {
         // localStorage.setItem('token', res.token)
         router.push('/')
     } else {
-        alert("Senha ou email incorretos")
+        alert("Senha ou email incorretos!")
     }
 
 }

@@ -54,8 +54,9 @@ const loginUsuario = async (req, res) => {
     const { email, senha } = req.body
     const usuario = await usuariosModel.listarUsuarios(email)
     const user = usuario.find((user) => user.email === email)
+    console.log(user);
 
-    if (user == undefined) {
+    if (!user) {
         return res.status(400).json({ message: 'Usuário não encontrado.' })
     } else {
         //Verificar Status
@@ -63,7 +64,7 @@ const loginUsuario = async (req, res) => {
         try {
             if (await bcrypt.compare(senha, user.senha)) {
                 // redirecionar
-                return res.status(200).json({ message: 'Logado com sucesso!' })
+                return res.status(200).json({ message: 'Logado com sucesso!', ativo: true })
             }
             return res
                 .status(400)
