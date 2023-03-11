@@ -63,15 +63,12 @@ export default {
       if (this.eCampoVazio(email) || this.eCampoVazio(senha)) {
         return alert("Preencha todos os campos");
       }
-
       email = this.removerAspas(email).trim();
       senha = this.removerAspas(senha).trim();
-
       // const dados = {
       //   email,
       //   senha,
       // };
-
       // this.salvarLocalStorage(dados);
       window.location.href = "/consumo";
     },
