@@ -5,7 +5,7 @@
         class="card"
     >
         <div class="img">
-            <img :src="accommodation.imagem" />
+            <img :src="`http://localhost:3000/images/${accommodation.imagem}`" />
         </div>
         <div class="inferior-text display-g">
             <div class="inferior-text-top">

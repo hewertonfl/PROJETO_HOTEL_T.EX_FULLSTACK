@@ -35,7 +35,7 @@
           </div>
 
 
-          <button @click="this.login" type="button" class="btn-entrar" id="btnLogin">Entrar</button>
+          <button @click.prevent="this.login" type="button" class="btn-entrar" id="btnLogin">Entrar</button>
 
           <h3>Entre com suas redes sociais</h3>
           <div class="social-login display-f">
@@ -65,37 +65,38 @@
 </template>
 
 <script>
-//import api from './../services/api.js'
-//import axios from 'axios'
+import axios from 'axios'
 
 export default {
-  name: "LoginView",
-  data() {
-    return {
-      email: "",
-      senha: "",
-      error: null,
-      success: false
-    };
-  },
-  methods: {
-    login: async function() {
-      // const auth = { username: this.email, senha: this.senha };
-      // const url = 'http://localhost:3000/api/usuarios/login';
-      // this.success = false;
-      // this.error = null;
-
-      // try {
-      //   const res = await axios.post(url, auth).then(res => res.data);
-      //   this.success = true;
-      //   console.log(res)
-      // } catch (err) {
-      //   this.error = err.message;
-      //   console.log(err)
-      // }
-      console.log(this.email, this.senha)
+  data(){
+    return{
+      email: null,
+      senha: null
     }
-
   },
+  methods:{
+    async login(){
+      const dados = {email: this.email, senha: this.senha}
+      
+      if(!this.email || !this.senha){
+        alert('Preencha e-mail e senha')
+        return
+      }
+
+      await axios.post('http://localhost:3000/api/usuarios/login', dados)
+      .then(response => {
+        if(response.statusText === 'OK'){
+          this.$router.push('/')
+        }
+      })
+      .catch(error => {
+        if (error.response) {
+          alert(error.response.data.message);
+          console.log(error.response.data.message)
+          return
+        } 
+      })
+    }
+  }
 }
 </script>

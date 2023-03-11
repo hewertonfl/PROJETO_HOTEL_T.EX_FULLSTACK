@@ -7,6 +7,8 @@ const usuariosController = require('./../controllers/usuariosController')
 router.get('/', usuariosController.listarUsuarios)
 router.get('/:id', usuariosController.listarUsuario)
 router.post('/', usuariosController.cadastrarUsuario)
+router.patch('/:id', usuariosController.atualizarUsuario)
+router.delete('/:id', usuariosController.inativarUsuario)
 
 router.post('/login', usuariosController.loginUsuario)
 router.post('/logout', )

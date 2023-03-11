@@ -30,19 +30,30 @@ const cadastrarUsuario = async (dados) => {
     }  
 }
 
-// const loginUsuario = async (email) => {
-//     try {
-//         const conn = await conexao()
-//         values = [email]
-//         const [rows] = await conn.query(`SELECT * FROM usuario WHERE email=?`, values)
-//         return rows
-//     } catch (error) {
-//         return error
-//     }  
-// }
+const atualizarUsuario = async (id, {nome, sobrenome, email, nivel, status, senha}) => {
+    try {
+        const conn = await conexao()
+        const values = [nome, sobrenome, email, nivel, status, senha]
+        return await conn.query(`UPDATE usuario SET nome=?, sobrenome=?, email=?, nivel=?, status=?, senha=? WHERE id = ${id}`, values)
+    } catch (error) {
+        return error
+    }
+}
+
+const inativarUsuario = async (id) => {
+    try {
+        const conn = await conexao()
+        const status = 'inativo'
+        return await conn.query(`UPDATE usuario SET status=? WHERE id = ${id}`, status)
+    } catch (error) {
+        return error
+    }
+}
 
 module.exports = {
     listarUsuarios,
     listarUsuario,
     cadastrarUsuario,
+    inativarUsuario,
+    atualizarUsuario
 }
