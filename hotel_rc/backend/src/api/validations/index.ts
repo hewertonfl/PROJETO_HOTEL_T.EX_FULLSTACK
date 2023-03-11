@@ -2,7 +2,7 @@ import { Response, Request } from 'express'
 const readUsers = require('../models/UserModel.js')
 const decrypt = require('../helpers/index.js')
 
-async function auth(username: string, password: string) {
+async function auth(username: string, password: string): Promise<number> {
     const row: any = await readUsers.findUsername(username)
     const [objRow] = JSON.parse(row)
     let status = 0

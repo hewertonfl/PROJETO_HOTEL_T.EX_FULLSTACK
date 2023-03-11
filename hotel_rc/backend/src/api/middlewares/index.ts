@@ -5,8 +5,10 @@ const session = require('express-session')
 const date = Date.now() // data de agora, incluindo horario
 const dia = 1000 * 60 * 60 * 24 //24 horas calculadas em milisegundos
 
-module.exports = (app: any) => {
+function mw(app: any) {
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(cors())
 }
+
+module.exports = { mw }

@@ -3,9 +3,9 @@ import express, { Express, Request, Response, Router } from 'express'
     const app: Express = express()
     const middleware = require('./api/middlewares/index.js')
     const router: Router = require('./api/routes/index.js')
-    const session = require('express-session')
     const port = '3000'
 
+    middleware.mw(app)
     app.use('/', router)
 
     app.listen(port, () => {

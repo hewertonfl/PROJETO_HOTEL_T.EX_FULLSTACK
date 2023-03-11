@@ -17,8 +17,8 @@ const express_1 = __importDefault(require("express"));
     const app = (0, express_1.default)();
     const middleware = require('./api/middlewares/index.js');
     const router = require('./api/routes/index.js');
-    const session = require('express-session');
     const port = '3000';
+    middleware.mw(app);
     app.use('/', router);
     app.listen(port, () => {
         console.log(`Example app listening on port http://localhost:${port}`);

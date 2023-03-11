@@ -6,7 +6,7 @@ interface data {
 }
 
 async function readUsers() {
-    const conn = await db.connect()
+    const conn: any = await db.connect()
     const [rows] = await conn.query('SELECT * FROM hotel_recanto.usuario')
     conn.end()
     //console.log(rows)
@@ -14,7 +14,7 @@ async function readUsers() {
 }
 
 async function findUsername(email: string) {
-    const conn = await db.connect()
+    const conn: any = await db.connect()
     try {
         const [rows] = await conn.query(
             'SELECT * FROM hotel_recanto.usuario WHERE email = ?',
