@@ -8,8 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const db = require('../../config/database.js');
-const encrypt = require('../helpers/index.js');
+let db = require('../../../config/database.js');
+const encrypt = require('../../helpers/index.js');
+// Leitura de usuários no database
 function readUsers() {
     return __awaiter(this, void 0, void 0, function* () {
         const conn = yield db.connect();
@@ -19,6 +20,7 @@ function readUsers() {
         return JSON.stringify(rows);
     });
 }
+// Procura determinado user no banco
 function findUsername(email) {
     return __awaiter(this, void 0, void 0, function* () {
         const conn = yield db.connect();
@@ -32,7 +34,8 @@ function findUsername(email) {
         }
     });
 }
-function writeUsers(data) {
+// Salva um usuário no banco
+function writeUser(data) {
     return __awaiter(this, void 0, void 0, function* () {
         const conn = yield db.connect();
         data.senha = yield encrypt.passCrypt(data.senha);
@@ -62,4 +65,4 @@ function writeUsers(data) {
 //     status: 'ativo',
 //     senha: '123',
 // })
-module.exports = { readUsers, writeUsers, findUsername };
+module.exports = { readUsers, writeUser, findUsername };

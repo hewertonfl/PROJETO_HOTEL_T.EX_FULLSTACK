@@ -1,11 +1,12 @@
-const db = require('../../config/database.js')
-const encrypt = require('../helpers/index.js')
+let db = require('../../../config/database.js')
+const encrypt = require('../../helpers/index.js')
 
 interface data {
     [key: string]: string
 }
 
-async function readUsers() {
+// Leitura de usuários no database
+async function readUsers(): Promise<string> {
     const conn: any = await db.connect()
     const [rows] = await conn.query('SELECT * FROM hotel_recanto.usuario')
     conn.end()
@@ -13,7 +14,8 @@ async function readUsers() {
     return JSON.stringify(rows)
 }
 
-async function findUsername(email: string) {
+// Procura determinado user no banco
+async function findUsername(email: string): Promise<null | string> {
     const conn: any = await db.connect()
     try {
         const [rows] = await conn.query(
@@ -27,7 +29,8 @@ async function findUsername(email: string) {
     }
 }
 
-async function writeUsers(data: any) {
+// Salva um usuário no banco
+async function writeUser(data: any): Promise<void> {
     const conn = await db.connect()
     data.senha = await encrypt.passCrypt(data.senha)
 
@@ -61,4 +64,4 @@ async function writeUsers(data: any) {
 //     senha: '123',
 // })
 
-module.exports = { readUsers, writeUsers, findUsername }
+module.exports = { readUsers, writeUser, findUsername }

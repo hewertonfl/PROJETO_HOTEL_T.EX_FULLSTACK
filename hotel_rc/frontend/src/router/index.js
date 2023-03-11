@@ -16,8 +16,20 @@ import ReservaView from '../views/ReservaView.vue'
 
 //Admin
 import LoginAdminView from '../views/admin/LoginAdminView.vue'
-import ConsumoView from '../views/admin/ConsumoView.vue'
-import ReservasViewAdmin from '../views/admin/ReservasViewAdmin.vue'
+
+import AdminUsuariosView from '../views/admin/AdminUsuariosView.vue'
+import CadastrarUsuarioView from '../views/admin/CadastrarUsuarioView.vue'
+import EditarUsuarioView from '../views/admin/EditarUsuarioView.vue'
+
+import AdminAcomodacoesView from '../views/admin/AdminAcomodacoesView.vue'
+import CadastrarAcomodacaoView from '../views/admin/CadastrarAcomodacaoView.vue'
+import EditarAcomodacaoView from '../views/admin/EditarAcomodacaoView.vue'
+
+import AdminAdicionaisView from '../views/admin/AdminAdicionaisView.vue'
+import CadastrarAdicionalView from '../views/admin/CadastrarAdicionalView.vue'
+import EditarAdicionalView from '../views/admin/EditarAdicionalView.vue'
+
+import AdminReservaView from '../views/admin/AdminReservaView.vue'
 
 const routes = [
     {
@@ -91,10 +103,74 @@ const routes = [
         },
     },
     {
-        path: '/admin/consumo',
-        name: 'consumo',
+        path: '/admin/usuarios',
+        name: 'admin-usuarios',
         components: {
-            default: ConsumoView,
+            default: AdminUsuariosView,
+            header: ComponenteHeaderAdmin,
+        },
+    },
+    {
+        path: '/admin/cadastrar-usuario',
+        name: 'admin-cadastrar-usuario',
+        components: {
+            default: CadastrarUsuarioView,
+            header: ComponenteHeaderAdmin,
+        },
+    },
+    {
+        path: '/admin/editar-usuario/:id',
+        name: 'admin-editar-usuario',
+        components: {
+            default: EditarUsuarioView,
+            header: ComponenteHeaderAdmin,
+        },
+    },
+    {
+        path: '/admin/acomodacoes',
+        name: 'admin-acomodacoes',
+        components: {
+            default: AdminAcomodacoesView,
+            header: ComponenteHeaderAdmin,
+        },
+    },
+    {
+        path: '/admin/cadastrar-acomodacao',
+        name: 'admin-cadastrar-acomodacao',
+        components: {
+            default: CadastrarAcomodacaoView,
+            header: ComponenteHeaderAdmin,
+        },
+    },
+    {
+        path: '/admin/editar-acomodacao',
+        name: 'admin-editar-acomodacao',
+        components: {
+            default: EditarAcomodacaoView,
+            header: ComponenteHeaderAdmin,
+        },
+    },
+    {
+        path: '/admin/adicionais',
+        name: 'admin-adicionais',
+        components: {
+            default: AdminAdicionaisView,
+            header: ComponenteHeaderAdmin,
+        },
+    },
+    {
+        path: '/admin/cadastrar-adicional',
+        name: 'admin-cadastrar-adicional',
+        components: {
+            default: CadastrarAdicionalView,
+            header: ComponenteHeaderAdmin,
+        },
+    },
+    {
+        path: '/admin/editar-adicional',
+        name: 'admin-editar-adicional',
+        components: {
+            default: EditarAdicionalView,
             header: ComponenteHeaderAdmin,
         },
     },
@@ -102,7 +178,7 @@ const routes = [
         path: '/admin/reservas',
         name: 'admin-reservas',
         components: {
-            default: ReservasViewAdmin,
+            default: AdminReservaView,
             header: ComponenteHeaderAdmin,
         },
     },

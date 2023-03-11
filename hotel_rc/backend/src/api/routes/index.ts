@@ -1,3 +1,9 @@
-const userRouter = require('./UserRouter.js')
+const userRouter = require('./public/UserRouter.js')
+const adminRouter = require('./admin/RoomRouter.js')
 
-module.exports = userRouter
+async function routerLoader(app: any): Promise<void> {
+    app.use('/', userRouter)
+    app.use('/admin', adminRouter)
+}
+
+module.exports = { routerLoader }

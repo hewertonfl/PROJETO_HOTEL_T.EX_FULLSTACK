@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userModel = require('../models/UserModel.js');
-const validations = require('../validations/index.js');
-function writeUsersControl(req, res) {
+const userModel = require('../../models/public/UserModel.js');
+const validations = require('../../validations/index.js');
+// Controle de acesso do salvamento de usuários
+function writeUserControl(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = req.body;
@@ -23,6 +24,7 @@ function writeUsersControl(req, res) {
         }
     });
 }
+// Controle de acesso do login de usuários
 function loginControl(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = req.body.user;
@@ -45,4 +47,4 @@ function loginControl(req, res) {
         }
     });
 }
-module.exports = { writeUsersControl, loginControl };
+module.exports = { writeUserControl, loginControl };

@@ -1,8 +1,9 @@
 import { Response, Request } from 'express'
-const userModel = require('../models/UserModel.js')
-const validations = require('../validations/index.js')
+const userModel = require('../../models/public/UserModel.js')
+const validations = require('../../validations/index.js')
 
-async function writeUsersControl(req: Request, res: Response) {
+// Controle de acesso do salvamento de usuários
+async function writeUserControl(req: Request, res: Response): Promise<void> {
     try {
         const user = req.body
         const users = await userModel.writeUsers(user)
@@ -12,7 +13,8 @@ async function writeUsersControl(req: Request, res: Response) {
     }
 }
 
-async function loginControl(req: Request, res: Response) {
+// Controle de acesso do login de usuários
+async function loginControl(req: Request, res: Response): Promise<void> {
     const user = req.body.user
     const pass = req.body.pass
     const valid = await validations.auth(user, pass)
@@ -32,4 +34,4 @@ async function loginControl(req: Request, res: Response) {
     }
 }
 
-module.exports = { writeUsersControl, loginControl }
+module.exports = { writeUserControl, loginControl }

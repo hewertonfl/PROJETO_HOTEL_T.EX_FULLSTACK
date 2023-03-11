@@ -9,26 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const readUsers = require('../models/public/UserModel.js');
-const decrypt = require('../helpers/index.js');
-function auth(username, password) {
+const roomModel = require('../../models/admin/RoomModel.js');
+// Controle de acesso de salvamento de dados dos quartos
+function writeRoomControl(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const row = yield readUsers.findUsername(username);
-        const [objRow] = JSON.parse(row);
-        let status = 0;
-        if (!objRow) {
-            console.log('Usuário não existe na base de dados');
-            return status;
+        try {
+            const data = req.body;
+            const save = yield roomModel.writeRoom(data);
+            res.status(201).json(data);
         }
-        if (username == objRow.email &&
-            (yield decrypt.passDecrypt(password, objRow.senha))) {
-            console.log('Logado com sucesso!');
-            status = 1;
-            return status;
+        catch (error) {
+            res.send(400).json(error);
         }
-        console.log('Usuário ou senha invalidos');
-        status = 2;
-        return status;
     });
 }
-module.exports = { auth };
+module.exports = { writeRoomControl };

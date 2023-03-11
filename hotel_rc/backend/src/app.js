@@ -19,7 +19,7 @@ const express_1 = __importDefault(require("express"));
     const router = require('./api/routes/index.js');
     const port = '3000';
     middleware.mw(app);
-    app.use('/', router);
+    router.routerLoader(app);
     app.listen(port, () => {
         console.log(`Example app listening on port http://localhost:${port}`);
     });

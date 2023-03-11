@@ -9,26 +9,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const readUsers = require('../models/public/UserModel.js');
-const decrypt = require('../helpers/index.js');
-function auth(username, password) {
+let db = require('../../../config/database.js');
+// Salva os dados do quarto
+function writeRoom(data) {
     return __awaiter(this, void 0, void 0, function* () {
-        const row = yield readUsers.findUsername(username);
-        const [objRow] = JSON.parse(row);
-        let status = 0;
-        if (!objRow) {
-            console.log('Usuário não existe na base de dados');
-            return status;
+        const conn = yield db.connect();
+        const values = [
+            data['numero'],
+            data['tipo'],
+            data['descricao'],
+            data['preco'],
+            data['imagem'],
+            data['status'],
+        ];
+        try {
+            const [rows] = yield conn.query('INSERT INTO hotel_recanto.acomodacao (numero,tipo,descricao,preco,imagem,status) values(?,?,?,?,?,?)', values);
+            console.log('Dados inseridos com sucesso!');
         }
-        if (username == objRow.email &&
-            (yield decrypt.passDecrypt(password, objRow.senha))) {
-            console.log('Logado com sucesso!');
-            status = 1;
-            return status;
+        catch (error) {
+            console.log(error);
+            return null;
         }
-        console.log('Usuário ou senha invalidos');
-        status = 2;
-        return status;
+        conn.end();
     });
 }
-module.exports = { auth };
+module.exports = { writeRoom };
