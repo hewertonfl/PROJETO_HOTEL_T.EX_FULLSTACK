@@ -23,4 +23,17 @@ function writeRoomControl(req, res) {
         }
     });
 }
-module.exports = { writeRoomControl };
+// Controle de acesso de upload de imagens das acomodações
+function uploadImageControl(req, res) {
+    var _a;
+    return __awaiter(this, void 0, void 0, function* () {
+        const imagem = (_a = req.file) === null || _a === void 0 ? void 0 : _a.filename;
+        if (!imagem) {
+            res.status(404).send({ message: 'Imagem não encontrada' });
+        }
+        else {
+            res.status(200).send({ message: 'Imagem enviada com sucesso' });
+        }
+    });
+}
+module.exports = { writeRoomControl, uploadImageControl };

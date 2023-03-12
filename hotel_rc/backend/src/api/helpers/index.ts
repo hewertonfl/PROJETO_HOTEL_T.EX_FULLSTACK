@@ -1,4 +1,7 @@
+import express, { Express, Request, Response, Router } from 'express'
 const bcrypt = require('bcrypt')
+const multer = require('multer')
+const path = require('path')
 const saltRounds = 10
 
 async function passCrypt(password: string) {
@@ -15,4 +18,18 @@ async function passDecrypt(pass: string, encriptedPass: string) {
     return passwordCompare
 }
 
-module.exports = { passCrypt, passDecrypt }
+function uploadImage(nome: string) {
+    const mt = multer.diskStorage({
+        destination: (req: any, file: any, cb: any) => {
+            cb(null, './api/uploads')
+        },
+        filename: (req: any, file: any, cb: any) => {
+            cb(null, Date.now() + path.extname(file.originalname))
+        },
+    })
+
+    const upload = multer({ storage: mt }).single(`${nome}`)
+    return upload
+}
+
+module.exports = { passCrypt, passDecrypt, uploadImage }

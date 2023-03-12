@@ -8,7 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+const path = require('path');
 const saltRounds = 10;
 function passCrypt(password) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -23,4 +26,16 @@ function passDecrypt(pass, encriptedPass) {
         return passwordCompare;
     });
 }
-module.exports = { passCrypt, passDecrypt };
+function uploadImage(nome) {
+    const mt = multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null, './api/uploads');
+        },
+        filename: (req, file, cb) => {
+            cb(null, Date.now() + path.extname(file.originalname));
+        },
+    });
+    const upload = multer({ storage: mt }).single(`${nome}`);
+    return upload;
+}
+module.exports = { passCrypt, passDecrypt, uploadImage };

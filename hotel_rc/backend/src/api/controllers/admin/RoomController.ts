@@ -12,4 +12,14 @@ async function writeRoomControl(req: Request, res: Response): Promise<void> {
     }
 }
 
-module.exports = { writeRoomControl }
+// Controle de acesso de upload de imagens das acomodações
+async function uploadImageControl(req: Request, res: Response): Promise<void> {
+    const imagem = req.file?.filename
+    if (!imagem) {
+        res.status(404).send({ message: 'Imagem não encontrada' })
+    } else {
+        res.status(200).send({ message: 'Imagem enviada com sucesso' })
+    }
+}
+
+module.exports = { writeRoomControl, uploadImageControl }
