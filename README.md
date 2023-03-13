@@ -1,6 +1,5 @@
 # Hotel Recanto dos Códigos
-<div align=center>
-<img src="public/images/Logo%20Hotel.jpeg" width="60%" alt="Logo Hotel Recanto dos Códigos"/></div>
+<img src="public/images/Logo%20Hotel.jpeg" width="60%" alt="Logo Hotel Recanto dos Códigos"/>
 
 ## Sobre
 Projeto desenvolvido como parte integrante do curso Full Stack Javascript Developer da T.EX.
