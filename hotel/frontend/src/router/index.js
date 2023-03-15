@@ -33,6 +33,7 @@ const routes = [
         component: () => import('../views/MinhasReservasView.vue'),
         meta: {
             requiresAuth: true,
+            nivel: 2,
         },
     },
     {
@@ -48,17 +49,50 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-    if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (
+        to.matched.some(
+            (record) => record.meta.requiresAuth && record.meta.nivel === 2
+        )
+    ) {
         // Authentication check
-             const token = localStorage.getItem('token')
-
-             if (token) {
-                 // Check if token is valid
-                 return next()
-             }
-         
+        const token = JSON.parse(localStorage.getItem('token'))
+        if (token.userNivel === 2) {
+            // Check if token is valid
+            return next()
+        } 
         return next('/login')
     }
+    if (
+        to.matched.some(
+            (record) => record.meta.requiresAuth && record.meta.nivel === 1
+        )
+    ) {
+        // Authentication check
+        const token = JSON.parse(localStorage.getItem('token'))
+        console.log(token)
+
+        if (token) {
+            // Check if token is valid
+            return next()
+        }
+
+        return next('/login')
+    }
+    // if (
+    //     to.matched.some(
+    //         (record) => record.meta.requiresAuth && record.meta.nivel == 1
+    //     )
+    // ) {
+    //     const token = JSON.parse(localStorage.getItem('token'))
+    //     console.log(token)
+
+    //     if (token.userNivel === 1) {
+    //         // Check if token is valid
+    //         return next()
+    //     }
+
+    //     return next('/login')
+    // }
     next()
 })
 

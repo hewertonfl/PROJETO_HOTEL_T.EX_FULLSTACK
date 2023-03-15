@@ -1,5 +1,7 @@
 const usuariosModel = require('./../models/usuariosModel')
 const bcrypt = require('bcrypt')
+const UUID = require('uuid')
+let sessionUser
 
 const listarUsuarios = async (req, res) => {
     try {
@@ -54,6 +56,9 @@ const loginUsuario = async (req, res) => {
     const { email, senha } = req.body
     const usuario = await usuariosModel.listarUsuarios(email)
     const user = usuario.find((user) => user.email === email)
+    const nome = (user.nome)
+    const sobrenome = user.sobrenome
+    const nivel = (user.nivel)
     console.log(user);
 
     if (!user) {
@@ -63,8 +68,15 @@ const loginUsuario = async (req, res) => {
 
         try {
             if (await bcrypt.compare(senha, user.senha)) {
+                sessionUser = req.session
+                sessionUser.userEmail = req.body.email
+                sessionUser.userNome = nome
+                sessionUser.userSobrenome = sobrenome
+                sessionUser.userNivel = nivel
+                console.log(sessionUser);
+                console.log(`Request: ${req.body.session}`)
                 // redirecionar
-                return res.status(200).json({ message: 'Logado com sucesso!', ativo: true })
+                return res.status(200).json({ message: 'Logado com sucesso!', ativo: true, session: sessionUser })
             }
             return res
                 .status(400)
@@ -75,9 +87,28 @@ const loginUsuario = async (req, res) => {
     }
 }
 
+const token = async (req, res) => {
+    req.session.token = UUID.v4()
+    res.send({ id: req.session.token })
+}
+
+const session = async (req, res) => {
+    if (req.body.session != req.session.token) {
+        return res
+            .status(500)
+            .send({
+                message: 'The data in the session does not match!',
+                ativo: false,
+            })
+    }
+    res.send({ message: 'Você já está logado!', ativo: true })
+}
+
 module.exports = {
     listarUsuarios,
     listarUsuario,
     cadastrarUsuario,
     loginUsuario,
+    token,
+    session
 }

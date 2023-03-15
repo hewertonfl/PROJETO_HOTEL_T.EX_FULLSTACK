@@ -3,7 +3,6 @@
         <div class="container-form-image display-f">
             <div class="container-login">
                 <form
-                 
                     class="form-login"
                     id="formLogin"
                 >
@@ -68,6 +67,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const router = useRouter()
 
@@ -77,22 +77,58 @@ const Login = async () => {
     if (!email.value || !senha.value) {
         return alert('Preencha todos os campos!')
     }
-    const res = await fetch('http://localhost:3000/usuarios/login', {
+    const res = await fetch('/usuarios/login', {
         method: 'POST',
+        withCredentials: true ,
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
+            
         },
-
         body: JSON.stringify({ email: email.value, senha: senha.value }),
     }).then((res) => res.json()) 
     console.log(res.message);
 
     if (res.ativo) {
-        // localStorage.setItem('token', res.token)
+        localStorage.setItem('token', JSON.stringify(res.session))
+        console.log(res.session.nome)
         router.push('/')
     } else {
         alert("Senha ou email incorretos!")
     }
 
+}
+</script>
+<script>
+export default {
+    name: 'LoginView',
+    data(){
+        return {
+            id: '',
+        }
+    },
+    mounted() {
+        // if (!localStorage.getItem('token')) {
+        axios({ method: "GET", "url": "/usuarios/token", withCredentials: true }).then(result => {
+                this.id = result.data.id;
+                console.log(this.id);
+            }, error => {
+                console.error(error.response.data);
+            })
+        // }
+    },
+    updated() {
+        if (localStorage.getItem('token')) {
+            axios({ method: "POST", "url": "/usuarios/session", data: { session: this.id }, headers: { "content-type": "application/json" }, withCredentials: true }).then(result => {
+                alert(JSON.stringify(result.data.message));
+                this.$router.push('/')
+            }).catch(error => {
+                console.error(error.response.data);
+                console.log(this.id );
+            })
+        }
+            },
+     methods: {
+         validate(){}
+},
 }
 </script>

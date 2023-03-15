@@ -9,6 +9,9 @@ router.get('/id', usuariosController.listarUsuario)
 router.post('/', usuariosController.cadastrarUsuario)
 
 router.post('/login', usuariosController.loginUsuario)
+
+router.get('/token', usuariosController.token)
+router.post('/session', usuariosController.session)
 router.post('/logout', )
 
 module.exports = router
