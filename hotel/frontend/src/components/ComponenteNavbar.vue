@@ -26,5 +26,6 @@
 export default {
   name: "ComponenteNavbar",
   props: ["autenticacao"],
-};
+}
 </script>
+

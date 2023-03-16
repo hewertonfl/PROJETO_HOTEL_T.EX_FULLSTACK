@@ -77,7 +77,7 @@ const Login = async () => {
     if (!email.value || !senha.value) {
         return alert('Preencha todos os campos!')
     }
-    const res = await fetch('/usuarios/login', {
+    const res = await fetch('/api/usuarios/login', {
         method: 'POST',
         withCredentials: true ,
         headers: {
@@ -90,7 +90,6 @@ const Login = async () => {
 
     if (res.ativo) {
         localStorage.setItem('token', JSON.stringify(res.session))
-        console.log(res.session.nome)
         router.push('/')
     } else {
         alert("Senha ou email incorretos!")
@@ -107,28 +106,23 @@ export default {
         }
     },
     mounted() {
-        // if (!localStorage.getItem('token')) {
-        axios({ method: "GET", "url": "/usuarios/token", withCredentials: true }).then(result => {
+        axios({ method: "GET", "url": "/api/usuarios/token", withCredentials: true }).then(result => {
                 this.id = result.data.id;
                 console.log(this.id);
             }, error => {
                 console.error(error.response.data);
             })
-        // }
     },
-    updated() {
-        if (localStorage.getItem('token')) {
-            axios({ method: "POST", "url": "/usuarios/session", data: { session: this.id }, headers: { "content-type": "application/json" }, withCredentials: true }).then(result => {
-                alert(JSON.stringify(result.data.message));
-                this.$router.push('/')
-            }).catch(error => {
-                console.error(error.response.data);
-                console.log(this.id );
-            })
-        }
-            },
-     methods: {
-         validate(){}
-},
+    // updated() {
+    //     if (localStorage.getItem('token')) {
+    //         axios({ method: "POST", "url": "/api/usuarios/session", data: { session: this.id }, headers: { "content-type": "application/json" }, withCredentials: true }).then(result => {
+    //             alert(JSON.stringify(result.data.message));
+    //             this.$router.push('/')
+    //         }).catch(error => {
+    //             console.error(error.response.data);
+    //             console.log(this.id );
+    //         })
+    //     }
+    //         }
 }
 </script>

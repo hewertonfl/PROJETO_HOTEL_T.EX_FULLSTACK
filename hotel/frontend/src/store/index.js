@@ -2,81 +2,10 @@ import { createStore } from 'vuex'
 
 export default createStore({
     state: {
-        // Conteudo dos cards da página reservar
-        cardContent: [
-            {
-                id: 1,
-                img: require('@/assets/images/card1.png'),
-                title: 'SUÍTE LUXUOSA',
-                description:
-                    'Uma suíte espaçosa com cama king-size, vista para a cidade,TV de tela plana, mini-bar, banheira de hidromassagem e área de estar separada.',
-                price: 800,
-            },
-            {
-                id: 2,
-                img: require('@/assets/images/card2.png'),
-                title: 'SUÍTE COM VARANDA',
-                description:
-                    'Uma suíte com cama king-size, varanda com vista para a piscina, TV de tela plana, mini-bar, banheira de hidromassagem e área de estar separada.',
-                price: 600,
-            },
-            {
-                id: 3,
-                img: require('@/assets/images/card3.png'),
-                title: 'QUARTO SUPERIOR',
-                description:
-                    'Uma suíte espaçosa com cama king-size, vista para a cidade, TV de tela plana, mini-bar, banheira de hidromassagem e área de estar separada.',
-                price: 500,
-            },
-            {
-                id: 4,
-                img: require('@/assets/images/card4.png'),
-                title: 'QUARTO DELUXE',
-                description:
-                    'Um quarto espaçoso com cama king-size ou duas camas de solteiro, vista para a cidade, TV de tela plana, mini-bar e banheiro privativo.',
-                price: 500,
-            },
-            {
-                id: 5,
-                img: require('@/assets/images/card5.png'),
-                title: 'QUARTO EXECUTIVO',
-                description:
-                    'Um quarto espaçoso com cama king-size ou duas camas de solteiro, vista para a cidade, TV de tela plana, mini-bar, escrivaninha e banheiro privativo.',
-                price: 450,
-            },
-            {
-                id: 6,
-                img: require('@/assets/images/card6.png'),
-                title: 'QUARTO FAMÍLIA',
-                description:
-                    'Um quarto espaçoso com duas camas de casal e duas camas de solteiro, vista para a cidade, TV de tela plana, mini-bar, área de estar separada e banheiro privativo.',
-                price: 400,
-            },
-            {
-                id: 7,
-                img: require('@/assets/images/card7.png'),
-                title: 'QUARTO ADAPTADO PARA DEFICIENTES',
-                description:
-                    'Um quarto espaçoso com cama king-size ou duas camas de solteiro, vista para a cidade, TV de tela plana, mini-bar, banheiro privativo e adaptações especiais para hóspedes com deficiência.',
-                price: 350,
-            },
-            {
-                id: 8,
-                img: require('@/assets/images/card8.png'),
-                title: 'QUARTO COM VISTA PARA O MAR',
-                description:
-                    'Um quarto espaçoso com cama king-size ou duas camas de solteiro, varanda com vista para o mar, TV de tela plana, mini-bar e banheiro privativo',
-                price: 300,
-            },
-            {
-                id: 9,
-                img: require('@/assets/images/card9.png'),
-                title: 'QUARTO ECONÔMICO',
-                description:
-                    'Um quarto compacto com cama de solteiro ou beliche, TV de tela plana, mini-bar e banheiro compartilhado',
-                price: 250,
-            },
-        ],
+        usuario: {},
+          // Conteudo dos cards da página reservar
+        cardContent: [],
+
         // Dados da Reserva
         dadosReserva: {
             checkin: '',
@@ -116,6 +45,11 @@ export default createStore({
         },
     },
     mutations: {
+        // Atribuir usuário
+        setUser(state, payload){
+            state.usuario = payload
+        },
+
         // Muda a ordem dos cards
         order(state, i) {
             let cardContent = state.cardContent

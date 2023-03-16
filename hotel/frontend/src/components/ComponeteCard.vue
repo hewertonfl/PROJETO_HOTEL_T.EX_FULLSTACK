@@ -5,7 +5,7 @@
         class="card"
     >
         <div class="img">
-            <img :src="accommodation.imagem" />
+            <img :src="`/images/${accommodation.imagem}`" />
         </div>
         <div class="inferior-text display-g">
             <div class="inferior-text-top">

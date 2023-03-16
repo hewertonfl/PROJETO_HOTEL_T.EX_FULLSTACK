@@ -2,9 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const session = require('express-session')
 
-
 const dia = 1000 * 60 * 60 * 24 //24 horas calculadas em milisegundos
-
 
 // Rotas
 const router = require('./router')
@@ -27,15 +25,13 @@ app.use(
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(`../../frontend/public/index.html`))
 
-
 // Rotas
 const {adicionaisRouter} = require('./router')
 const {acomodacoesRouter} = require('./router')
 const {usuariosRouter} = require('./router')
-app.use('/adicionais', adicionaisRouter)
-app.use('/acomodacoes', acomodacoesRouter)
-app.use('/usuarios', usuariosRouter)
-
+app.use('/api/adicionais', adicionaisRouter)
+app.use('/api/acomodacoes', acomodacoesRouter)
+app.use('/api/usuarios', usuariosRouter)
 
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {

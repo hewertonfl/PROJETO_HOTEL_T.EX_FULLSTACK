@@ -5,7 +5,7 @@
         <div class="login-user">
           <span id="helloUser">{{ mensagem }}</span>
           <button
-            @click="logout()" :key='reloadKey'
+            @click="logout()"
             type="button"
             class="btn-white"
             id="btnLogin"
@@ -44,12 +44,12 @@
 <script>
 import ComponenteNavbar from "./ComponenteNavbar.vue";
 import axios from 'axios'
+
 export default {
   name: "ComponenteHeaderBanner",
   components: { ComponenteNavbar },
   data() {
     return {
-      reloadKey: 0,
       imagem: "",
       texto: "",
       mensagem: "",
@@ -58,27 +58,27 @@ export default {
       banners: [
         {
           id: 1,
-          images: require("@/assets/banner/1.jpg"),
+          images: require("@/assets/images/banner/1.jpg"),
           text: "Relaxe em contato com a natureza",
         },
         {
           id: 2,
-          images: require("@/assets/banner/2.jpg"),
+          images: require("@/assets/images/banner/2.jpg"),
           text: "Arquitetura estilo árabe",
         },
         {
           id: 3,
-          images: require("@/assets/banner/3.jpg"),
+          images: require("@/assets/images/banner/3.jpg"),
           text: "Cabanas sedutoras",
         },
         {
           id: 4,
-          images: require("@/assets/banner/4.jpg"),
+          images: require("@/assets/images/banner/4.jpg"),
           text: "Pôr do sol fantástico",
         },
         {
           id: 5,
-          images: require("@/assets/banner/5.jpg"),
+          images: require("@/assets/images/banner/5.jpg"),
           text: "Piscinas com vista incrível",
         },
         {
@@ -104,6 +104,7 @@ export default {
     },
     obterLocalStorage() {
       const dados = JSON.parse(localStorage.getItem("token"));
+
       return dados;
     },
     carregarDados() {
@@ -111,26 +112,26 @@ export default {
       if (dados) {
         this.mensagem = `Olá ${dados.userNome} ${dados.userSobrenome}`;
         this.botao = "Sair";
+        if(dados.userNivel === 1){
         this.autenticado = true;
+        }
       } else {
         this.mensagem = `Olá usuário!`;
         this.botao = "Fazer Login";
         this.autenticado = false;
       }
     },
-
     logout() {
     axios.post('/logout')
       .then(response => {
         sessionStorage.clear()
         localStorage.clear()
-        this.$router.push('/login')
+        this.$router.push('/sair')
         console.log(response.data.message)
       })
       .catch(error => {
         console.log(error)
       })
-        // location.reload()
   }
   },
   created() {

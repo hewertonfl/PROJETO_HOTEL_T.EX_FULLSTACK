@@ -78,7 +78,8 @@ export default {
         }
     },
     mounted(){
-    api.get('/acomodacoes').then(response => {
+    api.get('/api/acomodacoes').then(response => {
+        console.log(response.data)
         this.quartos = response.data
     })
     }

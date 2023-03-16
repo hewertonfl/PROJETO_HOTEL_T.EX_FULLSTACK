@@ -21,19 +21,23 @@ const listarAcomodacao = async (req, res) => {
 }
 
 const cadastrarAcomodacao = async (req, res) => {
-    const {numero, tipo, descricao, preco, imagem, status} = req.body
+    const {numero, tipo, descricao, preco, status} = req.body
+    const imagem = req.file.filename 
 
-    if(!numero || !tipo || !descricao || !preco || !imagem || !status){
-        res.status(400).json({message: 'Preencha todos os campos.'})
-        return
+    if(!numero || !tipo || !descricao || !preco || !status){
+        return res.status(400).json({message: 'Preencha todos os campos.'})        
+    }
+
+    if(!req.file){
+        return res.status(400).json({message: 'Imagem não selecionada.'})
     }
 
     const dados = {
-        numero, 
+        numero,
         tipo, 
         descricao, 
         preco, 
-        imagem, 
+        imagem,
         status
     }
 

@@ -24,11 +24,13 @@ const cadastrarUsuario = async (dados) => {
     try {
         const conn = await conexao()
         const values = [dados.nome, dados.sobrenome, dados.email, dados.nivel, dados.status, dados.senha]
-        const [rows] = await conn.query(`INSERT INTO usuario (nome, sobrenome, email, nivel, status, senha) VALUES (?,?,?,?,?,?)`, values)
+        const [rows] = await conn.query(`INSERT INTO hotel_recanto.usuario (nome, sobrenome, email, nivel, status, senha) VALUES (?,?,?,?,?,?)`, values)
     } catch (error) {
         return error
     }  
 }
+
+cadastrarUsuario({nome:'João', sobrenome: 'Dev', email: 'j@d.com', nivel: 2, status: 'ativo', senha: '1234'})
 
 const loginUsuario = async (email) => {
     try {
@@ -40,11 +42,31 @@ const loginUsuario = async (email) => {
         return error
     }  
 }
-loginUsuario()
+const atualizarUsuario = async (id, {nome, sobrenome, email, nivel, status, senha}) => {
+    try {
+        const conn = await conexao()
+        const values = [nome, sobrenome, email, nivel, status, senha]
+        return await conn.query(`UPDATE usuario SET nome=?, sobrenome=?, email=?, nivel=?, status=?, senha=? WHERE id = ${id}`, values)
+    } catch (error) {
+        return error
+    }
+}
+
+const inativarUsuario = async (id) => {
+    try {
+        const conn = await conexao()
+        const status = 'inativo'
+        return await conn.query(`UPDATE usuario SET status=? WHERE id = ${id}`, status)
+    } catch (error) {
+        return error
+    }
+}
 
 module.exports = {
     listarUsuarios,
     listarUsuario,
     cadastrarUsuario,
-    loginUsuario
+    loginUsuario,
+    inativarUsuario,
+    atualizarUsuario
 }

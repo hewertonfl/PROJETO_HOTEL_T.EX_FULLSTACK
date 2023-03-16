@@ -14,21 +14,21 @@ const listarUsuarios = async (req, res) => {
 
 const listarUsuario = async (req, res) => {
     const { id } = req.params
-
     try {
         const usuario = await usuariosModel.listarUsuario(id)
         return res.status(200).json(usuario)
         return rows
+
     } catch (error) {
         return error
     }
 }
 
 const cadastrarUsuario = async (req, res) => {
-    const { nome, sobrenome, email, nivel, status, senha } = req.body
+    const {nome, sobrenome, email, nivel, status, senha} = req.body
 
-    if (!nome || !sobrenome || !email || !nivel || !status || !senha) {
-        return res.status(400).json({ message: 'Preencha todos os campos.' })
+    if(!nome || !sobrenome || !email || !nivel || !status || !senha){
+        return res.status(400).json({message: 'Preencha todos os campos.'})
     }
 
     const hash = await bcrypt.hash(senha, 10)
@@ -74,7 +74,6 @@ const loginUsuario = async (req, res) => {
                 sessionUser.userSobrenome = sobrenome
                 sessionUser.userNivel = nivel
                 console.log(sessionUser);
-                console.log(`Request: ${req.body.session}`)
                 // redirecionar
                 return res.status(200).json({ message: 'Logado com sucesso!', ativo: true, session: sessionUser })
             }
@@ -104,11 +103,57 @@ const session = async (req, res) => {
     res.send({ message: 'Você já está logado!', ativo: true })
 }
 
+const atualizarUsuario = async (req, res) => {
+    const {id} = req.params
+    const {nome, sobrenome, email, nivel, status, senha} = req.body
+
+    const usuario = await usuariosModel.listarUsuario(id)  
+    
+    if(!usuario){
+        return res.status(400).json({message: 'Usuário não encontrado.'}) 
+    }
+
+    if(!nome || !sobrenome || !email || !nivel || !status || !senha){
+        return res.status(400).json({message: 'Preencha todos os campos.'})        
+    }
+
+    const hash = await bcrypt.hash(senha, 10)
+
+    const dados = {
+        nome, 
+        sobrenome, 
+        email, 
+        nivel, 
+        status, 
+        senha: hash
+    }    
+
+    try {
+        const [rows] = await usuariosModel.atualizarUsuario(id, dados)
+        return res.status(200).json({message: `Dados atualizados com sucesso!`})
+    } catch (error) {
+        return error
+    }
+}
+
+const inativarUsuario = async (req, res) => {
+    const {id} = req.params
+
+    try {
+        const usuario = await usuariosModel.inativarUsuario(id)
+        return res.status(200).json({message: "Usuário removido com sucesso."})
+    } catch (error) {
+        return error
+    }
+}
+
 module.exports = {
     listarUsuarios,
     listarUsuario,
     cadastrarUsuario,
     loginUsuario,
     token,
-    session
+    session,
+    atualizarUsuario,
+    inativarUsuario
 }
