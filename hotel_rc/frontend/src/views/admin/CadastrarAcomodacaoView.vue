@@ -48,7 +48,7 @@
         <input
             type="file"
             ref="file"
-            @change="selectFile(), uploadImage($event)"
+            @change="selectFile()"
             name="UploadImage"
         />
 
@@ -70,7 +70,7 @@ export default {
             tipo: null,
             descricao: null,
             preco: null,
-            imagem: 'aaa',
+            imagem: null,
             status: null,
             file: '',
         }
@@ -90,7 +90,7 @@ export default {
                 .post('http://localhost:3000/admin/room/insert', dados)
                 .then((response) => console.log(response))
                 .catch((error) => console.log(error))
-
+            this.uploadImage()
             //this.$router.push('/admin/acomodacoes')
         },
         uploadImage: async function () {
@@ -108,6 +108,7 @@ export default {
         },
         selectFile() {
             const file = this.$refs.file.files[0]
+            this.imagem = file.name
             this.file = file
         },
     },
