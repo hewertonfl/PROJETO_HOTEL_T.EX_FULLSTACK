@@ -77,7 +77,7 @@ const Login = async () => {
     if (!email.value || !senha.value) {
         return alert('Preencha todos os campos!')
     }
-    const res = await fetch('/api/usuarios/login', {
+    const res = await fetch('api/usuarios/login', {
         method: 'POST',
         withCredentials: true ,
         headers: {
@@ -91,6 +91,7 @@ const Login = async () => {
     if (res.ativo) {
         localStorage.setItem('token', JSON.stringify(res.session))
         router.push('/')
+        router.go()
     } else {
         alert("Senha ou email incorretos!")
     }
@@ -106,7 +107,7 @@ export default {
         }
     },
     mounted() {
-        axios({ method: "GET", "url": "/api/usuarios/token", withCredentials: true }).then(result => {
+        axios({ method: "GET", "url": "api/usuarios/token", withCredentials: true }).then(result => {
                 this.id = result.data.id;
                 console.log(this.id);
             }, error => {

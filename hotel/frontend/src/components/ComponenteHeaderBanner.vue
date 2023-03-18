@@ -2,10 +2,21 @@
   <header id="banner">
     <div class="container display-f flex-dc justify-csb box-header">
       <div class="login display-f align-c">
-        <div class="login-user">
+        <div class="login-user" v-if="autenticado">
           <span id="helloUser">{{ mensagem }}</span>
           <button
             @click="logout()"
+            type="button"
+            class="btn-white"
+            id="btnLogin"
+          >
+            {{ botao }}
+          </button>
+        </div>
+        <div class="login-user" v-else>
+          <span id="helloUser" >{{ mensagem }}</span>
+          <button
+            @click="login()"
             type="button"
             class="btn-white"
             id="btnLogin"
@@ -121,11 +132,15 @@ export default {
         this.autenticado = false;
       }
     },
+    login(){
+      this.$router.push('/login')
+    },
     logout() {
     axios.post('/logout')
       .then(response => {
         sessionStorage.clear()
         localStorage.clear()
+        this.$router.go()
         this.$router.push('/sair')
         console.log(response.data.message)
       })

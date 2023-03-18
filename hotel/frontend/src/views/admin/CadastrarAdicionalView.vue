@@ -50,7 +50,7 @@ export default{
                 imagem: this.imagem
             }
 
-            axios.post('/api/adicionais', dados)
+            axios.post('http://localhost:3000/api/adicionais', dados)
             .then(resolve => console.log(resolve))
             .catch(error => error)
         },

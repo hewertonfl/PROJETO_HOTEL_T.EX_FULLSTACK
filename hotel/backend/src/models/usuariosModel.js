@@ -24,7 +24,7 @@ const cadastrarUsuario = async (dados) => {
     try {
         const conn = await conexao()
         const values = [dados.nome, dados.sobrenome, dados.email, dados.nivel, dados.status, dados.senha]
-        const [rows] = await conn.query(`INSERT INTO hotel_recanto.usuario (nome, sobrenome, email, nivel, status, senha) VALUES (?,?,?,?,?,?)`, values)
+        const [rows] = await conn.query(`INSERT INTO usuario (nome, sobrenome, email, nivel, status, senha) VALUES (?,?,?,?,?,?)`, values)
     } catch (error) {
         return error
     }  

@@ -1,4 +1,4 @@
-const usuariosModel = require('./../models/usuariosModel')
+const usuariosModel = require('../models/usuariosModel')
 const bcrypt = require('bcrypt')
 const UUID = require('uuid')
 let sessionUser
@@ -89,6 +89,7 @@ const loginUsuario = async (req, res) => {
 const token = async (req, res) => {
     req.session.token = UUID.v4()
     res.send({ id: req.session.token })
+    console.log(req.session.token)
 }
 
 const session = async (req, res) => {

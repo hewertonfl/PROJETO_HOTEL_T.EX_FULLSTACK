@@ -73,7 +73,7 @@ export default{
                 status: this.status,
             }
 
-            axios.post('api/acomodacoes/', dados, {
+            axios.post('http://localhost:3000/api/acomodacoes/', dados, {
                 withCredentials: true
             })
             .then(response => console.log(response))

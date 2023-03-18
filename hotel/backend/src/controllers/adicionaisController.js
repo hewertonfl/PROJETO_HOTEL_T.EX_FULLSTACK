@@ -24,7 +24,7 @@ const listarAdicional = async (req, res) => {
 
 const cadastrarAdicionais = async (req, res) => {
     const {item, descricao, valor} = req.body
-    const imagem = req.file.filename
+    // const imagem = req.file.filename
 
     // Validar se existe adicional
 
@@ -32,14 +32,14 @@ const cadastrarAdicionais = async (req, res) => {
         return res.status(400).json({message: 'Preencha todos os campos.'})        
     }
 
-    if(!req.file){
-        return res.status(400).json({message: 'Imagem não selecionada.'})
-    }    
+    // if(!req.file){
+    //     return res.status(400).json({message: 'Imagem não selecionada.'})
+    // }    
     const dados = {
         item,
         descricao,
         valor,
-        imagem
+        // imagem
     }
 
     try {

@@ -123,7 +123,7 @@ const routes = [
         },
         meta: {
             requiresAuth: false,
-            nivel: 0,
+            nivel: 20,
         },
     },
     {
@@ -260,19 +260,23 @@ router.beforeEach(async (to, from, next) => {
             (record) => record.meta.requiresAuth && record.meta.nivel == 1
         )
     ) {
-        if(token){
-        if (token.userNivel === 1) {return next()} 
-    }
+        if (token) {
+            if (token.userNivel === 1) {
+                return next()
+            }
+        }
         return next('/login')
     }
     if (
         to.matched.some(
-            (record) => record.meta.requiresAuth && record.meta.nivel === 2
+            (record) => record.meta.requiresAuth && record.meta.nivel == 2
         )
     ) {
         if (token) {
-        if (token.userNivel === 2) {return next()} 
-    }
+            if (token.userNivel === 2) {
+                return next()
+            }
+        }
         return next('/admin')
     }
     if (
@@ -281,6 +285,18 @@ router.beforeEach(async (to, from, next) => {
         )
     ) {
         if (token) {
+            return next('/')
+        }
+    }
+    if (
+        to.matched.some(
+            (record) => !record.meta.requiresAuth && record.meta.nivel === 20
+        )
+    ) {
+        if (token) {
+            if (token.userNivel === 2) {
+                return next('/admin/usuarios')
+            }
             return next('/')
         }
     }

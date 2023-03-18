@@ -10,8 +10,22 @@ const router = require('./router')
 const app = express()
 
 // Middleware
-app.use(cors({ origin: ["https://localhost:8080"], credentials: true }))
+// app.use(cors({ origin: ["http://localhost:8080"], credentials: true }))
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    )
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-Requested-With,content-type'
+    )
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    next()
+})
 app.use(express.json())
+
 
 app.use(
     session({
@@ -23,7 +37,7 @@ app.use(
 )
 
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static(`../../frontend/public/index.html`))
+// app.use(express.static(`../../frontend/public/index.html`))
 
 // Rotas
 const {adicionaisRouter} = require('./router')

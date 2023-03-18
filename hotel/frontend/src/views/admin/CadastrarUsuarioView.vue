@@ -78,7 +78,7 @@ export default{
                 status: this.status,
                 senha: this.senha,
             }
-            axios.post('/api/usuarios', dados,{
+            axios.post('/api/usuarios/', dados,{
                 withCredentials: true
             })
             .then(response => {

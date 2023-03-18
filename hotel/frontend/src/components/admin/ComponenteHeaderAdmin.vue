@@ -80,12 +80,12 @@ export default {
         sessionStorage.clear()
         localStorage.clear()
         this.$router.push('/sair')
+        this.$router.go()
         console.log(response.data.message)
       })
       .catch(error => {
         console.log(error)
       })
-        // location.reload()
   }
   },
     created() {

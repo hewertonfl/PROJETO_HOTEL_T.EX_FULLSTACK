@@ -35,7 +35,7 @@ export default {
   methods:{
     inativarUsuario(id){
       if(confirm('Tem certeza que deseja inativar esse usuário?')){
-        axios.delete(`/api/usuarios/${id}`).then(response => {
+        axios.delete(`http://localhost:3000/api/usuarios/${id}`).then(response => {
           alert(response.data.message)
         })
         this.$router.push('/admin/usuarios')
@@ -43,7 +43,7 @@ export default {
     },    
   },   
   mounted(){    
-    axios.get('/api/usuarios', {
+    axios.get('http://localhost:3000/api/usuarios', {
                 withCredentials: true
             }).then(response => this.usuarios = response.data)
   }
