@@ -26,6 +26,22 @@ async function findUsername(id: number): Promise<any> {
     }
 }
 
+// Procura determinado user no banco
+async function findUsernameByEmail(email: string): Promise<any> {
+    const conn: any = await db.connect()
+    try {
+        const [rows] = await conn.query(
+            'SELECT * FROM hotel_recanto.usuario WHERE email = ?',
+            email
+        )
+        conn.end()
+        return rows
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
 // Inativa um user no banco
 async function deactiveUser(id: number): Promise<void | unknown> {
     const conn: any = await db.connect()
@@ -71,4 +87,10 @@ async function userUpdate(id: number, data: data) {
     }
 }
 
-module.exports = { findUsername, deactiveUser, readUsers, userUpdate }
+module.exports = {
+    findUsername,
+    deactiveUser,
+    readUsers,
+    userUpdate,
+    findUsernameByEmail,
+}

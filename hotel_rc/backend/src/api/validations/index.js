@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const readUsers = require('../models/public/UserModel.js');
+const readUsers = require('../models/admin/UserModel.js');
 const decrypt = require('../helpers/index.js');
 function auth(username, password) {
     return __awaiter(this, void 0, void 0, function* () {
-        const row = yield readUsers.findUsername(username);
-        const [objRow] = JSON.parse(row);
+        const row = yield readUsers.findUsernameByEmail(username);
+        const [objRow] = row;
         let status = 0;
         if (!objRow) {
             console.log('Usuário não existe na base de dados');

@@ -35,6 +35,21 @@ function findUsername(id) {
         }
     });
 }
+// Procura determinado user no banco
+function findUsernameByEmail(email) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const conn = yield db.connect();
+        try {
+            const [rows] = yield conn.query('SELECT * FROM hotel_recanto.usuario WHERE email = ?', email);
+            conn.end();
+            return rows;
+        }
+        catch (error) {
+            console.log(error);
+            return error;
+        }
+    });
+}
 // Inativa um user no banco
 function deactiveUser(id) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -78,4 +93,10 @@ function userUpdate(id, data) {
         }
     });
 }
-module.exports = { findUsername, deactiveUser, readUsers, userUpdate };
+module.exports = {
+    findUsername,
+    deactiveUser,
+    readUsers,
+    userUpdate,
+    findUsernameByEmail,
+};

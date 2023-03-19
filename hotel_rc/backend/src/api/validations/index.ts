@@ -1,10 +1,11 @@
 import { Response, Request } from 'express'
-const readUsers = require('../models/public/UserModel.js')
+const readUsers = require('../models/admin/UserModel.js')
 const decrypt = require('../helpers/index.js')
 
 async function auth(username: string, password: string): Promise<number> {
-    const row: any = await readUsers.findUsername(username)
-    const [objRow] = JSON.parse(row)
+    const row: any = await readUsers.findUsernameByEmail(username)
+    const [objRow] = row
+
     let status: number = 0
 
     if (!objRow) {

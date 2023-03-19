@@ -88,7 +88,10 @@ export default {
             const data = { user: this.email, pass: this.senha }
             await axios
                 .post(url, data)
-                .then((response) => console.log(response.data.message))
+                .then((response) => {
+                    console.log(response.data.message)
+                    alert('Logado com Sucesso')
+                })
                 .catch((error) => {
                     if (error.response) {
                         // The request was made and the server responded with a status code
@@ -105,6 +108,7 @@ export default {
                         // Something happened in setting up the request that triggered an Error
                         console.log('Error', error.message)
                     }
+                    alert('Senha ou usuário inválidos')
                 })
         },
     },

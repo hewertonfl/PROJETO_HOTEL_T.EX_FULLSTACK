@@ -98,7 +98,7 @@ export default {
         uploadImage: async function () {
             const formData = new FormData()
             formData.append('UploadImage', this.file)
-            //console.log(this.$refs.file.files[0])
+            console.log(this.$refs.file.files[0])
             try {
                 await axios
                     .post('http://localhost:3000/admin/room/put', formData)
