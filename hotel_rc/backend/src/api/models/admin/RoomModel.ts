@@ -72,16 +72,32 @@ async function roomUpdate(id: number, data: data) {
 
 // Remove quartos
 async function roomRemove(id: number) {
+    let [img] = await roomSelectById(id)
+    const path = img.imagem.replace(
+        'http://localhost:3000',
+        `${__dirname}/../../uploads`
+    )
+    deleteImage(path)
     const conn: any = await db.connect()
     try {
         await conn.query(
-            `DELETE FROM hotel_recanto.acomodacao WHERE id = ${id}`
+            `DELETE FROM hotel_recanto.acomodacao WHERE id_acomodacao = ${id}`
         )
         conn.end()
         console.log('Acomodação deletada com sucesso!')
     } catch (error) {
         console.log(error)
         return error
+    }
+}
+// deleta imagens
+function deleteImage(path: string) {
+    const fs = require('fs')
+    try {
+        fs.unlinkSync(path)
+        console.log('File removed:', path)
+    } catch (err) {
+        console.log(err)
     }
 }
 

@@ -50,6 +50,7 @@
             ref="file"
             @change="selectFile()"
             name="UploadImage"
+            required
         />
 
         <button type="button" @click="cadastrarAcomodacao()">
@@ -124,7 +125,7 @@ export default {
 .formulario {
     width: 50%;
     margin: 0 auto;
-    margin: 3% auto 0 auto;
+    margin: 3% auto 3% auto;
     padding: 20px;
     background: #063f57;
     border-radius: 10px;

@@ -27,7 +27,12 @@
                         >
                             Editar
                         </button>
-                        <button class="button">Remover</button>
+                        <button
+                            @click="roomDelete(acomodacao['id_acomodacao'])"
+                            class="button"
+                        >
+                            Remover
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -46,15 +51,7 @@ export default {
         }
     },
     mounted() {
-        axios
-            .get('/rooms')
-            .then((res) => {
-                this.acomodacoes = res.data
-                console.log(res.data)
-            })
-            .catch((error) => {
-                console.log(error.response.data)
-            })
+        this.roomLoader()
     },
     props: {
         id: Number,
@@ -64,6 +61,28 @@ export default {
             console.log(id)
             this.$store.state.idRoom = id
             this.$router.push('editar-acomodacao')
+        },
+        async roomDelete(id) {
+            await axios
+                .delete(`http://localhost:3000/admin/room/delete/${id}`)
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            this.roomLoader()
+        },
+        async roomLoader() {
+            await axios
+                .get('/rooms')
+                .then((res) => {
+                    this.acomodacoes = res.data
+                    console.log(res.data)
+                })
+                .catch((error) => {
+                    console.log(error.response.data)
+                })
         },
     },
 }
@@ -85,19 +104,24 @@ export default {
 }
 
 .box-usuario div {
-    width: 300px;
+    width: 18rem;
+    height: 28rem;
     padding: 10px;
     display: flex;
+    align-items: center;
     background: #063f5710;
 }
 
 .box-usuario li span {
     color: #a35700;
     font-weight: bold;
+    height: 1%;
+    /* font-size: 13px; */
 }
 
 .imagem img {
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .button {
@@ -118,5 +142,9 @@ export default {
     margin: 0 auto;
     padding: 10px 20px;
     margin-bottom: 40px;
+}
+.container-contato {
+    width: 80%;
+    margin: auto;
 }
 </style>

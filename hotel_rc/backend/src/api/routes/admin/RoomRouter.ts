@@ -12,5 +12,6 @@ router.post(
 )
 router.get('/room/:id', roomController.roomSelectByIdControl)
 router.patch('/room/update/:id', roomController.roomUpdateControl)
+router.delete('/room/delete/:id', roomController.roomDeleteControl)
 
 module.exports = router

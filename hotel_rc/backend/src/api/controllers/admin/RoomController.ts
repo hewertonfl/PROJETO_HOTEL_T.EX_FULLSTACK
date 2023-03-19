@@ -50,9 +50,22 @@ async function uploadImageControl(req: Request, res: Response): Promise<void> {
     }
 }
 
+async function roomDeleteControl(req: Request, res: Response): Promise<void> {
+    const { id } = req.params
+
+    try {
+        await roomModel.roomRemove(id)
+        res.status(200).json({ message: `Acomodação removida com sucesso!` })
+    } catch (error) {
+        res.status(400).send({ message: 'Quarto não encontrado' })
+        console.log(error)
+    }
+}
+
 module.exports = {
     writeRoomControl,
     uploadImageControl,
     roomSelectByIdControl,
     roomUpdateControl,
+    roomDeleteControl,
 }

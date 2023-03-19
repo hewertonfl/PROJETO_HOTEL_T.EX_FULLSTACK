@@ -76,9 +76,12 @@ function roomUpdate(id, data) {
 // Remove quartos
 function roomRemove(id) {
     return __awaiter(this, void 0, void 0, function* () {
+        let [img] = yield roomSelectById(id);
+        const path = img.imagem.replace('http://localhost:3000', `${__dirname}/../../uploads`);
+        deleteImage(path);
         const conn = yield db.connect();
         try {
-            yield conn.query(`DELETE FROM hotel_recanto.acomodacao WHERE id = ${id}`);
+            yield conn.query(`DELETE FROM hotel_recanto.acomodacao WHERE id_acomodacao = ${id}`);
             conn.end();
             console.log('Acomodação deletada com sucesso!');
         }
@@ -87,5 +90,16 @@ function roomRemove(id) {
             return error;
         }
     });
+}
+// deleta imagens
+function deleteImage(path) {
+    const fs = require('fs');
+    try {
+        fs.unlinkSync(path);
+        console.log('File removed:', path);
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
 module.exports = { writeRoom, roomSelectById, roomUpdate, roomRemove };

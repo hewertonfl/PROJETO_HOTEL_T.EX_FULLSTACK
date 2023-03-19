@@ -67,9 +67,23 @@ function uploadImageControl(req, res) {
         }
     });
 }
+function roomDeleteControl(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { id } = req.params;
+        try {
+            yield roomModel.roomRemove(id);
+            res.status(200).json({ message: `Acomodação removida com sucesso!` });
+        }
+        catch (error) {
+            res.status(400).send({ message: 'Quarto não encontrado' });
+            console.log(error);
+        }
+    });
+}
 module.exports = {
     writeRoomControl,
     uploadImageControl,
     roomSelectByIdControl,
     roomUpdateControl,
+    roomDeleteControl,
 };
