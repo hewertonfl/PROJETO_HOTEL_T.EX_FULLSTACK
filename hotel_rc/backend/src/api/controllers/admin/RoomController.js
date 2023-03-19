@@ -23,6 +23,34 @@ function writeRoomControl(req, res) {
         }
     });
 }
+// Controle de seleção dos quartos
+function roomSelectByIdControl(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { id } = req.params;
+        console.log(id);
+        try {
+            const acomodacao = yield roomModel.roomSelectById(id);
+            res.status(200).json(acomodacao);
+        }
+        catch (error) {
+            res.status(400).send({ message: 'Quarto não encontrado' });
+        }
+    });
+}
+// Controle de update dos quartos
+function roomUpdateControl(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { id } = req.params;
+        const dados = req.body;
+        try {
+            yield roomModel.roomUpdate(id, dados);
+            res.status(200).json({ message: `Quarto atualizado com sucesso!` });
+        }
+        catch (error) {
+            res.status(400).send({ message: 'Operação invalida' });
+        }
+    });
+}
 // Controle de acesso de upload de imagens das acomodações
 function uploadImageControl(req, res) {
     var _a;
@@ -32,8 +60,16 @@ function uploadImageControl(req, res) {
             res.status(404).send({ message: 'Imagem não encontrada' });
         }
         else {
-            res.status(200).send({ message: 'Imagem enviada com sucesso' });
+            res.status(200).send({
+                message: 'Imagem enviada com sucesso',
+                image: imagem,
+            });
         }
     });
 }
-module.exports = { writeRoomControl, uploadImageControl };
+module.exports = {
+    writeRoomControl,
+    uploadImageControl,
+    roomSelectByIdControl,
+    roomUpdateControl,
+};

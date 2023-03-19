@@ -10,5 +10,7 @@ router.post(
     upld.uploadImage('UploadImage'),
     roomController.uploadImageControl
 )
+router.get('/room/:id', roomController.roomSelectByIdControl)
+router.patch('/room/update/:id', roomController.roomUpdateControl)
 
 module.exports = router

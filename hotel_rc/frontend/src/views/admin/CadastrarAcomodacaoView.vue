@@ -72,11 +72,13 @@ export default {
             preco: null,
             imagem: null,
             status: null,
-            file: '',
+            file: null,
+            imgName: null,
         }
     },
     methods: {
         cadastrarAcomodacao: async function () {
+            await this.uploadImage()
             const dados = {
                 numero: this.numero,
                 tipo: this.tipo,
@@ -85,30 +87,33 @@ export default {
                 imagem: this.imagem,
                 status: this.status,
             }
-
             await axios
                 .post('http://localhost:3000/admin/room/insert', dados)
                 .then((response) => console.log(response))
                 .catch((error) => console.log(error))
-            this.uploadImage()
-            //this.$router.push('/admin/acomodacoes')
+            alert('Quarto Registrado com Sucesso')
+            this.$router.push('/admin/acomodacoes')
         },
         uploadImage: async function () {
             const formData = new FormData()
             formData.append('UploadImage', this.file)
-            console.log(this.$refs.file.files[0])
+            //console.log(this.$refs.file.files[0])
             try {
                 await axios
                     .post('http://localhost:3000/admin/room/put', formData)
-                    .then((response) => console.log(response.data.message))
+                    .then((response) => {
+                        console.log(response.data.message)
+                        this.imagem =
+                            'http://localhost:3000/images/' +
+                            response.data.image
+                    })
                     .catch((error) => console.log(error.response.data.message))
             } catch (error) {
                 console.log(error)
             }
         },
-        selectFile() {
+        async selectFile() {
             const file = this.$refs.file.files[0]
-            this.imagem = file.name
             this.file = file
         },
     },

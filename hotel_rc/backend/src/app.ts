@@ -7,8 +7,7 @@ import express, { Express, Request, Response, Router } from 'express'
 
     middleware.mw(app)
     router.routerLoader(app)
-    app.use(express.static(`${__dirname}/api/uploads`))
-
+    app.use('/images', express.static(`${__dirname}/api/uploads/images`))
     app.listen(port, () => {
         console.log(`Example app listening on port http://localhost:${port}`)
     })

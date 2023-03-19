@@ -20,7 +20,7 @@ const express_1 = __importDefault(require("express"));
     const port = '3000';
     middleware.mw(app);
     router.routerLoader(app);
-    app.use(express_1.default.static(`${__dirname}/api/uploads`));
+    app.use('/images', express_1.default.static(`${__dirname}/api/uploads/images`));
     app.listen(port, () => {
         console.log(`Example app listening on port http://localhost:${port}`);
     });

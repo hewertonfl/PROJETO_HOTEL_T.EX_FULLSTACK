@@ -11,6 +11,31 @@ async function writeRoomControl(req: Request, res: Response): Promise<void> {
         res.send(400).json(error)
     }
 }
+// Controle de seleção dos quartos
+async function roomSelectByIdControl(req: Request, res: Response) {
+    const { id } = req.params
+    console.log(id)
+
+    try {
+        const acomodacao = await roomModel.roomSelectById(id)
+        res.status(200).json(acomodacao)
+    } catch (error) {
+        res.status(400).send({ message: 'Quarto não encontrado' })
+    }
+}
+
+// Controle de update dos quartos
+async function roomUpdateControl(req: Request, res: Response) {
+    const { id } = req.params
+    const dados = req.body
+
+    try {
+        await roomModel.roomUpdate(id, dados)
+        res.status(200).json({ message: `Quarto atualizado com sucesso!` })
+    } catch (error) {
+        res.status(400).send({ message: 'Operação invalida' })
+    }
+}
 
 // Controle de acesso de upload de imagens das acomodações
 async function uploadImageControl(req: Request, res: Response): Promise<void> {
@@ -18,8 +43,16 @@ async function uploadImageControl(req: Request, res: Response): Promise<void> {
     if (!imagem) {
         res.status(404).send({ message: 'Imagem não encontrada' })
     } else {
-        res.status(200).send({ message: 'Imagem enviada com sucesso' })
+        res.status(200).send({
+            message: 'Imagem enviada com sucesso',
+            image: imagem,
+        })
     }
 }
 
-module.exports = { writeRoomControl, uploadImageControl }
+module.exports = {
+    writeRoomControl,
+    uploadImageControl,
+    roomSelectByIdControl,
+    roomUpdateControl,
+}

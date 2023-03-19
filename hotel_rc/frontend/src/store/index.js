@@ -4,6 +4,9 @@ export default createStore({
     state: {
         usuario: {},
 
+        // Conteudo dos cards da página reservar
+        cardContent: [],
+
         // Dados da Reserva
         dadosReserva: {
             checkin: '',
@@ -24,6 +27,7 @@ export default createStore({
         },
 
         contador: 0,
+        idRoom: '',
     },
     getters: {
         rCard(state) {
@@ -44,7 +48,7 @@ export default createStore({
     },
     mutations: {
         // Atribuir usuário
-        setUser(state, payload){
+        setUser(state, payload) {
             state.usuario = payload
         },
 

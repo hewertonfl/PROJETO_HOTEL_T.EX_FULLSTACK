@@ -29,7 +29,7 @@ function passDecrypt(pass, encriptedPass) {
 function uploadImage(nome) {
     const mt = multer.diskStorage({
         destination: (req, file, cb) => {
-            cb(null, './api/uploads');
+            cb(null, './api/uploads/images');
         },
         filename: (req, file, cb) => {
             cb(null, Date.now() + path.extname(file.originalname));

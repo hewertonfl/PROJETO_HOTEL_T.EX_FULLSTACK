@@ -21,7 +21,7 @@ async function passDecrypt(pass: string, encriptedPass: string) {
 function uploadImage(nome: string) {
     const mt = multer.diskStorage({
         destination: (req: any, file: any, cb: any) => {
-            cb(null, './api/uploads')
+            cb(null, './api/uploads/images')
         },
         filename: (req: any, file: any, cb: any) => {
             cb(null, Date.now() + path.extname(file.originalname))

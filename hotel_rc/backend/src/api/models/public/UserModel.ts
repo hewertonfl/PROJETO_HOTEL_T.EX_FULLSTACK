@@ -2,7 +2,7 @@ let db = require('../../../config/database.js')
 const encrypt = require('../../helpers/index.js')
 
 interface data {
-    [key: string]: string
+    [key: string]: string | number
 }
 
 // Leitura de usuários no database
@@ -30,7 +30,7 @@ async function findUsername(email: string): Promise<null | string> {
 }
 
 // Salva um usuário no banco
-async function writeUser(data: any): Promise<void> {
+async function writeUser(data: data): Promise<void> {
     const conn = await db.connect()
     data.senha = await encrypt.passCrypt(data.senha)
 
