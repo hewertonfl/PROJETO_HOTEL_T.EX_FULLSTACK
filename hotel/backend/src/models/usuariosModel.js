@@ -30,8 +30,6 @@ const cadastrarUsuario = async (dados) => {
     }  
 }
 
-cadastrarUsuario({nome:'João', sobrenome: 'Dev', email: 'j@d.com', nivel: 2, status: 'ativo', senha: '1234'})
-
 const loginUsuario = async (email) => {
     try {
         const conn = await conexao()

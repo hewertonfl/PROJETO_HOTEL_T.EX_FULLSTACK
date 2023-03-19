@@ -29,9 +29,9 @@
 
             <label for="nivel">Nivel:</label>
             <select v-model="nivel" id="nivel">
-            <option value="admin">1</option>
-            <option value="hospede">2</option>
-            <option value="funcionario">3</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
             </select> 
 
             <label for="status">Status:</label>
@@ -78,7 +78,7 @@ export default{
                 status: this.status,
                 senha: this.senha,
             }
-            axios.post('/api/usuarios/', dados,{
+            axios.post('/api/usuarios', dados,{
                 withCredentials: true
             })
             .then(response => {
