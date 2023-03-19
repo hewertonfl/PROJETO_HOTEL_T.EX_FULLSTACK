@@ -49,6 +49,18 @@ async function roomSelectById(id: number): Promise<any> {
 // Atualiza Quartos
 async function roomUpdate(id: number, data: data) {
     try {
+        let [img] = await roomSelectById(id)
+        const path = img.imagem.replace(
+            'http://localhost:3000',
+            `${__dirname}/../../uploads`
+        )
+        deleteImage(path)
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+
+    try {
         const conn: any = await db.connect()
         const values = [
             data.numero,

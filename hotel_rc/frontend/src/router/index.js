@@ -119,7 +119,7 @@ const routes = [
         },
     },
     {
-        path: '/admin/editar-usuario/:id',
+        path: '/admin/editar-usuario/',
         name: 'admin-editar-usuario',
         components: {
             default: EditarUsuarioView,

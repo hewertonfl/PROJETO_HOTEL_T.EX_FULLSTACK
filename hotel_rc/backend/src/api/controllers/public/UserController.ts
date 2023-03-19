@@ -6,10 +6,10 @@ const validations = require('../../validations/index.js')
 async function writeUserControl(req: Request, res: Response): Promise<void> {
     try {
         const user = req.body
-        const users = await userModel.writeUsers(user)
+        await userModel.writeUser(user)
         res.status(201).json(user)
     } catch (error) {
-        res.send(400).json(error)
+        res.status(400).send({ message: 'Algo deu errado' })
     }
 }
 
@@ -34,4 +34,7 @@ async function loginControl(req: Request, res: Response): Promise<void> {
     }
 }
 
-module.exports = { writeUserControl, loginControl }
+module.exports = {
+    writeUserControl,
+    loginControl,
+}

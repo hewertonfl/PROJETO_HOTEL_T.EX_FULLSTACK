@@ -50,14 +50,14 @@ async function uploadImageControl(req: Request, res: Response): Promise<void> {
     }
 }
 
+// Controle de acesso de remoção de quartos
 async function roomDeleteControl(req: Request, res: Response): Promise<void> {
     const { id } = req.params
-
     try {
         await roomModel.roomRemove(id)
-        res.status(200).json({ message: `Acomodação removida com sucesso!` })
+        res.status(200).send({ message: `Usuário inativado com sucesso!` })
     } catch (error) {
-        res.status(400).send({ message: 'Quarto não encontrado' })
+        res.status(400).send({ message: 'Operação Inválida' })
         console.log(error)
     }
 }

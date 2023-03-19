@@ -1,5 +1,9 @@
 <template>
-    <form class="formulario" enctype="multipart/form-data">
+    <form
+        class="formulario"
+        enctype="multipart/form-data"
+        @submit.prevent="roomUpdate()"
+    >
         <label for="numero">Número:</label>
         <input
             type="text"
@@ -51,7 +55,7 @@
             name="UploadImage"
         />
 
-        <button @click="roomUpdate()" type="button">Editar Acomodação</button>
+        <button>Salvar Alterações</button>
     </form>
 </template>
 
@@ -84,6 +88,8 @@ export default {
             await axios
                 .patch(`http://localhost:3000/admin/room/update/${id}`, dados)
                 .then((response) => console.log(response.data))
+            alert('Acomodação atualizada com sucesso!')
+            this.$router.push('/admin/acomodacoes')
         },
         uploadImage: async function () {
             const formData = new FormData()

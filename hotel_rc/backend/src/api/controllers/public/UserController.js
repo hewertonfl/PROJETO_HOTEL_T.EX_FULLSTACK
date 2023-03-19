@@ -16,11 +16,11 @@ function writeUserControl(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = req.body;
-            const users = yield userModel.writeUsers(user);
+            yield userModel.writeUser(user);
             res.status(201).json(user);
         }
         catch (error) {
-            res.send(400).json(error);
+            res.status(400).send({ message: 'Algo deu errado' });
         }
     });
 }
@@ -47,4 +47,7 @@ function loginControl(req, res) {
         }
     });
 }
-module.exports = { writeUserControl, loginControl };
+module.exports = {
+    writeUserControl,
+    loginControl,
+};

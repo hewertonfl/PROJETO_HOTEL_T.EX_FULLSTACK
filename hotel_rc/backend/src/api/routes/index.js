@@ -11,11 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const userRouter = require('./public/UserRouter.js');
 const adminRoomRouter = require('./admin/RoomRouter.js');
 const publicRoomRouter = require('./public/RoomRouter.js');
+const adminUsersRouter = require('./admin/UserRouter.js');
 function routerLoader(app) {
     return __awaiter(this, void 0, void 0, function* () {
         app.use('/', userRouter);
         app.use('/', publicRoomRouter);
         app.use('/admin', adminRoomRouter);
+        app.use('/admin', adminUsersRouter);
     });
 }
 module.exports = { routerLoader };

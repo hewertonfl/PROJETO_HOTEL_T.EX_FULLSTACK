@@ -67,15 +67,16 @@ function uploadImageControl(req, res) {
         }
     });
 }
+// Controle de acesso de remoção de quartos
 function roomDeleteControl(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { id } = req.params;
         try {
             yield roomModel.roomRemove(id);
-            res.status(200).json({ message: `Acomodação removida com sucesso!` });
+            res.status(200).send({ message: `Usuário inativado com sucesso!` });
         }
         catch (error) {
-            res.status(400).send({ message: 'Quarto não encontrado' });
+            res.status(400).send({ message: 'Operação Inválida' });
             console.log(error);
         }
     });

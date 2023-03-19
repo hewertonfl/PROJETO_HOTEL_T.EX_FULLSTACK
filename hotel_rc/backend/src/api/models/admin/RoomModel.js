@@ -54,6 +54,15 @@ function roomSelectById(id) {
 function roomUpdate(id, data) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            let [img] = yield roomSelectById(id);
+            const path = img.imagem.replace('http://localhost:3000', `${__dirname}/../../uploads`);
+            deleteImage(path);
+        }
+        catch (error) {
+            console.log(error);
+            return error;
+        }
+        try {
             const conn = yield db.connect();
             const values = [
                 data.numero,

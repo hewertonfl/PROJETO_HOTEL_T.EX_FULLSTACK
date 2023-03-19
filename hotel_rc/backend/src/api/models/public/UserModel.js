@@ -10,59 +10,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 let db = require('../../../config/database.js');
 const encrypt = require('../../helpers/index.js');
-// Leitura de usuários no database
-function readUsers() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const conn = yield db.connect();
-        const [rows] = yield conn.query('SELECT * FROM hotel_recanto.usuario');
-        conn.end();
-        //console.log(rows)
-        return JSON.stringify(rows);
-    });
-}
-// Procura determinado user no banco
-function findUsername(email) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const conn = yield db.connect();
-        try {
-            const [rows] = yield conn.query('SELECT * FROM hotel_recanto.usuario WHERE email = ?', email);
-            conn.end();
-            return JSON.stringify(rows);
-        }
-        catch (error) {
-            return null;
-        }
-    });
-}
 // Salva um usuário no banco
 function writeUser(data) {
     return __awaiter(this, void 0, void 0, function* () {
-        const conn = yield db.connect();
-        data.senha = yield encrypt.passCrypt(data.senha);
-        const values = [
-            data['nome'],
-            data['sobrenome'],
-            data['email'],
-            data['nivel'],
-            data['status'],
-            data['senha'],
-        ];
         try {
+            const conn = yield db.connect();
+            data.senha = yield encrypt.passCrypt(data.senha);
+            const values = [
+                data['nome'],
+                data['sobrenome'],
+                data['email'],
+                data['nivel'],
+                data['status'],
+                data['senha'],
+            ];
             const [rows] = yield conn.query('INSERT INTO hotel_recanto.usuario (nome,sobrenome,email,nivel,status,senha) values(?,?,?,?,?,?)', values);
+            conn.end();
             console.log('Dados inseridos com sucesso!');
         }
         catch (error) {
             console.log(error);
+            return error;
         }
-        conn.end();
     });
 }
-// writeUsers({
-//     nome: 'Mario',
-//     sobrenome: 'Bros',
-//     email: 'mario@bros.com.br',
-//     nivel: '0',
-//     status: 'ativo',
-//     senha: '123',
-// })
-module.exports = { readUsers, writeUser, findUsername };
+module.exports = { writeUser };

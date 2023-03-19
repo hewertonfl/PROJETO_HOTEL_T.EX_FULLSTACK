@@ -28,6 +28,7 @@ export default createStore({
 
         contador: 0,
         idRoom: '',
+        idUser: '',
     },
     getters: {
         rCard(state) {
