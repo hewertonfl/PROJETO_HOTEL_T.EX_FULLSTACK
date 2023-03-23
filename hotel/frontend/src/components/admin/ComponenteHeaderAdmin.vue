@@ -30,6 +30,9 @@
                             <router-link :to="{ path: '/admin/adicionais' }"
                                 >Adicionais</router-link
                             >
+                        </li>
+                        <li>
+                            <router-link :to="{path:'/admin/usuarios-admin'}">Funcionários</router-link>
                         </li>                       
                     </ul>
                 </nav>

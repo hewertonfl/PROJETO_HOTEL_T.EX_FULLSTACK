@@ -40,14 +40,7 @@
             <option value="inativo">Inativo</option>
             </select>
 
-            <label for="senha">Senha:</label>
-            <input
-            type="text"
-            id="senha"
-            placeholder="Digite uma senha"
-            v-model="senha"
-            required
-            />               
+            <label >Senha gerada automaticamente.</label>
 
             <button>Cadastrar</button>
         </form>
@@ -69,6 +62,13 @@ export default{
         }
     },
     methods:{
+        criarSenha() {
+            const email = this.email
+            const partes = email.split('@')
+            const senha = partes[0]
+            console.log(`Senha: ${senha}`);
+            return senha
+        },
         cadastrarUsuario(){
             const dados = {
                 nome: this.nome,
@@ -76,8 +76,9 @@ export default{
                 email: this.email,
                 nivel: this.nivel,
                 status: this.status,
-                senha: this.senha,
+                senha: this.criarSenha(),
             }
+            
             axios.post('/api/usuarios', dados,{
                 withCredentials: true
             })
@@ -89,6 +90,9 @@ export default{
             this.$router.push('/admin/usuarios')
         }
     },
+    updated() {
+        
+    }
 }
 </script>
 

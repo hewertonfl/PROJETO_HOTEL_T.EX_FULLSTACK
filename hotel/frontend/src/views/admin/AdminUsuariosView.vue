@@ -2,7 +2,7 @@
   <main class="container-contato">
     <div class="header">
       <h2 class="titulo-form-contato">Lista de Hóspedes</h2>  
-      <router-link :to="{ path: '/admin/cadastrar-usuario' }" class="button">Cadastrar Hóspede</router-link>
+      <router-link :to="{ path: '/admin/cadastrar-usuario' }" class="button">Cadastrar Usuário</router-link>
     </div>
     
     <div class="box-usuario">      

@@ -12,6 +12,15 @@ const listarUsuarios = async (req, res) => {
     }
 }
 
+const listarUsuariosAdmin = async (req, res) => {
+    try {
+        const usuarios = await usuariosModel.listarUsuariosAdmin()
+        return res.status(200).json(usuarios)
+    } catch (error) {
+        return error
+    }
+}
+
 const listarUsuario = async (req, res) => {
     const { id } = req.params
     try {
@@ -114,11 +123,11 @@ const atualizarUsuario = async (req, res) => {
         return res.status(400).json({message: 'Usuário não encontrado.'}) 
     }
 
-    if(!nome || !sobrenome || !email || !nivel || !status || !senha){
+    if(!nome || !sobrenome || !email || !nivel || !status){
         return res.status(400).json({message: 'Preencha todos os campos.'})        
     }
 
-    const hash = await bcrypt.hash(senha, 10)
+    // const hash = await bcrypt.hash(senha, 10)
 
     const dados = {
         nome, 
@@ -126,7 +135,7 @@ const atualizarUsuario = async (req, res) => {
         email, 
         nivel, 
         status, 
-        senha: hash
+        // senha: hash
     }    
 
     try {
@@ -150,6 +159,7 @@ const inativarUsuario = async (req, res) => {
 
 module.exports = {
     listarUsuarios,
+    listarUsuariosAdmin,
     listarUsuario,
     cadastrarUsuario,
     loginUsuario,

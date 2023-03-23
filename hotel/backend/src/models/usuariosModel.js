@@ -3,7 +3,16 @@ const conexao = require('../database/conexao')
 const listarUsuarios = async () => {
     try {
         const conn = await conexao()
-        const [rows] = await conn.query("SELECT * FROM usuario")
+        const [rows] = await conn.query('SELECT * FROM usuario WHERE nivel=1')
+        return rows
+    } catch (error) {
+        return error
+    }
+}
+const listarUsuariosAdmin = async () => {
+    try {
+        const conn = await conexao()
+        const [rows] = await conn.query('SELECT * FROM usuario WHERE nivel=2')
         return rows
     } catch (error) {
         return error
@@ -62,6 +71,7 @@ const inativarUsuario = async (id) => {
 
 module.exports = {
     listarUsuarios,
+    listarUsuariosAdmin,
     listarUsuario,
     cadastrarUsuario,
     loginUsuario,

@@ -46,7 +46,7 @@
       </div>
       <!-- ComponenteNavbar -->
       <div style="font-size: 50px; color: #ffffff">
-        <ComponenteNavbar :autenticacao="autenticado" />
+        <ComponenteNavbar :autenticacao="autenticadoUsuario" />
       </div>
     </div>
   </header>
@@ -66,6 +66,7 @@ export default {
       mensagem: "",
       botao: "",
       autenticado: "",
+      autenticadoUsuario: "",
       banners: [
         {
           id: 1,
@@ -123,8 +124,9 @@ export default {
       if (dados) {
         this.mensagem = `Olá ${dados.userNome} ${dados.userSobrenome}`;
         this.botao = "Sair";
-        if(dados.userNivel === 1){
         this.autenticado = true;
+        if(dados.userNivel === 1){
+        this.autenticadoUsuario = true;
         }
       } else {
         this.mensagem = `Olá usuário!`;

@@ -18,6 +18,7 @@ import ReservaView from '../views/ReservaView.vue'
 import LoginAdminView from '../views/admin/LoginAdminView.vue'
 
 import AdminUsuariosView from '../views/admin/AdminUsuariosView.vue'
+import AdminUsuariosAdminView from '../views/admin/AdminUsuariosAdminView.vue'
 import CadastrarUsuarioView from '../views/admin/CadastrarUsuarioView.vue'
 import EditarUsuarioView from '../views/admin/EditarUsuarioView.vue'
 
@@ -131,6 +132,18 @@ const routes = [
         name: 'admin-usuarios',
         components: {
             default: AdminUsuariosView,
+            header: ComponenteHeaderAdmin,
+        },
+        meta: {
+            requiresAuth: true,
+            nivel: 2,
+        },
+    },
+    {
+        path: '/admin/usuarios-admin',
+        name: 'admin-usuarios-admin',
+        components: {
+            default: AdminUsuariosAdminView,
             header: ComponenteHeaderAdmin,
         },
         meta: {

@@ -6,7 +6,7 @@
     </div>
     
     <div class="box-usuario">      
-      <div v-for="adicional in acomodacoes" :key="adicional.id">        
+      <div v-for="adicional in adicionais" :key="adicional.id">        
         <ul>
             <li class="imagem"><img :src="`http://localhost:3000/images/${adicional.imagem}`" alt=""></li>
             <li><span>Item:</span> {{adicional.item}}</li>
@@ -39,6 +39,7 @@ export default {
   },  
   mounted(){    
     api.get('/api/adicionais').then(response => this.adicionais = response.data)
+    console.log(this.adicionais);
   }
 };
 </script>

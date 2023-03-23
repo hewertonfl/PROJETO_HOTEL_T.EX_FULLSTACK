@@ -1,5 +1,5 @@
 <template>
-        <form class="formulario" method="POST" @submit="atualizarUsuario(this.usuarioID)">
+        <form class="formulario" method="POST" @submit.prevent="atualizarUsuario(this.usuarioID)">
             <label for="nome">Nome:</label>
             <input
             type="text"
@@ -29,9 +29,9 @@
 
             <label for="nivel">Nivel:</label>
             <select v-model="nivel" id="nivel">
-            <option value="admin">Admin</option>
-            <option value="hospede">Hóspede</option>
-            <option value="funcionario">Funcionário</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
             </select> 
 
             <label for="status">Status:</label>
@@ -40,14 +40,13 @@
             <option value="inativo">Inativo</option>
             </select>
 
-            <label for="senha">Senha:</label>
+            <!-- <label for="senha">Senha:</label>
             <input
             type="text"
             id="senha"
             placeholder="Digite uma senha"
             v-model="senha"
-            required
-            />               
+            />                -->
             <button @click="this.atualizar">Editar Hóspede</button>
         </form>
 </template>
@@ -87,7 +86,7 @@ export default{
                 email: this.email,
                 status: this.status,
                 nivel: this.nivel,
-                senha: this.senha,
+                // senha: this.senha,
             }
             axios.patch(`/api/usuarios/${id}`, dados)
             .then(response => console.log(response))
