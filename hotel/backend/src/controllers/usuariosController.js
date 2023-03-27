@@ -11,6 +11,14 @@ const listarUsuarios = async (req, res) => {
         return error
     }
 }
+const listarUsuariosHospedes = async (req, res) => {
+    try {
+        const usuarios = await usuariosModel.listarUsuariosHospedes()
+        return res.status(200).json(usuarios)
+    } catch (error) {
+        return error
+    }
+}
 
 const listarUsuariosAdmin = async (req, res) => {
     try {
@@ -135,7 +143,7 @@ const atualizarUsuario = async (req, res) => {
         email, 
         nivel, 
         status, 
-        // senha: hash
+        senha
     }    
 
     try {
@@ -159,6 +167,7 @@ const inativarUsuario = async (req, res) => {
 
 module.exports = {
     listarUsuarios,
+    listarUsuariosHospedes,
     listarUsuariosAdmin,
     listarUsuario,
     cadastrarUsuario,

@@ -13,7 +13,7 @@ const listarAdicionais = async () => {
 const listarAdicional = async (id) => {
     try {
         const conn = await conexao()
-        const [rows] = await conn.query(`SELECT * FROM adicionais WHERE id = ${id}`)
+        const [rows] = await conn.query(`SELECT * FROM adicionais WHERE id_adicionais = ${id}`)
         return rows
     } catch (error) {
         return error
@@ -34,7 +34,10 @@ const atualizarAdicional = async (id, {item, descricao, valor, imagem}) => {
     try {
         const conn = await conexao()
         const values = [item, descricao, valor, imagem]
-        return await conn.query(`UPDATE adicionais SET item=?, descricao=?, valor=?, imagem=? WHERE id = ${id}`, values)
+        return await conn.query(
+            `UPDATE adicionais SET item=?, descricao=?, valor=?, imagem=? WHERE id_adicionais = ${id}`,
+            values
+        )
     } catch (error) {
         return error
     }
@@ -43,7 +46,9 @@ const atualizarAdicional = async (id, {item, descricao, valor, imagem}) => {
 const removerAdicional = async (id) => {
     try {
         const conn = await conexao()
-        return await conn.query(`DELETE FROM adicionais WHERE id = ${id}`)
+        return await conn.query(
+            `DELETE FROM adicionais WHERE id_adicionais = ${id}`
+        )
     } catch (error) {
         return error
     }

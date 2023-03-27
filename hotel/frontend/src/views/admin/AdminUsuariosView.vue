@@ -43,7 +43,7 @@ export default {
     },    
   },   
   mounted(){    
-    axios.get('/api/usuarios', {
+    axios.get('/api/usuarios/usuarioshospedes', {
                 withCredentials: true
             }).then(response => this.usuarios = response.data)
   }

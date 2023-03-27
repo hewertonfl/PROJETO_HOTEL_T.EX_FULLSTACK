@@ -43,9 +43,11 @@ app.use(express.urlencoded({ extended: true }))
 const {adicionaisRouter} = require('./router')
 const {acomodacoesRouter} = require('./router')
 const {usuariosRouter} = require('./router')
+const {reservasRouter } = require('./router')
 app.use('/api/adicionais', adicionaisRouter)
 app.use('/api/acomodacoes', acomodacoesRouter)
 app.use('/api/usuarios', usuariosRouter)
+app.use('/api/reservas', reservasRouter)
 
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {

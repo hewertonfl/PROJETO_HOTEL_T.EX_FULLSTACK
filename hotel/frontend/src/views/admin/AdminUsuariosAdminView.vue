@@ -4,26 +4,33 @@
             <h2 class="titulo-form-contato">Lista de Funcionários</h2>
             <div>
                 <input
+                    @click="carregarDados()"
                     type="radio"
                     v-model="checked"
-                    value="todos"
-                    id="status-todos"
-                />
-                Todos
-                <input
-                    type="radio"
-                    v-model="checked"
+                    name="status"
                     value="ativo"
                     id="status-ativo"
+                    checked
                 />
                 Ativo
                 <input
+                    @click="carregarDados()"
                     type="radio"
                     v-model="checked"
+                    name="status"
                     value="inativo"
                     id="status-inativo"
                 />
                 Inativo
+                <input
+                    @click="carregarDados()"
+                    type="radio"
+                    v-model="checked"
+                    name="status"
+                    value="todos"
+                    id="status-todos"
+                />
+                Todos
             </div>
             <router-link
                 :to="{ path: '/admin/cadastrar-usuario' }"
@@ -33,7 +40,7 @@
         </div>
 
         <div class="box-usuario">
-            <div v-for="usuario in itensFiltrados" :key="usuario.id">
+            <div v-for="usuario in usuariosFiltrados" :key="usuario.id">
                 <ul>
                     <li>
                         <span>Nome:</span> {{ usuario.nome }}
@@ -71,7 +78,8 @@ export default {
     data() {
         return {
             usuarios: null,
-            checked: 'todos',
+            checked: 'ativo',
+            usuariosFiltrados: null,
         }
     },
     methods: {
@@ -83,27 +91,37 @@ export default {
                 this.$router.push('/admin/usuarios-admin')
             }
         },
-    },
-    mounted() {
-        axios
-            .get('/api/usuarios/usuariosadmin', {
-                withCredentials: true,
-            })
-            .then((response) => (this.usuarios = response.data))
-    },
-    computed: {
-      itensFiltrados() {
-          console.log(this.usuarios);
+        async carregarDados() {
+            await axios
+                .get('/api/usuarios/usuariosadmin', {
+                    withCredentials: true,
+                })
+                .then((response) => (this.usuarios = response.data))
+            this.itensFiltrados()
+        },
+        itensFiltrados() {
+            const [...usuariosArray] = this.usuarios
+
             if (this.checked === 'todos') {
-                return this.usuarios
+                this.usuariosFiltrados = usuariosArray
             } else if (this.checked === 'ativo') {
-                return this.usuarios.status.filter((status) => status.ativo)
+                const filtro = usuariosArray.filter(
+                    (status) => status.status == 'ativo'
+                )
+                console.log(filtro)
+                this.usuariosFiltrados = filtro
             } else if (this.checked === 'inativo') {
-                return this.usuarios.filter((status) => status.inativo)
+                const filtro = usuariosArray.filter(
+                    (status) => status.status == 'inativo'
+                )
+                this.usuariosFiltrados = filtro
             }
-            return "erro"
         },
     },
+    mounted() {
+        this.carregarDados()
+    },
+    computed: {},
 }
 </script>
 

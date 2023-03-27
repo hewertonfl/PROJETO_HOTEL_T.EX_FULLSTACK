@@ -13,7 +13,7 @@ const listarAcomodacoes = async () => {
 const listarAcomodacao = async (id) => {
     try {
         const conn = await conexao()
-        const [rows] = await conn.query(`SELECT * FROM acomodacao WHERE id = ${id}`)
+        const [rows] = await conn.query(`SELECT * FROM acomodacao WHERE id_acomodacao = ${id}`)
         return rows
     } catch (error) {
         return error
@@ -34,7 +34,10 @@ const atualizarAcomodacao = async (id, {numero, tipo, descricao, preco, imagem, 
     try {
         const conn = await conexao()
         const values = [numero, tipo, descricao, preco, imagem, status]
-        return await conn.query(`UPDATE acomodacao SET numero=?, tipo=?, descricao=?, preco=?, imagem=?, status=? WHERE id = ${id}`, values)
+        return await conn.query(
+            `UPDATE acomodacao SET numero=?, tipo=?, descricao=?, preco=?, imagem=?, status=? WHERE id_acomodacao = ${id}`,
+            values
+        )
     } catch (error) {
         return error
     }
@@ -43,7 +46,9 @@ const atualizarAcomodacao = async (id, {numero, tipo, descricao, preco, imagem, 
 const removerAcomodacao = async (id) => {
     try {
         const conn = await conexao()
-        return await conn.query(`DELETE FROM acomodacao WHERE id = ${id}`)
+        return await conn.query(
+            `DELETE FROM acomodacao WHERE id_acomodacao = ${id}`
+        )
     } catch (error) {
         return error
     }
