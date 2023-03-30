@@ -18,14 +18,14 @@
                         {{ reserva.totaldesconto }}
                     </li>
                     <li><span>Data da reserva:</span> {{ reserva.data }}</li>
-                    <li v-if="reserva.confirmacao">
+                    <li v-if="reserva.confirmacao == 'confirmado'">
                         <span>Data da confirmação:</span>
                         {{ reserva.dataconfirmacao }}
                     </li>
                     <li><span>Quarto:</span> {{ carregarDadosQuartos(reserva.id_acomodacao) }}</li>
 
                     <li>
-                        <!-- <router-link :to="{ path: `/admin/editar-reserva/${reserva.id}` }" class="button">Editar</router-link> -->
+                    <router-link :to="{ path: `/admin/editar-reserva/${reserva.id_reserva}` }" class="button">Editar</router-link>
                         <!-- <button @click="this.inativarReserva(reserva.id)" class="button">Remover</button> -->
                     </li>
                 </ul>
@@ -41,26 +41,22 @@ export default {
     data() {
         return {
             reservas: null,
+            acomodacoes: null,
+            // nomeQuarto: null,
         }
     },
     methods: {
         carregarDadosQuartos(id_acomodacao) {
             let nomeQuarto 
-            axios
-                .get(`/api/acomodacoes/${id_acomodacao}`, {
-                    withCredentials: true,
-                })
-                .then((response) => {
-                    let [...quartos] = response.data
-                    console.log(response.data);
-                    const filtro = quartos.filter(
+            try{
+                    const filtro = this.acomodacoes.filter(
                         (quarto) => quarto.id_acomodacao == id_acomodacao
                     )
                     // return filtro
                    nomeQuarto = filtro[0].tipo
-                   console.log(`Nome quarto: ${nomeQuarto}`)
-                })
                    return nomeQuarto
+            } 
+            catch(erro) {console.log(erro)}
         },
     },
     mounted() {
@@ -71,7 +67,12 @@ export default {
             .then((response) => (this.reservas = response.data))
             .catch((erro) => console.log(erro))
 
-            // this.carregarDadosQuartos(id_acomodacao)
+    axios
+                .get('/api/acomodacoes', {
+                    withCredentials: true,
+                })
+                .then((response) => (
+                    this.acomodacoes = response.data)).catch((erro) => console.log(erro))
     },
 }
 </script>
@@ -87,6 +88,7 @@ export default {
 
 .box-reservas div {
     width: 300px;
+    height: 350px;
     padding: 10px;
     display: flex;
     background: #063f5710;
@@ -96,4 +98,24 @@ export default {
     color: #a35700;
     font-weight: bold;
 }
+.button{
+  background: #063f57;
+  padding: 5px 10px;
+  color: #ffffff;
+  border: none;
+  margin: 10px 7px 0 0;
+  cursor: pointer;
+}
+
+.button:hover{
+    background: #a35700;
+}
+
+.cadastro{
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  margin-bottom: 40px;
+}
+
 </style>
