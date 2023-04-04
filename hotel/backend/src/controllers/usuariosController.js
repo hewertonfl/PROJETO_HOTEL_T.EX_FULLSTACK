@@ -11,30 +11,12 @@ const listarUsuarios = async (req, res) => {
         return error
     }
 }
-const listarUsuariosHospedes = async (req, res) => {
-    try {
-        const usuarios = await usuariosModel.listarUsuariosHospedes()
-        return res.status(200).json(usuarios)
-    } catch (error) {
-        return error
-    }
-}
-
-const listarUsuariosAdmin = async (req, res) => {
-    try {
-        const usuarios = await usuariosModel.listarUsuariosAdmin()
-        return res.status(200).json(usuarios)
-    } catch (error) {
-        return error
-    }
-}
 
 const listarUsuario = async (req, res) => {
     const { id } = req.params
     try {
         const usuario = await usuariosModel.listarUsuario(id)
         return res.status(200).json(usuario)
-        return rows
 
     } catch (error) {
         return error
@@ -167,8 +149,6 @@ const inativarUsuario = async (req, res) => {
 
 module.exports = {
     listarUsuarios,
-    listarUsuariosHospedes,
-    listarUsuariosAdmin,
     listarUsuario,
     cadastrarUsuario,
     loginUsuario,

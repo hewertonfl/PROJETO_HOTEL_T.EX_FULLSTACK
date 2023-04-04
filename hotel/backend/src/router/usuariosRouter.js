@@ -5,8 +5,6 @@ const router = express.Router()
 const usuariosController = require('../controllers/usuariosController')
 
 router.get('/', usuariosController.listarUsuarios)
-router.get('/usuariosadmin', usuariosController.listarUsuariosAdmin)
-router.get('/usuarioshospedes', usuariosController.listarUsuariosHospedes)
 router.get('/:id', usuariosController.listarUsuario)
 router.post('/', usuariosController.cadastrarUsuario)
 router.patch('/:id', usuariosController.atualizarUsuario)

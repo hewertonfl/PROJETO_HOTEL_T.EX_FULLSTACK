@@ -14,7 +14,7 @@
                 <nav class="navbar">
                     <ul class="ul-navbar">
                         <li>
-                            <router-link :to="{ path: '/admin/usuarios' }">Hóspedes</router-link>
+                            <router-link :to="{ path: '/admin/usuarios' }">Usuários</router-link>
                         </li>
                         <li>
                             <router-link :to="{ path: '/admin/acomodacoes' }"
@@ -30,10 +30,7 @@
                             <router-link :to="{ path: '/admin/adicionais' }"
                                 >Adicionais</router-link
                             >
-                        </li>
-                        <li>
-                            <router-link :to="{path:'/admin/usuarios-admin'}">Funcionários</router-link>
-                        </li>                       
+                        </li>                     
                     </ul>
                 </nav>
             </div>

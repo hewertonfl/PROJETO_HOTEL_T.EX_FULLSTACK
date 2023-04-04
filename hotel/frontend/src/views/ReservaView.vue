@@ -25,7 +25,7 @@ import ComponenteBarraReservar from './../components/ComponenteBarraReservar.vue
 import ComponenteServicos from '../components/ComponenteServicos.vue'
 // import ComponenteDetalhes from '../components/ComponenteDetalhes.vue'
 export default {
-    name: 'ComponentCardReserva',
+    name: 'ReservaView',
     components: {
         CardReserva,
         ComponenteResumoReserva,

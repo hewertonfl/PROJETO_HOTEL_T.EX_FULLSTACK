@@ -9,25 +9,6 @@ const listarUsuarios = async () => {
         return error
     }
 }
-const listarUsuariosHospedes = async () => {
-    try {
-        const conn = await conexao()
-        const [rows] = await conn.query('SELECT * FROM usuario WHERE nivel=1')
-        return rows
-    } catch (error) {
-        return error
-    }
-}
-const listarUsuariosAdmin = async () => {
-    try {
-        const conn = await conexao()
-        const [rows] = await conn.query(`SELECT * FROM usuario WHERE nivel=2`)
-        conn.end()
-        return rows
-    } catch (error) {
-        return error
-    }
-}
 
 const listarUsuario = async (id) => {
     try {
@@ -85,8 +66,6 @@ const inativarUsuario = async (id) => {
 
 module.exports = {
     listarUsuarios,
-    listarUsuariosHospedes,
-    listarUsuariosAdmin,
     listarUsuario,
     cadastrarUsuario,
     loginUsuario,
