@@ -3,7 +3,9 @@ const conexao = require('../database/conexao')
 const listarUsuarios = async () => {
     try {
         const conn = await conexao()
-        const [rows] = await conn.query('SELECT * FROM usuario')
+        const [rows] = await conn.query(
+            'SELECT * FROM usuario ORDER BY id_usuario desc'
+        )
         return rows
     } catch (error) {
         return error
@@ -40,6 +42,7 @@ const loginUsuario = async (email) => {
         return error
     }  
 }
+
 const atualizarUsuario = async (id, {nome, sobrenome, email, nivel, status, senha}) => {
     try {
         const conn = await conexao()

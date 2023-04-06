@@ -92,7 +92,7 @@
                             >Editar</router-link
                         >
                         <button
-                            @click="this.inativarUsuario(usuario.id)"
+                            @click="this.inativarUsuario(usuario.id_usuario)"
                             class="button"
                         >
                             Remover
@@ -120,7 +120,7 @@
                             >Editar</router-link
                         >
                         <button
-                            @click="this.inativarUsuario(usuario.id)"
+                            @click="this.inativarUsuario(usuario.id_usuario)"
                             class="button"
                         >
                             Remover

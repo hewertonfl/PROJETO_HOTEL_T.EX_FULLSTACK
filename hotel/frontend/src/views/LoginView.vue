@@ -67,7 +67,6 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 
 const router = useRouter()
 
@@ -86,9 +85,9 @@ const Login = async () => {
         },
         body: JSON.stringify({ email: email.value, senha: senha.value }),
     }).then((res) => res.json()) 
-    console.log(res.message);
 
-    if (res.ativo) {
+    if (res.ativo && res.session.userNivel == 1) {
+        console.log(res.message);
         localStorage.setItem('token', JSON.stringify(res.session))
         router.push('/')
         router.go()
@@ -96,34 +95,5 @@ const Login = async () => {
         alert("Senha ou email incorretos!")
     }
 
-}
-</script>
-<script>
-export default {
-    name: 'LoginView',
-    data(){
-        return {
-            id: '',
-        }
-    },
-    mounted() {
-        axios({ method: "GET", "url": "api/usuarios/token", withCredentials: true }).then(result => {
-                this.id = result.data.id;
-                console.log(this.id);
-            }, error => {
-                console.error(error.response.data);
-            })
-    },
-    // updated() {
-    //     if (localStorage.getItem('token')) {
-    //         axios({ method: "POST", "url": "/api/usuarios/session", data: { session: this.id }, headers: { "content-type": "application/json" }, withCredentials: true }).then(result => {
-    //             alert(JSON.stringify(result.data.message));
-    //             this.$router.push('/')
-    //         }).catch(error => {
-    //             console.error(error.response.data);
-    //             console.log(this.id );
-    //         })
-    //     }
-    //         }
 }
 </script>

@@ -58,7 +58,6 @@ const loginUsuario = async (req, res) => {
     const nome = (user.nome)
     const sobrenome = user.sobrenome
     const nivel = (user.nivel)
-    console.log(user);
 
     if (!user) {
         return res.status(400).json({ message: 'Usuário não encontrado.' })
@@ -72,7 +71,6 @@ const loginUsuario = async (req, res) => {
                 sessionUser.userNome = nome
                 sessionUser.userSobrenome = sobrenome
                 sessionUser.userNivel = nivel
-                console.log(sessionUser);
                 // redirecionar
                 return res.status(200).json({ message: 'Logado com sucesso!', ativo: true, session: sessionUser })
             }
@@ -96,7 +94,7 @@ const session = async (req, res) => {
         return res
             .status(500)
             .send({
-                message: 'The data in the session does not match!',
+                message: 'Os dados na sessão não conferem!',
                 ativo: false,
             })
     }

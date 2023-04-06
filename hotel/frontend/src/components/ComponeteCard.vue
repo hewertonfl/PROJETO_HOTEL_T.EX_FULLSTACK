@@ -5,7 +5,7 @@
         class="card"
     >
         <div class="img">
-            <img :src="`/images/${accommodation.imagem}`" />
+            <img :src="`${accommodation.imagem}`" />
         </div>
         <div class="inferior-text display-g">
             <div class="inferior-text-top">
@@ -17,7 +17,7 @@
                     <div class="text2 noto-sans">A partir de</div>
                     <div class="text-valor-acomodacoes">
                         {{
-                            accommodation.preco.toLocaleString('pt-BR', {
+                            parseFloat(accommodation.preco).toLocaleString('pt-BR', {
                                 style: 'currency',
                                 currency: 'BRL',
                             })

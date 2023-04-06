@@ -67,4 +67,36 @@ const atualizarReserva = async (req, res) => {
     }
 }
 
-module.exports = { listarReservas, listarReserva, atualizarReserva }
+const inativarReserva = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const reserva = await reservasModel.inativarReserva(id)
+        return res
+            .status(200)
+            .json({ message: 'Reserva cancelada com sucesso.' })
+    } catch (error) {
+        return error
+    }
+}
+
+const arquivarReserva = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const reserva = await reservasModel.arquivarReserva(id)
+        return res
+            .status(200)
+            .json({ message: 'Reserva arquivada com sucesso.' })
+    } catch (error) {
+        return error
+    }
+}
+
+module.exports = {
+    listarReservas,
+    listarReserva,
+    atualizarReserva,
+    inativarReserva,
+    arquivarReserva,
+}

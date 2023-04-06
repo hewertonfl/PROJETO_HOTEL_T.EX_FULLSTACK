@@ -79,8 +79,8 @@ export default {
     },
     mounted(){
     api.get('/api/acomodacoes').then(response => {
-        console.log(response.data)
         this.quartos = response.data
+        console.log(this.quartos);
     })
     }
 }

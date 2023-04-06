@@ -26,7 +26,7 @@
                     <span id="alertPassword" style="color: brown"></span>
 
                     <button
-                        @click.prevent="Login()"
+                        @click.prevent="Login"
                         class="btn-entrar"
                         id="btnLogin"
                     >
@@ -41,7 +41,6 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-// import axios from 'axios'
 
 const router = useRouter()
 
@@ -61,7 +60,7 @@ const Login = async () => {
     }).then((res) => res.json())
     console.log(res.message)
 
-    if (res.ativo) {
+    if (res.ativo && res.session.userNivel == 2) {
         localStorage.setItem('token', JSON.stringify(res.session))
         // router.push('/admin/login')
     } else {
@@ -70,44 +69,6 @@ const Login = async () => {
     router.go()
 }
 
-</script>
-<script>
-import axios from 'axios'
-
-export default {
-    name: 'LoginAdminView',
-    data() {
-        return {
-            id: '',
-        }
-    },
-    mounted() {
-        axios({
-            method: 'GET',
-            url: '/api/usuarios/token',
-            withCredentials: true,
-        }).then(
-            (result) => {
-                this.id = result.data.id
-                console.log(result)
-            },
-            (error) => {
-                console.error(error.response.data)
-            }
-        )
-    },
-    // updated() {
-    //     if (localStorage.getItem('token')) {
-    //         axios({ method: "POST", "url": "/api/usuarios/session", data: { session: this.id }, headers: { "content-type": "application/json" }, withCredentials: true }).then(result => {
-    //             alert(JSON.stringify(result.data.message));
-    //             this.$router.push('/')
-    //         }).catch(error => {
-    //             console.error(error.response.data);
-    //             console.log(this.id );
-    //         })
-    //     }
-    //         }
-}
 </script>
 
 <style lang="scss" scoped>
