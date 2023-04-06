@@ -3,6 +3,8 @@
         <div class="titulo-form-contato header">
             <h2>Reservas</h2>
             <div>
+                <fieldset>
+                <legend>Status</legend>
                 <input
                     @click="carregarDados()"
                     type="radio"
@@ -39,6 +41,7 @@
                     id="cancelados"
                 />
                 Cancelados
+                </fieldset>
             </div>
             <router-link
                 :to="{ path: '/admin/cadastrar-reserva' }"

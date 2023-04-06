@@ -9,12 +9,32 @@ const listarAcomodacoes = async (req, res) => {
     }
 }
 
+const listarQuartos = async (req, res) => {
+    try {
+        const quartos = await acomodacoesModel.listarQuartos()
+        res.status(200).json(quartos)
+    } catch (error) {
+        res.send(400).json(error)
+    }
+}
+
 const listarAcomodacao = async (req, res) => {
     const {id} = req.params
 
     try {
         const acomodacao = await acomodacoesModel.listarAcomodacao(id)
         res.status(200).json(acomodacao)
+    } catch (error) {
+        res.send(400).json(error)
+    }
+}
+
+const listarQuarto = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const quarto = await acomodacoesModel.listarQuarto(id)
+        res.status(200).json(quarto)
     } catch (error) {
         res.send(400).json(error)
     }
@@ -46,6 +66,33 @@ const cadastrarAcomodacao = async (req, res) => {
         res.status(201).json({message: 'Acomodação cadastrada com sucesso!'})
     } catch (error) {
         return error
+    }
+}
+
+const cadastrarQuarto = async (req, res) => {
+    const { numero, status, id_acomodacao } = req.body
+
+    if (!numero || !status || !id_acomodacao) {
+        return res.status(400).json({ message: 'Preencha todos os campos.' })
+    }
+
+    const dados = {
+        numero,
+        status,
+        id_acomodacao
+    }
+    // const numeroUnico = dados.find((numero) => numero.numero === numero)
+
+    try {
+        const conn = await acomodacoesModel.cadastrarQuarto(dados)
+        if(!(conn == 409)){
+        console.log(conn);
+        res.status(201).json({ message: 'Quarto cadastrado com sucesso!' })
+        } else {
+            return res.status(409).json({ message: 'Quarto já cadastrado!' })
+        }
+    } catch (error) {
+        return res.status(400).json({message: error})
     }
 }
 
@@ -84,8 +131,11 @@ const removerAcomodacao = async (req, res) => {
 
 module.exports = {
     listarAcomodacoes,
+    listarQuartos,
     listarAcomodacao,
+    listarQuarto,
     cadastrarAcomodacao,
+    cadastrarQuarto,
     atualizarAcomodacao,
     removerAcomodacao
 }
