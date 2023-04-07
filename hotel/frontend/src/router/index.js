@@ -30,6 +30,7 @@ import CadastrarAdicionalView from '../views/admin/CadastrarAdicionalView.vue'
 import EditarAdicionalView from '../views/admin/EditarAdicionalView.vue'
 
 import AdminReservaView from '../views/admin/AdminReservaView.vue'
+import CadastrarReservaView from '../views/admin/CadastrarReservaView.vue'
 import AdminEditarReservaView from '../views/admin/AdminEditarReservaView.vue'
 
 const routes = [
@@ -253,6 +254,18 @@ const routes = [
         name: 'admin-reservas',
         components: {
             default: AdminEditarReservaView,
+            header: ComponenteHeaderAdmin,
+        },
+        meta: {
+            requiresAuth: true,
+            nivel: 2,
+        },
+    },
+    {
+        path: '/admin/cadastrar-reserva',
+        name: 'admin-cadastrar-reservas',
+        components: {
+            default: CadastrarReservaView,
             header: ComponenteHeaderAdmin,
         },
         meta: {

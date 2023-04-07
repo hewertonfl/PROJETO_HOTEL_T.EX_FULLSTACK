@@ -40,6 +40,17 @@ const listarQuarto = async (req, res) => {
     }
 }
 
+const listarQuartosNumeros = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const quartos = await acomodacoesModel.listarQuartosNumeros(id)
+        res.status(200).json(quartos)
+    } catch (error) {
+        res.send(400).json(error)
+    }
+}
+
 const cadastrarAcomodacao = async (req, res) => {
     const {numero, tipo, descricao, preco, status} = req.body
     // const imagem = req.file.filename 
@@ -86,7 +97,6 @@ const cadastrarQuarto = async (req, res) => {
     try {
         const conn = await acomodacoesModel.cadastrarQuarto(dados)
         if(!(conn == 409)){
-        console.log(conn);
         res.status(201).json({ message: 'Quarto cadastrado com sucesso!' })
         } else {
             return res.status(409).json({ message: 'Quarto já cadastrado!' })
@@ -134,6 +144,7 @@ module.exports = {
     listarQuartos,
     listarAcomodacao,
     listarQuarto,
+    listarQuartosNumeros,
     cadastrarAcomodacao,
     cadastrarQuarto,
     atualizarAcomodacao,

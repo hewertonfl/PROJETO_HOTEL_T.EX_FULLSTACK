@@ -78,7 +78,6 @@
                         </li>
                         <li>
                             <span>Status:</span>
-                            <!-- tirar? -->
                             {{ reserva.confirmacao }} 
                         </li>
                         <li>
@@ -201,17 +200,6 @@ export default {
                 )
                 this.reservasFiltradas = filtro
             } 
-            // else if (this.checked === 'ativo-funcionario') {
-            //     const filtro = reservasArray.filter(
-            //         (status) => status.status == 'ativo' && status.nivel == 2
-            //     )
-            //     this.reservasFiltradas = filtro
-            // } else if (this.checked === 'inativo-funcionario') {
-            //     const filtro = reservasArray.filter(
-            //         (status) => status.status == 'inativo' && status.nivel == 2
-            //     )
-            //     this.reservasFiltradas = filtro
-            // }
         },
         formatarData(data) {
             const dataS = new Date(data)

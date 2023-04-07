@@ -60,7 +60,7 @@
                         <span>Número:</span> {{ quarto.numero }}
                     </li>
                     <li><span>Tipo:</span> {{ quarto.tipo }}</li>
-                    <li><span>Preço:</span> {{ quarto.preco }}</li>
+                    <li><span>Preço:</span> {{ formatarMoeda(parseFloat(quarto.preco)) }}</li>
                     <li><span>Status:</span> {{ quarto.status }}</li>
                     <li>
                         <router-link
@@ -80,7 +80,7 @@
                         <span>Número:</span> {{ quarto.numero }}
                     </li>
                     <li><span>Tipo:</span> {{ quarto.tipo }}</li>
-                    <li><span>Preço:</span> {{ quarto.preco }}</li>
+                    <li><span>Preço:</span> {{ formatarMoeda(parseFloat(quarto.preco)) }}</li>
                     <li><span>Status:</span> {{ quarto.status }}</li>
                     <li>
                         <router-link
@@ -164,6 +164,13 @@ export default {
             } else {
                 this.$router.go()
             }
+        },
+        formatarMoeda(valor) {
+            const moeda = valor.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+            })
+            return moeda
         },
     },
     mounted() {

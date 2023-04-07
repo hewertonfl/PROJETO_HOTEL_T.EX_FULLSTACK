@@ -7,6 +7,7 @@ router.get('/', acomodacoesController.listarAcomodacoes)
 router.get('/quartos', acomodacoesController.listarQuartos)
 router.get('/:id', acomodacoesController.listarAcomodacao)
 router.get('/quartos/:id', acomodacoesController.listarQuarto)
+router.get('/tipos/:id', acomodacoesController.listarQuartosNumeros)
 router.post('/', uploadImage.single('foto'), acomodacoesController.cadastrarAcomodacao)
 router.post(
     '/quartos',

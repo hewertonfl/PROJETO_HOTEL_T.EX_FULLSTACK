@@ -26,11 +26,11 @@
                                 >Reservas</router-link
                             >
                         </li>
-                        <li>
+                        <!-- <li>
                             <router-link :to="{ path: '/admin/adicionais' }"
                                 >Adicionais</router-link
                             >
-                        </li>                     
+                        </li>                      -->
                     </ul>
                 </nav>
             </div>

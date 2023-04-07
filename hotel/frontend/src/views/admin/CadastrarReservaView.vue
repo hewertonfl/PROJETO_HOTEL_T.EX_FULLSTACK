@@ -56,7 +56,7 @@
             <option value="cancelado">Cancelado</option>
         </select>
         <label for="total">Total:</label>
-        <input type="text" id="total" v-model='totaltela' disabled required />
+        <input type="text" id="total" v-model='total' disabled required /> 
         <label for="total">Total com desconto:</label>
         <input type="text" id="total" v-model='totaldesconto' disabled required /> 
         <button @click="this.atualizar">Editar Reserva</button>
@@ -85,7 +85,6 @@ export default {
             // idUsuario: null,
 
             totaldesconto: null,
-            totaltela: null,
 
             //*Quarto
             quartoPreco:null,
@@ -133,6 +132,7 @@ export default {
                     //*Acomodacão
                     this.preco = parseFloat(response.data[0].preco)
                     this.filtrarNumero(this.idAcomodacao)
+                    // this.calcularTotal(this.idQuarto,this.qtdpessoas)
                 })
                 .catch((error) => error)
         },
@@ -162,31 +162,27 @@ export default {
                 .get(`/api/acomodacoes/tipos/${id_acomodacao}`)
                 .then((response) => {
                     this.numerosQuartos = response.data
+            // this.total = this.calcularTotal(parseFloat(response.data[0].preco),this.qtdpessoas)
                 })
                 .catch((error) => error)
 
         },
-        async calcularTotal(idQuarto, totalPessoas, checkin, checkout) {
+        async calcularTotal(idQuarto, totalPessoas) {
             // let quarto = null
             await axios
             .get(`/api/acomodacoes/quartos/${idQuarto}`)
             .then((response) => (this.quartoPreco = parseFloat(response.data[0].preco)))
-            const dataCheckin = new Date(checkin)
-            const dataCheckout = new Date(checkout)
-            const milissegundos = dataCheckout - dataCheckin
-            const diferencaDias = milissegundos/(1000*60*60*24)
             if(totalPessoas <2) {
-                const preco = this.quartoPreco*diferencaDias
-                this.quartoPreco = preco
+                this.quartoPreco
             }
             if(totalPessoas > 1) {
             const preco = this.quartoPreco
-            this.quartoPreco = ((preco * 0.05)*totalPessoas) + (preco*diferencaDias)
+            this.quartoPreco = ((preco * 0.05)*totalPessoas) + preco
             }
             const preco = this.quartoPreco
-            this.totaldesconto = this.formatarMoeda(this.calcularDesconto(preco, this.desconto))
+            this.totaldesconto = this.calcularDesconto(preco, this.desconto)
             this.total = this.quartoPreco
-            this.totaltela = this.formatarMoeda(this.quartoPreco)
+            return this.total
         },
         calcularDesconto(total, desconto) {
             const calculo = total * (1 - desconto / 100)
@@ -206,7 +202,7 @@ export default {
     },
     updated() {
         console.log(this.idQuarto)
-        this.calcularTotal(this.idQuarto,this.qtdpessoas, this.checkin, this.checkout)
+        this.calcularTotal(this.idQuarto,this.qtdpessoas)
     },
     mounted() {
         this.reservaID = this.$route.params.id
