@@ -106,6 +106,36 @@ const arquivarReserva = async (id) => {
     }
 }
 
+const cadastrarReserva = async (data) => {
+    const checkin1 = moment(checkin).format('YYYY-MM-DD')
+    const checkout1 = moment(checkout).format('YYYY-MM-DD')
+    const data1 = moment(data).format('YYYY-MM-DD')
+    const dataconfirmacao1 = moment(dataconfirmacao).format('YYYY-MM-DD')
+    const data = [
+        checkin1,
+        checkout1,
+        qtdpessoas,
+        total,
+        totaldesconto,
+        data1,
+        confirmacao,
+        dataconfirmacao1,
+        idUsuario,
+        idQuarto,
+    ]
+    try {
+        const conn = await conexao()
+        await conn.query(
+            `INSERT INTO hotel_recanto.reserva (checkin,checkout,qtdpessoas,total,totaldesconto,data,confirmacao,dataconfirmacao,id_usuario) values(?,?,?,?,?,?,?,?,?)`,
+            data
+        )
+        conn.end()
+    } catch (error) {
+        console(error)
+        return error
+    }
+}
+
 module.exports = {
     listarReservas,
     listarReserva,

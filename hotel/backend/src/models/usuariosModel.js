@@ -88,7 +88,7 @@ const inativarUsuario = async (id) => {
         return error
     }
 }
-listarUsuarios()
+
 module.exports = {
     listarUsuarios,
     listarUsuario,
