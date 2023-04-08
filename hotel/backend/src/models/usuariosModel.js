@@ -6,7 +6,6 @@ const listarUsuarios = async () => {
         const [rows] = await conn.query(
             'SELECT * FROM usuario ORDER BY id_usuario desc'
         )
-        console.log(rows)
         return rows
     } catch (error) {
         console.log(error)

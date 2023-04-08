@@ -18,14 +18,15 @@
 </template>
 
 <script>
-import CardReserva from './../components/CardReserva.vue'
-import ComponenteResumoReserva from './../components/ComponenteResumoReserva.vue'
+import CardReserva from '../components/CardReserva.vue'
+import ComponenteResumoReserva from '../components/ComponenteResumoReserva.vue'
 // import ComponeteBarra from './../components/ComponeteBarra.vue'
-import ComponenteBarraReservar from './../components/ComponenteBarraReservar.vue'
+import ComponenteBarraReservar from '../components/ComponenteBarraReservar.vue'
 import ComponenteServicos from '../components/ComponenteServicos.vue'
 // import ComponenteDetalhes from '../components/ComponenteDetalhes.vue'
+import axios from 'axios'
 export default {
-    name: 'ReservaView',
+    name: 'ComponentCardReserva',
     components: {
         CardReserva,
         ComponenteResumoReserva,
@@ -34,7 +35,6 @@ export default {
         ComponenteServicos,
         // ComponenteDetalhes,
     },
-
     beforeMount() {
         if (localStorage.getItem('cardContent')) {
             this.$store.commit(
@@ -44,6 +44,8 @@ export default {
             localStorage.getItem('counter')
                 ? (this.$store.state.contador = localStorage.getItem('counter'))
                 : (this.$store.state.contador = 0)
+        } else {
+            this.roomFill()
         }
     },
     mounted() {
@@ -70,12 +72,27 @@ export default {
                 .querySelectorAll('input[type=radio]')[0]
                 .setAttribute('checked', 'checked')
         },
-
         resetCardStyle: function () {
             const card = document.querySelectorAll('.quarto-reserva')
             card.forEach((item) => {
                 item.style.backgroundColor = '#f1f1f1'
                 item.style.color = 'black'
+            })
+        },
+        roomFill() {
+            axios.get('/api/acomodacoes').then((response) => {
+                //this.quartos = response.data
+                let cardContent = []
+                response.data.forEach((element) => {
+                    let room = {}
+                    room['id'] = element['id_acomodacao']
+                    room['img'] = element['imagem']
+                    room['title'] = element['tipo']
+                    room['description'] = element['descricao']
+                    room['price'] = element['preco']
+                    cardContent.push(room)
+                })
+                this.$store.commit('storeCardContent', cardContent)
             })
         },
     },
