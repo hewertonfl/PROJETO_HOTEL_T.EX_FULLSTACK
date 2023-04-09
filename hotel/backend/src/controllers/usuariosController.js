@@ -128,7 +128,7 @@ const atualizarUsuario = async (req, res) => {
 
     try {
         const [rows] = await usuariosModel.atualizarUsuario(id, dados)
-        return res.status(200).json({message: `Dados atualizados com sucesso!`})
+        return res.status(200).json(`Dados atualizados com sucesso!`)
     } catch (error) {
         return error
     }

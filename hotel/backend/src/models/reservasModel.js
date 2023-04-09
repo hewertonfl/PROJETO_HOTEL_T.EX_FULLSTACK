@@ -74,7 +74,7 @@ const atualizarReserva = async (
         await conn.query(
             `UPDATE quarto SET status='ocupado' WHERE id_quarto=${idQuarto}`
         )
-        conn.end()
+        // conn.end()
     } catch (error) {
         return error
     }

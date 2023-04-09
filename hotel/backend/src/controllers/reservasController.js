@@ -26,6 +26,7 @@ const atualizarReserva = async (req, res) => {
     const reserva = await reservasModel.listarReserva(id)
     const dados1 = JSON.stringify(req.body)
     const dados = JSON.parse(dados1)
+    
     // if (
     //     !checkin ||
     //     !checkout ||
@@ -38,27 +39,33 @@ const atualizarReserva = async (req, res) => {
     //     return res.status(400).json({ message: 'Preencha todos os campos.' })
     // }
 
-    const obj = {
-        checkin: dados.checkin ? dados.checkin : reserva[0].checkin,
-        checkout: dados.checkout ? dados.checkout : reserva[0].checkout,
-        qtdpessoas: dados.qtdpessoas ? dados.qtdpessoas : reserva[0].qtdpessoas,
-        total: dados.total ? dados.total : reserva[0].total,
-        totaldesconto: dados.totaldesconto,
-        data: dados.data ? dados.data : reserva[0].data,
-        dataconfirmacao: dados.dataconfirmacao
-            ? dados.dataconfirmacao
-            : reserva[0].dataconfirmacao,
-        confirmacao: dados.confirmacao
-            ? dados.confirmacao
-            : reserva[0].confirmacao,
-        idUsuario: dados.idUsuario ? dados.idUsuario : reserva[0].id_usuario,
-        idQuarto: dados.idQuarto ? dados.idQuarto : reserva[0].id_quarto,
-        idQuartoAnterior: dados.idQuartoAnterior
-    }
     try {
-        const [rows] = await reservasModel.atualizarReserva(id, obj)
-        return res
-            .status(200)
+        const obj = {
+            checkin: dados.checkin ? dados.checkin : reserva[0].checkin,
+            checkout: dados.checkout ? dados.checkout : reserva[0].checkout,
+            qtdpessoas: dados.qtdpessoas
+                ? dados.qtdpessoas
+                : reserva[0].qtdpessoas,
+            total: dados.total ? dados.total : reserva[0].total,
+            totaldesconto: dados.totaldesconto,
+            data: dados.data ? dados.data : reserva[0].data,
+            dataconfirmacao: dados.dataconfirmacao
+                ? dados.dataconfirmacao
+                : reserva[0].dataconfirmacao,
+            confirmacao: dados.confirmacao
+                ? dados.confirmacao
+                : reserva[0].confirmacao,
+            idUsuario: dados.idUsuario
+                ? dados.idUsuario
+                : reserva[0].id_usuario,
+            idQuarto: dados.idQuarto ? dados.idQuarto : reserva[0].id_quarto,
+            idQuartoAnterior: dados.idQuartoAnterior
+                ? dados.idQuartoAnterior
+                : reserva[0].id_quarto
+        }
+        console.log(obj)
+        let [rows] = await reservasModel.atualizarReserva(id, obj)
+        return res.status(200)
             .json({ message: `Reserva atualizada com sucesso!` })
     } catch (error) {
         return error
