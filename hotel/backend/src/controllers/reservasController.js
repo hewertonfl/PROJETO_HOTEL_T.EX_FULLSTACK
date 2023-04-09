@@ -53,7 +53,7 @@ const atualizarReserva = async (req, res) => {
             : reserva[0].confirmacao,
         idUsuario: dados.idUsuario ? dados.idUsuario : reserva[0].id_usuario,
         idQuarto: dados.idQuarto ? dados.idQuarto : reserva[0].id_quarto,
-        idQuartoAnterior: dados.idQuartoAnterior
+        idQuartoAnterior: dados.idQuartoAnterior,
     }
     try {
         const [rows] = await reservasModel.atualizarReserva(id, obj)
@@ -91,10 +91,72 @@ const arquivarReserva = async (req, res) => {
     }
 }
 
+const cadastrarReserva = async (req, res) => {
+    const {
+        acomodacao,
+        adultos,
+        checkin,
+        checkout,
+        codigo,
+        cupomDesconto,
+        img,
+        noites,
+        quartoPreco,
+        servicos,
+        valorTotal,
+        id_usuario,
+    } = req.body
+
+    const dados = {
+        acomodacao,
+        adultos,
+        checkin,
+        checkout,
+        codigo,
+        cupomDesconto,
+        img,
+        noites,
+        quartoPreco,
+        servicos,
+        valorTotal,
+        id_usuario,
+    }
+
+    try {
+        const usuario = await reservasModel.cadastrarReserva(dados)
+        res.status(201).json({ dados })
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
+const myBookings = async (req, res) => {
+    const { id } = req.params
+    try {
+        const reservas = await reservasModel.myBookings(id)
+        res.status(200).json(reservas)
+    } catch (error) {
+        res.status(400).send({ message: 'Erro ao listar as reservas' })
+    }
+}
+const deleteMyBookings = async (req, res) => {
+    const { codigo } = req.params
+    try {
+        await reservasModel.deleteMyBookings(codigo)
+        res.status(200).send({ message: 'Deletado com sucesso!' })
+    } catch (error) {
+        res.status(400).send({ message: 'Erro ao deletar reserva' })
+    }
+}
+
 module.exports = {
     listarReservas,
     listarReserva,
     atualizarReserva,
     inativarReserva,
     arquivarReserva,
+    cadastrarReserva,
+    myBookings,
+    deleteMyBookings,
 }

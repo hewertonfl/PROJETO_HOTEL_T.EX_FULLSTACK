@@ -32,15 +32,15 @@
               <p><span>Checkout:</span> {{ item.checkout }}</p>
               <p><span>Noites:</span> {{ item.noites }}</p>
               <p><span>Pessoas:</span> {{ item.adultos }}</p>
-              <p><span>Preço Quarto:</span> {{ this.moeda(item.quartoPreco) }}</p>
+              <p><span>Preço Quarto:</span> {{ item.quartoPreco }}</p>
               <p>
                 <span>Serviços Adicionais:</span> 
                 <ul>
-                  <li v-for="servico in item.servicos" :key="servico.nome">✅ {{ servico.nome }} -
-                {{ this.moeda(servico.preco) }}</li>
+                  <li v-for="servico in JSON.parse(item.servicos)" :key="servico.nome">✅ {{ servico.nome }} -
+                {{ servico.preco }}</li>
                 </ul>
               </p>
-              <p class="total"><span>Total:</span> {{ this.moeda(item.valorTotal) }}</p>
+              <p class="total"><span>Total:</span> {{ item.valorTotal }}</p>
             </div>
           </div>
           <button type="button" @click="showModal = false">Sair</button>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "ComponenteDetalhes",
   props: ["codigo"],
@@ -61,22 +62,26 @@ export default {
     };
   },
   methods: {
-    obterDados(chave) {
-      const dados = localStorage.getItem(chave)
-        ? JSON.parse(localStorage.getItem(chave))
-        : null;
-      const detalhes = dados.filter((item) => item.codigo === this.codigo);
-      return detalhes;
-    },
     moeda(valor) {
       return valor.toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
       });
-    },    
+    },
+    async fillBookings() {
+            const id = JSON.parse(localStorage.getItem('token')).userID
+            console.log(id)
+            await axios
+                .get(`http://localhost:3000/api/reservas/mybookings/${id}`)
+                .then((res) => {
+                    this.reserva = res.data
+                    this.reserva = this.reserva.filter(element => element.codigo == this.codigo)
+                })
+                .catch((error) => console.log(error))
+        },   
   },
   mounted() {
-    this.reserva = this.obterDados("reserva");
+    this.fillBookings()
   },
 };
 </script>

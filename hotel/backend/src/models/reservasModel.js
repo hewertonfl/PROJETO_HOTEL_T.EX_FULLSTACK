@@ -6,7 +6,7 @@ const listarReservas = async () => {
     try {
         const conn = await conexao()
         const [rows] = await conn.query(
-            'SELECT r.id_reserva, r.checkin, r.checkout, r.confirmacao, r.data, r. dataconfirmacao, r.qtdpessoas, r.total, r.totaldesconto , r.id_usuario, r.id_quarto, u.nome, u.sobrenome, a.tipo, a.preco, q.status, q.numero, q.id_acomodacao FROM hotel_recanto.reserva r INNER JOIN usuario u ON r.id_usuario = u.id_usuario INNER JOIN quarto q ON r.id_quarto = q.id_quarto INNER JOIN acomodacao a ON q.id_acomodacao = a.id_acomodacao ORDER BY id_reserva desc'
+            'SELECT * FROM hotel_recanto.reserva_teste r INNER JOIN usuario u ON r.id_usuario = u.id_usuario INNER JOIN quarto q ON r.id_quarto = q.id_quarto INNER JOIN acomodacao a ON q.id_acomodacao = a.id_acomodacao ORDER BY id_reserva desc'
         )
         conn.end()
         return rows
@@ -107,31 +107,58 @@ const arquivarReserva = async (id) => {
 }
 
 const cadastrarReserva = async (data) => {
-    const checkin1 = moment(checkin).format('YYYY-MM-DD')
-    const checkout1 = moment(checkout).format('YYYY-MM-DD')
-    const data1 = moment(data).format('YYYY-MM-DD')
-    const dataconfirmacao1 = moment(dataconfirmacao).format('YYYY-MM-DD')
-    const data = [
-        checkin1,
-        checkout1,
-        qtdpessoas,
-        total,
-        totaldesconto,
-        data1,
-        confirmacao,
-        dataconfirmacao1,
-        idUsuario,
-        idQuarto,
+    const values = [
+        data.acomodacao,
+        data.adultos,
+        data.checkin,
+        data.checkout,
+        data.codigo,
+        data.cupomDesconto,
+        data.img,
+        data.noites,
+        data.quartoPreco,
+        data.servicos,
+        data.valorTotal,
+        data.id_usuario,
     ]
     try {
         const conn = await conexao()
         await conn.query(
-            `INSERT INTO hotel_recanto.reserva (checkin,checkout,qtdpessoas,total,totaldesconto,data,confirmacao,dataconfirmacao,id_usuario) values(?,?,?,?,?,?,?,?,?)`,
-            data
+            `INSERT INTO hotel_recanto.reserva_teste (acomodacao,adultos,checkin,checkout,codigo,cupomDesconto,img,noites,quartoPreco,servicos,valorTotal,id_usuario) values(?,?,?,?,?,?,?,?,?,?,?,?)`,
+            values
         )
         conn.end()
     } catch (error) {
-        console(error)
+        console.log(error)
+        return error
+    }
+}
+
+const myBookings = async (id) => {
+    try {
+        const conn = await conexao()
+        const [rows] = await conn.query(
+            'SELECT * FROM hotel_recanto.reserva_teste WHERE id_usuario = ?',
+            id
+        )
+        conn.end()
+        return rows
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
+const deleteMyBookings = async (codigoReserva) => {
+    try {
+        const conn = await conexao()
+        const [rows] = await conn.query(
+            'DELETE FROM hotel_recanto.reserva_teste WHERE codigo = ?',
+            codigoReserva
+        )
+        conn.end()
+    } catch (error) {
+        console.log(error)
         return error
     }
 }
@@ -142,4 +169,7 @@ module.exports = {
     atualizarReserva,
     inativarReserva,
     arquivarReserva,
+    cadastrarReserva,
+    myBookings,
+    deleteMyBookings,
 }

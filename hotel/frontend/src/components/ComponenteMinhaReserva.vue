@@ -14,7 +14,7 @@
             <td>{{ reserva.codigo }}</td>
             <td>
                 {{ reserva.acomodacao }} <br />
-                {{ this.moeda(reserva.quartoPreco) }}
+                {{ reserva.quartoPreco }}
             </td>
             <td>{{ reserva.adultos }}</td>
             <td>{{ reserva.checkin }}</td>
@@ -25,14 +25,14 @@
             <td>
                 <ul>
                     <li
-                        v-for="servicos in reserva.servicos"
+                        v-for="servicos in JSON.parse(reserva.servicos)"
                         :key="servicos.nome"
                     >
                         {{ servicos.nome }} - {{ this.moeda(servicos.preco) }}
                     </li>
                 </ul>
             </td>
-            <td>{{ this.moeda(reserva.valorTotal) }}</td>
+            <td>{{ reserva.valorTotal }}</td>
             <td>
                 <button
                     @click="this.excluirReserva(reserva.codigo)"
@@ -50,6 +50,7 @@
 
 <script>
 import ComponenteDetalhes from './ComponenteDetalhes.vue'
+import axios from 'axios'
 
 export default {
     name: 'ComponenteMinhaReserva',
@@ -62,24 +63,16 @@ export default {
         }
     },
     methods: {
-        obterDados(chave) {
-            const dados = localStorage.getItem(chave)
-                ? JSON.parse(localStorage.getItem(chave))
-                : null
-
-            return dados
-        },
-        excluirReserva(indice) {
+        async excluirReserva(codigoReserva) {
             const resposta = confirm(
                 'Tem certeza que deseja excluir essa reserva?'
             )
             if (resposta) {
-                this.salvar(
-                    'reserva',
-                    this.reservas.filter((item) => item.codigo !== indice)
+                await axios.delete(
+                    `http://localhost:3000/api/reservas/mybookings/delete/${codigoReserva}`
                 )
-                this.reservas = this.obterDados('reserva')
             }
+            this.fillBookings()
         },
         formatarDataBR(data) {
             const inData = Date(data)
@@ -99,10 +92,20 @@ export default {
                 currency: 'BRL',
             })
         },
+        async fillBookings() {
+            const id = JSON.parse(localStorage.getItem('token')).userID
+            console.log(id)
+            await axios
+                .get(`http://localhost:3000/api/reservas/mybookings/${id}`)
+                .then((res) => {
+                    this.reservas = res.data
+                    console.log(res)
+                })
+                .catch((error) => console.log(error))
+        },
     },
-    computed: {},
-    created() {
-        this.reservas = this.obterDados('reserva')
+    mounted() {
+        this.fillBookings()
     },
 }
 </script>
