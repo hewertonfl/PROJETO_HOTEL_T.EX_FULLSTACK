@@ -90,12 +90,11 @@ const cadastrarReserva = async (req, res) => {
     console.log(dados);
 
     const obj = {
-        codigo: dados.codigo,
         checkin: dados.checkin,
         checkout: dados.checkout,
         qtdpessoas: dados.qtdpessoas,
-        totalcomdesconto: dados.totalcomdesconto,
         total: dados.total,
+        totalcomdesconto: dados.totalcomdesconto ? dados.totalcomdesconto : dados.total,
         cupomDesconto: dados.cupomDesconto,
         totaldesconto: dados.cupomDesconto ? 10 : dados.totaldesconto,
         noites: dados.noites,

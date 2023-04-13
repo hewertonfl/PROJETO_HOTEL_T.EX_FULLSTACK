@@ -89,6 +89,20 @@ const inativarUsuario = async (id) => {
     }
 }
 
+const pesquisarUsuario = async (nome,sobrenome) => {
+    try {
+        const conn = await conexao()
+        const values = [nome, sobrenome]
+        const [rows] = await conn.query(
+            'SELECT * FROM usuario WHERE nome=? and sobrenome=?', values
+        )
+        console.log(rows);
+        return rows
+    } catch (error) {
+        return error
+    }
+}
+
 module.exports = {
     listarUsuarios,
     listarUsuario,
@@ -96,4 +110,5 @@ module.exports = {
     loginUsuario,
     inativarUsuario,
     atualizarUsuario,
+    pesquisarUsuario,
 }

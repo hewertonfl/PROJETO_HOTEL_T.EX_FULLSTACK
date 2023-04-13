@@ -2,13 +2,32 @@
     <form
         class="formulario"
         method="POST"
-        @submit.prevent="atualizarReserva(this.reservaID)"
     >
-        <label for="usuario" class="usuario"
-            >Cliente: <span>{{ nome }} {{ sobrenome }}</span></label
-        >
+        <label for="nome">Nome:</label>
+        <input
+            class="pesquisa-nome"
+            type="text"
+            v-model="nome"
+            name="nome"
+            id="nome-cliente"
+            placeholder="Nome"
+        />
+        <label for="sobrenome">Sobrenome:</label>
+        <input
+            class="pesquisa-sobrenome"
+            type="text"
+            v-model="sobrenome"
+            name="sobrenome"
+            id="sobrenome-cliente"
+            placeholder="Sobrenome"
+        />
+        <div v-if='!this.usuario'>
+        <button type='button' @click.prevent="filtrarNome(this.nome,this.sobrenome)">Pesquisar</button>
+        </div>
+
+        <div v-if='this.usuario'>
         <label for="tipo">Tipo:</label>
-        <select v-model="idAcomodacao" @change='filtrarNumero(idAcomodacao)'>
+        <select v-model="idAcomodacao" @change="filtrarNumero(idAcomodacao)">
             <option
                 v-for="acomodacao in acomodacoes"
                 :key="acomodacao.id"
@@ -18,10 +37,15 @@
             </option>
         </select>
         <label for="numero">Número do quarto:</label>
-        <select v-model="idQuarto" >
-            <option value='' selected disabled >Quarto atual: {{numero}}</option>
-            <option v-if="this.numerosQuartos == 0" value='' selected disabled >Tipo de acomodação sem quarto vago</option>
-            <option v-else
+        <select v-model="idQuarto">
+            <option value="" selected disabled>
+                Quarto atual: {{ numero }}
+            </option>
+            <option v-if="this.numerosQuartos == 0" value="" selected disabled>
+                Tipo de acomodação sem quarto vago
+            </option>
+            <option
+                v-else
                 v-for="quarto in numerosQuartos"
                 :key="quarto.id"
                 :value="quarto.id_quarto"
@@ -29,7 +53,7 @@
                 {{ quarto.numero }}
             </option>
         </select>
-            
+
         <!-- <input type="text" id="numero" v-model="numero" required /> -->
 
         <label for="checkin">Check-in:</label>
@@ -44,7 +68,7 @@
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
-        </select>   
+        </select>
 
         <label for="totaldesconto">Total de Desconto (%):</label>
         <input type="text" id="totaldesconto" v-model="desconto" />
@@ -56,10 +80,17 @@
             <option value="cancelado">Cancelado</option>
         </select>
         <label for="total">Total:</label>
-        <input type="text" id="total" v-model='total' disabled required /> 
+        <input type="text" id="total" v-model="total" disabled required />
         <label for="total">Total com desconto:</label>
-        <input type="text" id="total" v-model='totaldesconto' disabled required /> 
+        <input
+            type="text"
+            id="total"
+            v-model="totaldesconto"
+            disabled
+            required
+        />
         <button @click="this.atualizar">Editar Reserva</button>
+        </div>
     </form>
 </template>
 
@@ -87,7 +118,7 @@ export default {
             totaldesconto: null,
 
             //*Quarto
-            quartoPreco:null,
+            quartoPreco: null,
             quartos: null,
             quartosFiltrados: null,
             numerosQuartos: null,
@@ -102,6 +133,8 @@ export default {
             preco: null,
 
             //*Usuário
+            idUsuario: null,
+            usuario: null,
             nome: null,
             sobrenome: null,
         }
@@ -162,22 +195,24 @@ export default {
                 .get(`/api/acomodacoes/tipos/${id_acomodacao}`)
                 .then((response) => {
                     this.numerosQuartos = response.data
-            // this.total = this.calcularTotal(parseFloat(response.data[0].preco),this.qtdpessoas)
+                    // this.total = this.calcularTotal(parseFloat(response.data[0].preco),this.qtdpessoas)
                 })
                 .catch((error) => error)
-
         },
         async calcularTotal(idQuarto, totalPessoas) {
             // let quarto = null
             await axios
-            .get(`/api/acomodacoes/quartos/${idQuarto}`)
-            .then((response) => (this.quartoPreco = parseFloat(response.data[0].preco)))
-            if(totalPessoas <2) {
+                .get(`/api/acomodacoes/quartos/${idQuarto}`)
+                .then(
+                    (response) =>
+                        (this.quartoPreco = parseFloat(response.data[0].preco))
+                )
+            if (totalPessoas < 2) {
                 this.quartoPreco
             }
-            if(totalPessoas > 1) {
-            const preco = this.quartoPreco
-            this.quartoPreco = ((preco * 0.05)*totalPessoas) + preco
+            if (totalPessoas > 1) {
+                const preco = this.quartoPreco
+                this.quartoPreco = preco * 0.05 * totalPessoas + preco
             }
             const preco = this.quartoPreco
             this.totaldesconto = this.calcularDesconto(preco, this.desconto)
@@ -187,6 +222,14 @@ export default {
         calcularDesconto(total, desconto) {
             const calculo = total * (1 - desconto / 100)
             return calculo
+        },
+        async filtrarNome(nome,sobrenome) {
+            axios
+            .get(`/api/usuarios/pesquisar/${nome}/${sobrenome}`)
+            .then((response) => {
+                this.usuario = response.data
+                this.idUsuario = response.data[0].id_usuario
+            }).catch((error) => {error, this.usuario = null})
         },
         formatarData(data) {
             let formatarData = data.split('T')
@@ -202,7 +245,7 @@ export default {
     },
     updated() {
         console.log(this.idQuarto)
-        this.calcularTotal(this.idQuarto,this.qtdpessoas)
+        this.calcularTotal(this.idQuarto, this.qtdpessoas)
     },
     mounted() {
         this.reservaID = this.$route.params.id
@@ -210,7 +253,7 @@ export default {
         axios
             .get('/api/acomodacoes')
             .then((response) => (this.acomodacoes = response.data))
-            axios
+        axios
             .get('/api/acomodacoes/quartos')
             .then((response) => (this.quartos = response.data))
     },
@@ -219,7 +262,7 @@ export default {
 
 <style scoped>
 option[default] {
-  display: none;
+    display: none;
 }
 .formulario {
     width: 50%;

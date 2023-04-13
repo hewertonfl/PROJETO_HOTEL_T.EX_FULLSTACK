@@ -233,20 +233,34 @@ export default {
                 return this.total()
             }
         },
+        async carregarAcomodacoes() {
+            await axios
+                .get('/api/acomodacoes')
+                .then((response) => console.log(response.data))
+                .catch((erro) => console.log(erro))
+        },
         filtrarIdAcomodacao(tipoAcomodacao) {
-            const [...acomodacoesArray] = this.acomodacoes
-            const filtro = acomodacoesArray.filter(
-                (tipo) => tipo.tipo == tipoAcomodacao
-            )
-            const acomodacao = filtro
-            console.log(acomodacao[0].id_acomodacao)
             axios
-                .get(`/api/acomodacoes/tipos/${acomodacao[0].id_acomodacao}`)
+                .get('/api/acomodacoes')
                 .then((response) => {
-                    console.log(response.data[0].id_quarto)
-                    return (this.idQuarto = response.data[0].id_quarto)
+                    console.log(response.data)
+                    const [...acomodacoesArray] = response.data
+                    const filtro = acomodacoesArray.filter(
+                        (tipo) => tipo.tipo == tipoAcomodacao
+                    )
+                    const acomodacao = filtro
+                    console.log(acomodacao[0].id_acomodacao)
+                    axios
+                        .get(
+                            `/api/acomodacoes/tipos/${acomodacao[0].id_acomodacao}`
+                        )
+                        .then((response) => {
+                            console.log(response.data[0].id_quarto)
+                            return (this.idQuarto = response.data[0].id_quarto)
+                        })
+                        .catch((error) => error)
                 })
-                .catch((error) => error)
+                .catch((erro) => console.log(erro))
         },
         // filtrarNumero(id_acomodacao) {
 
@@ -285,7 +299,7 @@ export default {
         },
     },
     updated() {
-        // this.tipoAcomodacao = this.$store.getters.bookingData.acomodacao
+        console.log(this.$store.getters.bookingData.acomodacao)
         if (this.$store.getters.bookingData.acomodacao) {
             this.filtrarIdAcomodacao(this.$store.getters.bookingData.acomodacao)
         }
@@ -296,6 +310,8 @@ export default {
         } else {
             this.temCupom = true
         }
+        this.carregarAcomodacoes()
+        console.log(this.acomodacoes)
     },
     watch: {
         checkout(vl) {
@@ -304,9 +320,6 @@ export default {
         },
     },
     mounted() {
-        axios
-            .get('/api/acomodacoes')
-            .then((response) => (this.acomodacoes = response.data))
         // if (localStorage.getItem('cardContent')) {
         //     const cardContent = localStorage.getItem('cardContent')
         //     const cardContentparse = JSON.parse(cardContent)

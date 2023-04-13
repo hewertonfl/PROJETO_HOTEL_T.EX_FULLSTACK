@@ -124,56 +124,56 @@
                 </div>
             </div>
         </div>
-    </main>
+  </main>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
-    name: 'AdminReservaView',
-    data() {
-        return {
-            reservas: null,
-            checked: 'confirmados',
-            reservasFiltradas: null,
-        }
+  name: "AdminReservaView",
+  data() {
+    return {
+      reservas: null,
+      checked: "confirmados",
+      reservasFiltradas: null,
+    };
+  },
+  methods: {
+    // carregarDadosQuartos(id_acomodacao) {
+    //     let nomeQuarto
+    //     try {
+    //         const filtro = this.acomodacoes.filter(
+    //             (quarto) => quarto.id_acomodacao == id_acomodacao
+    //         )
+    //         nomeQuarto = filtro[0].tipo
+    //         return nomeQuarto
+    //     } catch (erro) {
+    //         console.log(erro)
+    //     }
+    // },
+    // carregarDadosUsuario(id_usuario) {
+    //     let nomeUsuario
+    //     try {
+    //         const filtro = this.usuarios.filter(
+    //             (usuario) => usuario.id_usuario == id_usuario
+    //         )
+    //         nomeUsuario = filtro[0].nome + " " + filtro[0].sobrenome
+    //         console.log(nomeUsuario);
+    //         return nomeUsuario
+    //     } catch (erro) {
+    //         console.log(erro)
+    //     }
+    // },
+    async carregarDados() {
+      await axios
+        .get("/api/reservas", {
+          withCredentials: true,
+        })
+        .then((response) => (this.reservas = response.data));
+      this.itensFiltrados();
     },
-    methods: {
-        // carregarDadosQuartos(id_acomodacao) {
-        //     let nomeQuarto
-        //     try {
-        //         const filtro = this.acomodacoes.filter(
-        //             (quarto) => quarto.id_acomodacao == id_acomodacao
-        //         )
-        //         nomeQuarto = filtro[0].tipo
-        //         return nomeQuarto
-        //     } catch (erro) {
-        //         console.log(erro)
-        //     }
-        // },
-        // carregarDadosUsuario(id_usuario) {
-        //     let nomeUsuario
-        //     try {
-        //         const filtro = this.usuarios.filter(
-        //             (usuario) => usuario.id_usuario == id_usuario
-        //         )
-        //         nomeUsuario = filtro[0].nome + " " + filtro[0].sobrenome
-        //         console.log(nomeUsuario);
-        //         return nomeUsuario
-        //     } catch (erro) {
-        //         console.log(erro)
-        //     }
-        // },
-        async carregarDados() {
-            await axios
-                .get('/api/reservas', {
-                    withCredentials: true,
-                })
-                .then((response) => (this.reservas = response.data))
-            this.itensFiltrados()
-        },
-        itensFiltrados() {
-            const [...reservasArray] = this.reservas
+    itensFiltrados() {
+      const [...reservasArray] = this.reservas;
 
            if (this.checked === 'confirmados') {
                 const filtro = reservasArray.filter(
@@ -203,116 +203,141 @@ export default {
             return formatarData
         },
 
-        formatarMoeda(valor) {
-            const moeda = valor.toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-            })
-            return moeda
-        },
-        calcularDesconto(total, desconto) {
-            const calculo = total * (1 - desconto / 100)
-            return calculo
-        },
-        inativarReserva(id) {
-            if (confirm('Tem certeza que deseja cancelar essa reserva?')) {
-                axios.delete(`/api/reservas/${id}`).then((response) => {
-                    alert(response.data.message)
-                })
-                this.$router.push('/admin/reservas')
-            }
-        },
-        arquivarReserva(id) {
-            if (confirm('Tem certeza que deseja arquivar essa reserva?')) {
-                axios.patch(`/api/reservas/arquivar/${id}`).then((response) => {
-                    alert(response.data.message)
-                })
-                this.$router.push('/admin/reservas')
-            }
-        },
+    formatarMoeda(valor) {
+      const moeda = valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
+      return moeda;
     },
-    mounted() {
-       this.carregarDados()
+    calcularDesconto(total, desconto) {
+      const calculo = total * (1 - desconto / 100);
+      return calculo;
     },
-}
+    inativarReserva(id) {
+      if (confirm("Tem certeza que deseja cancelar essa reserva?")) {
+        axios.delete(`/api/reservas/${id}`).then((response) => {
+          alert(response.data.message);
+        });
+        this.$router.push("/admin/reservas");
+      }
+    },
+    arquivarReserva(id) {
+      if (confirm("Tem certeza que deseja arquivar essa reserva?")) {
+        axios.patch(`/api/reservas/arquivar/${id}`).then((response) => {
+          alert(response.data.message);
+        });
+        this.$router.push("/admin/reservas");
+      }
+    },
+  },
+  mounted() {
+    this.carregarDados();
+  },
+};
 </script>
 
 <style lang="scss" scoped>
+fieldset {
+  border: #a35700 2px solid;
+  padding: 2px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+legend {
+  font-weight: bold;
+  color: #063f57;
+  padding: 0 5px;
+}
 .titulo-form-contato {
-    div {
-            color: black;
-            margin-top: 12px;
-            input {
-            margin-left: 5px;}
-        }
+  div {
+    color: black;
+    margin-top: 12px;
+    input {
+      margin-left: 5px;
     }
+  }
+}
 .header {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
 }
 .destaque1 {
-    border-block: solid 1px black;
-    align-items: flex-start;
-    font-weight: bold;
-    margin-bottom: 10px;
-    flex-basis: 300px;
+  border-block: solid 1px black;
+  align-items: flex-start;
+  font-weight: bold;
+  margin-bottom: 10px;
+  flex-basis: 300px;
 }
 .destaque2 {
-    border-block: solid 1px rgb(0, 0, 0);
-    background: rgba(6, 62, 86, 0.1);
-    align-items: flex-start;
-    font-weight: bold;
+  border-block: solid 1px rgb(0, 0, 0);
+  background: rgba(6, 62, 86, 0.1);
+  align-items: flex-start;
+  font-weight: bold;
 }
 .box-reservas {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .box-reservas .cada-box {
-    width: 300px;
-    height: 320px;
-    padding: 10px;
-    display: flex;
-    background: #063f5710;
-    flex-wrap: wrap;
-    align-content: space-between;
-    justify-content: flex-start;
+  width: 300px;
+  height: 320px;
+  padding: 10px;
+  display: flex;
+  background: #063f5710;
+  flex-wrap: wrap;
+  align-content: space-between;
+  justify-content: flex-start;
 }
 
 .cada-box ul li {
-    display: block;
-    width: 280px;
+  display: block;
+  width: 280px;
 }
 
 .box-reservas span {
-    color: #a35700;
-    font-weight: bold;
+  color: #a35700;
+  font-weight: bold;
 }
 
 .button {
-    background: #063f57;
-    padding: 5px 10px;
-    color: #ffffff;
-    border: none;
-    margin: 10px 7px 0 0;
-    cursor: pointer;
+  background: #063f57;
+  padding: 5px 10px;
+  color: #ffffff;
+  border: none;
+  margin: 10px 7px 0 0;
+  cursor: pointer;
 }
 .btn-cancelar {
-    background-color: #831515;
+  background-color: #831515;
 }
 
 .button:hover {
-    background: #a35700;
+  background: #a35700;
 }
 
 .cadastro {
-    display: block;
-    margin: 0 auto;
-    padding: 10px 20px;
-    margin-bottom: 40px;
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  margin-bottom: 40px;
+}
+@media (max-width: 417px) and (orientation: portrait) {
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  fieldset{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 </style>

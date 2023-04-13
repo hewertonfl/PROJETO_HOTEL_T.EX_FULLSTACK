@@ -23,13 +23,16 @@
                 {{ reserva.noites }}
             </td>
             <td>
-                <ul>
-                    <li
+                <ul v-if="JSON.parse(reserva.servicos).length">
+                    <li 
                         v-for="servicos in JSON.parse(reserva.servicos)"
                         :key="servicos.nome"
                     >
                         {{ servicos.nome }} - {{ this.moeda(servicos.preco) }}
                     </li>
+                </ul>
+                <ul v-else>
+                    <li>Nenhum serviço adicionado</li>
                 </ul>
             </td>
             <td>{{ moeda(parseFloat(reserva.totalcomdesconto)) }}</td>

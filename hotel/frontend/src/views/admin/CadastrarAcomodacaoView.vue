@@ -27,8 +27,8 @@
 
         <label for="status">Status:</label>
         <select v-model="status" id="status">
-            <option value="Livre">Livre</option>
-            <option value="Ocupado">Ocupado</option>
+            <option value="livre">Livre</option>
+            <option value="ocupado">Ocupado</option>
         </select>
 
         <button>Cadastrar Acomodação</button>

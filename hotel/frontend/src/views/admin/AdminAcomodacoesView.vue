@@ -1,55 +1,61 @@
 <template>
-    <main class="container-contato">
-        <div class="header">
-            <h2 class="titulo-form-contato">Lista de Quartos</h2>
-            <div class="filtro">
-                <input
-                    @click="carregarDados()"
-                    type="radio"
-                    v-model="checked"
-                    name="status"
-                    value="livre"
-                    id="livre"
-                />
-                Livre
-                <input
-                    @click="carregarDados()"
-                    type="radio"
-                    v-model="checked"
-                    name="status"
-                    value="ocupado"
-                    id="ocupado"
-                />
-                Ocupado
-            </div>
-            <div class="filtro">
-                <label for="tipo">Tipo:</label>
-                <select v-model="quartoTipo" @change="filtrarTipos(quartoTipo)">
-                    <option
-                        v-for="acomodacao in acomodacoes"
-                        :key="acomodacao.id"
-                    >
-                        {{ acomodacao.tipo }}
-                    </option>
-                </select>
-            </div>
-            <div class="filtro pesquisa">
-                <input
-                    type="text"
-                    v-model="numero"
-                    name="numero"
-                    id="numero-quarto"
-                    placeholder="Nº do quarto"
-                />
-                <button @click="filtrarNumero()">Pesquisar</button>
-            </div>
-            <router-link
-                :to="{ path: '/admin/cadastrar-acomodacao' }"
-                class="button"
-                >Cadastrar Quarto</router-link
-            >
-        </div>
-
+  <main class="container-contato">
+    <div class="header">
+      <h2 class="titulo-form-contato">Lista de Quartos</h2>
+      <div class="filtro">
+        <fieldset>
+          <legend>Status</legend>
+          <input
+            @click="carregarDados()"
+            type="radio"
+            v-model="checked"
+            name="status"
+            value="livre"
+            id="livre"
+            class="status"
+          />
+          <div class="status">Livre</div>
+          <input
+            @click="carregarDados()"
+            type="radio"
+            v-model="checked"
+            name="status"
+            value="ocupado"
+            id="ocupado"
+            class="status"
+          />
+          <div class="status">Ocupado</div>
+        </fieldset>
+      </div>
+      <div class="filtro">
+        <fieldset>
+          <legend>Tipo</legend>
+          <select v-model="quartoTipo" @change="filtrarTipos(quartoTipo)">
+            <option v-for="acomodacao in acomodacoes" :key="acomodacao.id">
+              {{ acomodacao.tipo }}
+            </option>
+          </select>
+        </fieldset>
+      </div>
+      <div class="filtro pesquisa">
+        <fieldset>
+          <legend>Número do Quarto</legend>
+          <input
+            class="pesquisa-numero"
+            type="text"
+            v-model="numero"
+            name="numero"
+            id="numero-quarto"
+            placeholder="Nº do quarto"
+          />
+          <button @click="filtrarNumero()">Pesquisar</button>
+        </fieldset>
+      </div>
+      <router-link :to="{ path: '/admin/cadastrar-acomodacao' }" class="button"
+        >Cadastrar Quarto</router-link
+      >
+    </div>
+    
         <div
             class="box-usuario"
             v-if="!quartosFiltrados && !numero && !checked && !quartoTipo"
@@ -113,33 +119,33 @@
 
 <script>
 // import api from '../../services/api'
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-    name: 'AdminUsuariosView',
-    data() {
-        return {
-            quartos: null,
-            acomodacoes: null,
-            checked: null,
-            quartoTipo: null,
-            numero: null,
-            quartosFiltrados: null,
-            vazio: 0,
-            // tiposFiltrados: null,
-        }
+  name: "AdminUsuariosView",
+  data() {
+    return {
+      quartos: null,
+      acomodacoes: null,
+      checked: null,
+      quartoTipo: null,
+      numero: null,
+      quartosFiltrados: null,
+      vazio: 0,
+      // tiposFiltrados: null,
+    };
+  },
+  methods: {
+    async carregarDados() {
+      await axios
+        .get("/api/acomodacoes/quartos", {
+          withCredentials: true,
+        })
+        .then((response) => (this.quartos = response.data));
+      this.itensFiltrados();
     },
-    methods: {
-        async carregarDados() {
-            await axios
-                .get('/api/acomodacoes/quartos', {
-                    withCredentials: true,
-                })
-                .then((response) => (this.quartos = response.data))
-            this.itensFiltrados()
-        },
-        itensFiltrados() {
-            const [...quartosArray] = this.quartos
+    itensFiltrados() {
+      const [...quartosArray] = this.quartos;
 
             if (this.checked === 'livre') {
                 const filtro = quartosArray.filter(
@@ -196,74 +202,121 @@ export default {
             return moeda
         },
     },
-    mounted() {
-        axios
-            .get('/api/acomodacoes')
-            .then((response) => (this.acomodacoes = response.data))
-        this.carregarDados()
-    },
-}
+  mounted() {
+    axios
+      .get("/api/acomodacoes")
+      .then((response) => (this.acomodacoes = response.data));
+    this.carregarDados();
+  },
+};
 </script>
 
 <style lang="scss" scoped>
+fieldset {
+  border: #a35700 2px solid;
+  padding: 2px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  select {
+    margin-bottom: 10px;
+  }
+  .status {
+    margin-bottom: 10px;
+  }
+  input[type=text]{
+      height: 27px;
+      margin-bottom: 10px;
+    }
+}
+legend {
+  font-weight: bold;
+  color: #063f57;
+  padding: 0 5px;
+}
 .header {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 .bold {
-    font-weight: bold;
+  font-weight: bold;
 }
 .filtro {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-    gap: 3px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 3px;
+}
+.pesquisa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  button{
+    margin-bottom: 10px;
+  }
 }
 .pesquisa ::placeholder {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 .box-usuario {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .box-usuario div {
-    width: 300px;
-    padding: 10px;
-    display: flex;
-    background: #063f5710;
+  width: 300px;
+  padding: 10px;
+  display: flex;
+  background: #063f5710;
 }
 
 .box-usuario li span {
-    color: #a35700;
-    font-weight: bold;
+  color: #a35700;
+  font-weight: bold;
 }
 
 .imagem img {
-    width: 100%;
+  width: 100%;
 }
 
 .button {
-    background: #063f57;
-    padding: 5px 10px;
-    color: #ffffff;
-    border: none;
-    margin: 10px 7px 30px 0;
-    cursor: pointer;
+  background: #063f57;
+  padding: 5px 10px;
+  color: #ffffff;
+  border: none;
+  margin: 10px 7px 30px 0;
+  cursor: pointer;
 }
 
 .button:hover {
-    background: #a35700;
+  background: #a35700;
 }
 
 .cadastro {
-    display: block;
-    margin: 0 auto;
-    padding: 10px 20px;
-    margin-bottom: 40px;
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  margin-bottom: 40px;
+}
+@media (max-width: 417px) and (orientation: portrait) {
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h2 {
+      margin-bottom: 10px;
+    }
+    .button {
+      margin-bottom: 15px;
+    }
+    fieldset {
+      margin: 0px;
+    }
+    
+  }
 }
 </style>

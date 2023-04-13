@@ -111,6 +111,7 @@ const cadastrarReserva = async (data) => {
             const checkout1 = moment(data.checkout).format('YYYY-MM-DD')
             const data1 = moment(data.data).format('YYYY-MM-DD')
             const confirmacao = 'confirmado'
+            const idQuarto1 = data.idQuarto
     const values = [
         checkin1,
         checkout1,
@@ -124,13 +125,16 @@ const cadastrarReserva = async (data) => {
         confirmacao,
         data1,
         data.idUsuario,
-        data.idQuarto
+        idQuarto1
     ]
     try {
         const conn = await conexao()
         await conn.query(
-            `INSERT INTO hotel_recanto.reserva (codigo,checkin,checkout,qtdpessoas,total,totalcomdesconto,cupomDesconto,totaldesconto,noites,servicos,confirmacao,data,id_usuario,id_quarto) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+            `INSERT INTO hotel_recanto.reserva (checkin,checkout,qtdpessoas,total,totalcomdesconto,cupomDesconto,totaldesconto,noites,servicos,confirmacao,data,id_usuario,id_quarto) values (?,?,?,?,?,?,?,?,?,?,?,?,?)`,
             values
+        )
+        await conn.query(
+            `UPDATE quarto SET status='ocupado' WHERE id_quarto=${idQuarto1}`
         )
         conn.end()
     } catch (error) {

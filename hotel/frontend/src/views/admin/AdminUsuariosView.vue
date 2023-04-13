@@ -257,4 +257,17 @@ legend {
     padding: 10px 20px;
     margin-bottom: 40px;
 }
+@media (max-width: 417px) and (orientation: portrait) {
+    .header{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .button{
+        margin-bottom: 15px;
+    }
+    fieldset{
+        margin-top: 10px;
+    }
+}
 </style>
