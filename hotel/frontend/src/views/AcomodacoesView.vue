@@ -46,25 +46,37 @@
             </article>
 
             <div class="acomodacoes-imagens display-f justify-c align-c">
-                <ComponeteCard :quartos='this.quartos' />
+                <ComponeteCard />
             </div>
         </div>
     </section>
 </template>
 
 <script>
-import api from './../services/api.js'
-
-import ComponeteCard from './../components/ComponeteCard.vue'
+import axios from 'axios'
+import ComponeteCard from '../components/ComponeteCard.vue'
 export default {
     name: 'CardTemplate',
     components: {
         ComponeteCard,
     },
-    data(){
-        return{
-            quartos: null
-        }
+    methods: {
+        roomFill() {
+            axios.get('/api/acomodacoes').then((response) => {
+                //this.quartos = response.data
+                let cardContent = []
+                response.data.forEach((element) => {
+                    let room = {}
+                    room['id'] = element['id_acomodacao']
+                    room['img'] = element['imagem']
+                    room['title'] = element['tipo']
+                    room['description'] = element['descricao']
+                    room['price'] = element['preco']
+                    cardContent.push(room)
+                })
+                this.$store.commit('storeCardContent', cardContent)
+            })
+        },
     },
     beforeMount() {
         if (localStorage.getItem('cardContent')) {
@@ -77,11 +89,8 @@ export default {
                 : (this.$store.state.contador = 0)
         }
     },
-    mounted(){
-    api.get('/api/acomodacoes').then(response => {
-        this.quartos = response.data
-        console.log(this.quartos);
-    })
-    }
+    mounted() {
+        this.roomFill()
+    },
 }
 </script>

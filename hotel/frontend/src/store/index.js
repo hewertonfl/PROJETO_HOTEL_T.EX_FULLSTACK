@@ -3,21 +3,21 @@ import { createStore } from 'vuex'
 export default createStore({
     state: {
         usuario: {},
-          // Conteudo dos cards da página reservar
+        // Conteudo dos cards da página reservar
         cardContent: [],
 
         // Dados da Reserva
         dadosReserva: {
             checkin: '',
             checkout: '',
-            adultos: '',
+            qtdpessoas: '',
             acomodacao: '',
             noites: '',
             servicos: [],
             quartoPreco: '',
             cupomDesconto: '',
             img: '',
-            valorTotal: '',
+            total: '',
         },
 
         modalProperties: {
@@ -46,7 +46,7 @@ export default createStore({
     },
     mutations: {
         // Atribuir usuário
-        setUser(state, payload){
+        setUser(state, payload) {
             state.usuario = payload
         },
 
@@ -82,7 +82,7 @@ export default createStore({
             state.dadosReserva.checkout = data
         },
         storeAdultos(state, data) {
-            state.dadosReserva.adultos = data
+            state.dadosReserva.qtdpessoas = data
         },
         storeAcomodacao(state, data) {
             state.dadosReserva.acomodacao = data
@@ -94,7 +94,7 @@ export default createStore({
             state.dadosReserva.servicos = data
         },
         storeValorTotal(state, data) {
-            state.dadosReserva.valorTotal = data
+            state.dadosReserva.total = data
         },
         storeCupomDesconto(state, data) {
             state.dadosReserva.cupomDesconto = data

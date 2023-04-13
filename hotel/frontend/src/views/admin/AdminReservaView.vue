@@ -14,7 +14,7 @@
                     id="confirmados"
                 />
                 Confirmados
-                <input
+                <!-- <input
                     @click="carregarDados()"
                     type="radio"
                     v-model="checked"
@@ -22,7 +22,7 @@
                     value="aguardando"
                     id="aguardando"
                 />
-                Aguardando
+                Aguardando -->
                 <input
                     @click="carregarDados()"
                     type="radio"
@@ -83,10 +83,6 @@
                         <li>
                             <span>Data da reserva:</span>
                             {{ this.formatarData(reserva.data) }}
-                        </li>
-                        <li v-if="reserva.confirmacao == 'confirmado'">
-                            <span>Data da confirmação:</span>
-                            {{ this.formatarData(reserva.dataconfirmacao) }}
                         </li>
                         <li class="destaque2">
                             <span>Total:</span>
@@ -184,11 +180,11 @@ export default {
                     (status) => status.confirmacao == 'confirmado'
                 )
                 this.reservasFiltradas = filtro
-            } else if (this.checked === 'aguardando') {
-                const filtro = reservasArray.filter(
-                    (status) => status.confirmacao == 'aguardando'
-                )
-                this.reservasFiltradas = filtro
+            // } else if (this.checked === 'aguardando') {
+            //     const filtro = reservasArray.filter(
+            //         (status) => status.confirmacao == 'aguardando'
+            //     )
+            //     this.reservasFiltradas = filtro
             } else if (this.checked === 'arquivados') {
                 const filtro = reservasArray.filter(
                     (status) => status.confirmacao == 'arquivado'

@@ -11,38 +11,38 @@
             <th>Total</th>
         </tr>
         <tr v-for="(reserva, i) in reservas" :key="i">
-            <td>{{ reserva.codigo }}</td>
+            <td>{{ reserva.id_reserva }}</td>
             <td>
-                {{ reserva.acomodacao }} <br />
-                {{ this.moeda(reserva.quartoPreco) }}
+                {{ reserva.tipo }} <br />
+                {{ moeda(parseFloat(reserva.preco)) }}
             </td>
-            <td>{{ reserva.adultos }}</td>
-            <td>{{ reserva.checkin }}</td>
-            <td>{{ reserva.checkout }}</td>
+            <td>{{ reserva.qtdpessoas }}</td>
+            <td>{{ formatarData(reserva.checkin) }}</td>
+            <td>{{ formatarData(reserva.checkout) }}</td>
             <td>
                 {{ reserva.noites }}
             </td>
             <td>
                 <ul>
                     <li
-                        v-for="servicos in reserva.servicos"
+                        v-for="servicos in JSON.parse(reserva.servicos)"
                         :key="servicos.nome"
                     >
                         {{ servicos.nome }} - {{ this.moeda(servicos.preco) }}
                     </li>
                 </ul>
             </td>
-            <td>{{ this.moeda(reserva.valorTotal) }}</td>
+            <td>{{ moeda(parseFloat(reserva.totalcomdesconto)) }}</td>
             <td>
                 <button
-                    @click="this.excluirReserva(reserva.codigo)"
+                    @click="this.excluirReserva(reserva.id_reserva)"
                     class="excluir"
                     type="button"
                     title="Excluir Reserva"
                 >
                     Excluir Reserva
                 </button>
-                <ComponenteDetalhes :codigo="reserva.codigo" />
+                <ComponenteDetalhes :codigo="reserva.id_reserva" />
             </td>
         </tr>
     </table>
@@ -50,6 +50,7 @@
 
 <script>
 import ComponenteDetalhes from './ComponenteDetalhes.vue'
+import axios from 'axios'
 
 export default {
     name: 'ComponenteMinhaReserva',
@@ -62,33 +63,16 @@ export default {
         }
     },
     methods: {
-        obterDados(chave) {
-            const dados = localStorage.getItem(chave)
-                ? JSON.parse(localStorage.getItem(chave))
-                : null
-
-            return dados
-        },
-        excluirReserva(indice) {
+        async excluirReserva(id) {
             const resposta = confirm(
                 'Tem certeza que deseja excluir essa reserva?'
             )
             if (resposta) {
-                this.salvar(
-                    'reserva',
-                    this.reservas.filter((item) => item.codigo !== indice)
+                await axios.delete(
+                    `/api/reservas/${id}`
                 )
-                this.reservas = this.obterDados('reserva')
             }
-        },
-        formatarDataBR(data) {
-            const inData = Date(data)
-
-            const dia = inData.getDate()
-            const mes = inData.getMounth()
-            const ano = inData.getFullYear()
-
-            return `${dia}-${mes}-${ano}`
+            this.fillBookings()
         },
         salvar(chave, valor) {
             localStorage.setItem(chave, JSON.stringify(valor))
@@ -99,10 +83,25 @@ export default {
                 currency: 'BRL',
             })
         },
+        formatarData(data) {
+            const dataS = new Date(data)
+            var formatarData = dataS.toLocaleDateString('pt-BR')
+            return formatarData
+        },
+        async fillBookings() {
+            const id = JSON.parse(localStorage.getItem('token')).userID
+            console.log(id)
+            await axios
+                .get(`/api/reservas/mybookings/${id}`)
+                .then((res) => {
+                    this.reservas = res.data
+                    console.log(res)
+                })
+                .catch((error) => console.log(error))
+        },
     },
-    computed: {},
-    created() {
-        this.reservas = this.obterDados('reserva')
+    mounted() {
+        this.fillBookings()
     },
 }
 </script>

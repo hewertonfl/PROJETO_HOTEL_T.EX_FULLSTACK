@@ -128,12 +128,43 @@ const atualizarAcomodacao = async (req, res) => {
     }
 }
 
+const atualizarQuarto = async (req, res) => {
+    const { id } = req.params
+    const quarto = await acomodacoesModel.listarQuarto(id)
+    const dados = req.body
+
+    const obj = {
+        numero: dados.numero ? dados.numero : quarto[0].numero,
+        idAcomodacao: dados.idAcomodacao ? dados.idAcomodacao : quarto[0].id_acomodacao,
+        status: dados.status ? dados.status : quarto[0].status,
+    }
+    try {
+        const rows = await acomodacoesModel.atualizarQuarto(id, obj)
+        return res.status(200).json({ message: `Item atualizado com sucesso!` })
+    } catch (error) {
+        return error
+    }
+}
+
+
 const removerAcomodacao = async (req, res) => {
     const {id} = req.params
 
     try {
         const [rows] = await acomodacoesModel.removerAcomodacao(id)
         return res.status(200).json({message: `Acomodação removida com sucesso!`})
+    } catch (error) {
+        return error
+    }
+}
+
+const removerQuarto = (req, res) => {
+    const { id } = req.params
+    try {
+        const rows = acomodacoesModel.removerQuarto(id)
+        return res
+            .status(200)
+            .json({ message: `Quarto removido com sucesso!` })
     } catch (error) {
         return error
     }
@@ -148,5 +179,7 @@ module.exports = {
     cadastrarAcomodacao,
     cadastrarQuarto,
     atualizarAcomodacao,
-    removerAcomodacao
+    atualizarQuarto,
+    removerAcomodacao,
+    removerQuarto,
 }

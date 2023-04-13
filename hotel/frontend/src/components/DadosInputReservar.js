@@ -15,9 +15,9 @@ export const DadosInputReservar = {
         name: 'N° de pessoas',
         id: 'adultos',
         type: 'number',
-        min: '0',
+        min: '1',
         max: '4',
-        placeholder: 0,
+        placeholder: 1,
         legenda: 'N° de pessoas',
     },
 }

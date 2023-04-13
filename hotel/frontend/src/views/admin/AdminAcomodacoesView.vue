@@ -60,15 +60,20 @@
                         <span>Número:</span> {{ quarto.numero }}
                     </li>
                     <li><span>Tipo:</span> {{ quarto.tipo }}</li>
-                    <li><span>Preço:</span> {{ formatarMoeda(parseFloat(quarto.preco)) }}</li>
+                    <li>
+                        <span>Preço:</span>
+                        {{ formatarMoeda(parseFloat(quarto.preco)) }}
+                    </li>
                     <li><span>Status:</span> {{ quarto.status }}</li>
                     <li>
                         <router-link
-                            :to="{ path: '/admin/editar-acomodacao' }"
+                            :to="{
+                                path: `/admin/editar-acomodacao/${quarto.id_quarto}`,
+                            }"
                             class="button"
                             >Editar</router-link
                         >
-                        <button class="button">Remover</button>
+                        <button @click="this.deletarQuarto(quarto.id_quarto)" class="button">Remover</button>
                     </li>
                 </ul>
             </div>
@@ -80,15 +85,25 @@
                         <span>Número:</span> {{ quarto.numero }}
                     </li>
                     <li><span>Tipo:</span> {{ quarto.tipo }}</li>
-                    <li><span>Preço:</span> {{ formatarMoeda(parseFloat(quarto.preco)) }}</li>
+                    <li>
+                        <span>Preço:</span>
+                        {{ formatarMoeda(parseFloat(quarto.preco)) }}
+                    </li>
                     <li><span>Status:</span> {{ quarto.status }}</li>
                     <li>
                         <router-link
-                            :to="{ path: '/admin/editar-acomodacao' }"
+                            :to="{
+                                path: `/admin/editar-acomodacao/${quarto.id_quarto}`,
+                            }"
                             class="button"
                             >Editar</router-link
                         >
-                        <button class="button">Remover</button>
+                        <button
+                            @click="this.deletarQuarto(quarto.id_quarto)"
+                            class="button"
+                        >
+                            Remover
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -131,15 +146,15 @@ export default {
                     (status) => status.status == 'livre'
                 )
                 this.quartosFiltrados = filtro
-                    this.quartoTipo = null
-                    this.numero = null
+                this.quartoTipo = null
+                this.numero = null
             } else if (this.checked === 'ocupado') {
                 const filtro = quartosArray.filter(
                     (status) => status.status == 'ocupado'
                 )
                 this.quartosFiltrados = filtro
                 this.quartoTipo = null
-                    this.numero = null
+                this.numero = null
             }
         },
         filtrarTipos(quartoTipo) {
@@ -149,7 +164,7 @@ export default {
             )
             this.quartosFiltrados = filtro
             this.checked = null
-                    this.numero = null
+            this.numero = null
         },
         filtrarNumero() {
             if (this.numero) {
@@ -160,9 +175,17 @@ export default {
                 this.quartosFiltrados = filtro
                 this.vazio = 1
                 this.quartoTipo = null
-                    this.checked = null
+                this.checked = null
             } else {
                 this.$router.go()
+            }
+        },
+        deletarQuarto(id) {
+            if (confirm('Tem certeza que deseja excluir este quarto?')) {
+                axios.delete(`/api/acomodacoes/quartos/${id}`).then((response) => {
+                    alert(response.data.message)
+                })
+                this.$router.push('/admin/acomodacoes')
             }
         },
         formatarMoeda(valor) {

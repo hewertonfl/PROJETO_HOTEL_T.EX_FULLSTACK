@@ -17,17 +17,16 @@ const listarUsuario = async (req, res) => {
     try {
         const usuario = await usuariosModel.listarUsuario(id)
         return res.status(200).json(usuario)
-
     } catch (error) {
         return error
     }
 }
 
 const cadastrarUsuario = async (req, res) => {
-    const {nome, sobrenome, email, nivel, status, senha} = req.body
+    const { nome, sobrenome, email, nivel, status, senha } = req.body
 
-    if(!nome || !sobrenome || !email || !nivel || !status || !senha){
-        return res.status(400).json({message: 'Preencha todos os campos.'})
+    if (!nome || !sobrenome || !email || !nivel || !status || !senha) {
+        return res.status(400).json({ message: 'Preencha todos os campos.' })
     }
 
     const hash = await bcrypt.hash(senha, 10)
@@ -55,9 +54,10 @@ const loginUsuario = async (req, res) => {
     const { email, senha } = req.body
     const usuario = await usuariosModel.listarUsuarios(email)
     const user = usuario.find((user) => user.email === email)
-    const nome = (user.nome)
+    const nome = user.nome
     const sobrenome = user.sobrenome
-    const nivel = (user.nivel)
+    const nivel = user.nivel
+    const id = user.id_usuario
 
     if (!user) {
         return res.status(400).json({ message: 'Usuário não encontrado.' })
@@ -71,8 +71,15 @@ const loginUsuario = async (req, res) => {
                 sessionUser.userNome = nome
                 sessionUser.userSobrenome = sobrenome
                 sessionUser.userNivel = nivel
+                sessionUser.userID = id
                 // redirecionar
-                return res.status(200).json({ message: 'Logado com sucesso!', ativo: true, session: sessionUser })
+                return res
+                    .status(200)
+                    .json({
+                        message: 'Logado com sucesso!',
+                        ativo: true,
+                        session: sessionUser,
+                    })
             }
             return res
                 .status(400)
@@ -91,55 +98,57 @@ const token = async (req, res) => {
 
 const session = async (req, res) => {
     if (req.body.session != req.session.token) {
-        return res
-            .status(500)
-            .send({
-                message: 'Os dados na sessão não conferem!',
-                ativo: false,
-            })
+        return res.status(500).send({
+            message: 'Os dados na sessão não conferem!',
+            ativo: false,
+        })
     }
     res.send({ message: 'Você já está logado!', ativo: true })
 }
 
 const atualizarUsuario = async (req, res) => {
-    const {id} = req.params
-    const {nome, sobrenome, email, nivel, status, senha} = req.body
+    const { id } = req.params
+    const { nome, sobrenome, email, nivel, status, senha } = req.body
+    const dados = req.body
+    const usuario = await usuariosModel.listarUsuario(id)
 
-    const usuario = await usuariosModel.listarUsuario(id)  
+    if (!usuario) {
+        return res.status(400).json({ message: 'Usuário não encontrado.' })
+    }
+    if (!nome || !sobrenome || !email || !nivel || !status) {
+        return res.status(400).json({ message: 'Preencha todos os campos.' })
+    }
     
-    if(!usuario){
-        return res.status(400).json({message: 'Usuário não encontrado.'}) 
+    if(senha){
+    var hash = await bcrypt.hash(senha, 10)
     }
 
-    if(!nome || !sobrenome || !email || !nivel || !status){
-        return res.status(400).json({message: 'Preencha todos os campos.'})        
+    const obj = {
+        nome: dados.nome ? dados.nome : usuario[0].nome,
+        sobrenome: dados.sobrenome ? dados.sobrenome : usuario[0].sobrenome,
+        email: dados.email ? dados.email : usuario[0].email,
+        nivel: dados.nivel ? dados.nivel : usuario[0].nivel,
+        status: dados.status ? dados.status : usuario[0].status,
+        senha: hash ? hash : usuario[0].senha,
     }
-
-    // const hash = await bcrypt.hash(senha, 10)
-
-    const dados = {
-        nome, 
-        sobrenome, 
-        email, 
-        nivel, 
-        status, 
-        senha
-    }    
-
     try {
-        const [rows] = await usuariosModel.atualizarUsuario(id, dados)
-        return res.status(200).json(`Dados atualizados com sucesso!`)
+        const rows = usuariosModel.atualizarUsuario(id, obj)
+        return res
+            .status(200)
+            .send({ message: `Dados atualizados com sucesso!` })
     } catch (error) {
         return error
     }
 }
 
 const inativarUsuario = async (req, res) => {
-    const {id} = req.params
+    const { id } = req.params
 
     try {
         const usuario = await usuariosModel.inativarUsuario(id)
-        return res.status(200).json({message: "Usuário removido com sucesso."})
+        return res
+            .status(200)
+            .json({ message: 'Usuário removido com sucesso.' })
     } catch (error) {
         return error
     }
@@ -153,5 +162,5 @@ module.exports = {
     token,
     session,
     atualizarUsuario,
-    inativarUsuario
+    inativarUsuario,
 }
