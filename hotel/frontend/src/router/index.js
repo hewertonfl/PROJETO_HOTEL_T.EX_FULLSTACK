@@ -13,6 +13,7 @@ import ContatoView from '../views/ContatoView.vue'
 import LoginView from '../views/LoginView.vue'
 import MinhasReservasView from '../views/MinhasReservasView.vue'
 import ReservaView from '../views/ReservaView.vue'
+import CadastrarUsuarioPublicView from '../views/CadastrarUsuarioPublicView.vue'
 
 //Admin
 import LoginAdminView from '../views/admin/LoginAdminView.vue'
@@ -116,6 +117,19 @@ const routes = [
             default: ReservaView,
             header: ComponenteHeaderBanner,
             footer: ComponenteFooter,
+        },
+    },
+    {
+        path: '/cadastro',
+        name: 'cadastro',
+        components: {
+            default: CadastrarUsuarioPublicView,
+            header: ComponenteHeaderBanner,
+            footer: ComponenteFooter,
+        },
+        meta: {
+            requiresAuth: false,
+            nivel: 0,
         },
     },
     {

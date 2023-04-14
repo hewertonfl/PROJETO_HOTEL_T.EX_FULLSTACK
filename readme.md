@@ -15,10 +15,17 @@ Projeto desenvolvido como parte integrante do curso Full Stack Javascript Develo
 
 ### Backlog
 O que não foi possível concluir nesta Sprint:
+- [ ]  Filtro de reservas por períodos.
+- [ ]  Atualização automática de status de reserva.
+- [ ]  Criação, edição e exclusão de tipos de acomodações.
+- [ ]  Implementação de upload de imagens.
 - [ ]  Consumo de serviços adicionais pelo back-end.
 - [ ]  Cupom de desconto. 
 - [ ]  Avaliação das acomodações.
-- [ ]  Consumo.
+- [ ]  Consumo no hotel.
+- [ ]  Login com redes sociais.
+- [ ]  Recuperação da senha.
+- [ ]  Formulário de contato.
 
 
 ## Parte inicial do projeto
