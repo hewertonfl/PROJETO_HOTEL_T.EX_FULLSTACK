@@ -206,24 +206,22 @@ export default {
             //this.salvar('reserva', reservas)
 
             this.limpar()
-            alert('Reserva realizada com sucesso!')
-            this.$router.push('/minhasreservas')
+            
+            
         },
         total() {
             let adultos
             if (this.$store.getters.bookingData.qtdpessoas == 1) {
-                adultos = 1
+                adultos = 0
             } else {
                 adultos =
-                    1 +
-                    (Number(this.$store.getters.bookingData.qtdpessoas) - 1) *
-                        0.1
+                    Number(this.$store.getters.bookingData.qtdpessoas) *
+                        0.05
             }
             const totalReserva =
                 (this.totalServicos() +
-                    Number(this.$store.getters.bookingData.quartoPreco) *
-                        this.$store.getters.bookingData.noites) *
-                adultos
+                   Number(this.$store.getters.bookingData.quartoPreco) + ((Number(this.$store.getters.bookingData.quartoPreco) * adultos)*
+                        this.$store.getters.bookingData.noites) )
             return totalReserva ? totalReserva : 0
         },
         totalGeral() {
@@ -295,7 +293,11 @@ export default {
             }
         },
         async saveBookingDB(data) {
-            await axios.post('/api/reservas', data)
+            await axios.post('/api/reservas', data).then((response) => {
+                console.log(response);
+                alert('Reserva realizada com sucesso!')
+                this.$router.push('/minhasreservas')
+            }).catch((erro) => alert(erro.response.data.message))
         },
     },
     updated() {

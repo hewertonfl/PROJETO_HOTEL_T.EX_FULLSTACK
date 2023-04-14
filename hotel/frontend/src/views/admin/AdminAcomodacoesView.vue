@@ -71,7 +71,7 @@
                         {{ formatarMoeda(parseFloat(quarto.preco)) }}
                     </li>
                     <li><span>Status:</span> {{ quarto.status }}</li>
-                    <li>
+                    <li class='editar'>
                         <router-link
                             :to="{
                                 path: `/admin/editar-acomodacao/${quarto.id_quarto}`,
@@ -79,7 +79,7 @@
                             class="button"
                             >Editar</router-link
                         >
-                        <button @click="this.deletarQuarto(quarto.id_quarto)" class="button">Remover</button>
+                        <!-- <button @click="this.deletarQuarto(quarto.id_quarto)" class="button">Remover</button> -->
                     </li>
                 </ul>
             </div>
@@ -96,7 +96,7 @@
                         {{ formatarMoeda(parseFloat(quarto.preco)) }}
                     </li>
                     <li><span>Status:</span> {{ quarto.status }}</li>
-                    <li>
+                    <li class='editar'>
                         <router-link
                             :to="{
                                 path: `/admin/editar-acomodacao/${quarto.id_quarto}`,
@@ -104,12 +104,12 @@
                             class="button"
                             >Editar</router-link
                         >
-                        <button
+                        <!-- <button
                             @click="this.deletarQuarto(quarto.id_quarto)"
                             class="button"
                         >
                             Remover
-                        </button>
+                        </button> -->
                     </li>
                 </ul>
             </div>
@@ -301,6 +301,9 @@ legend {
   margin: 0 auto;
   padding: 10px 20px;
   margin-bottom: 40px;
+}
+.editar {
+  margin-top: 10px;
 }
 @media (max-width: 417px) and (orientation: portrait) {
   .header {

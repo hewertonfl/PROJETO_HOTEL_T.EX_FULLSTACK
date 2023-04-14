@@ -53,6 +53,14 @@
                             >
                         </div>
                     </div>
+                    <div class="cadastro">
+                        <span>Ainda não tem conta?</span>
+                        <router-link :to="{path: '/cadastro'}" class="link-cadastro"
+                            ><span class="cadastro-link"
+                                >Cadastre-se</span
+                            ></router-link
+                        >
+                    </div>
                 </form>
             </div>
             <div class="container-img-login">
@@ -98,3 +106,17 @@ const Login = async () => {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.cadastro {
+    margin-top: 10px;
+}
+.cadastro-link{
+    color: white;
+    margin-left: 10px;
+    font-weight: bold;
+    &:hover {
+        color: #a35700;
+    }
+}
+</style>

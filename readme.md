@@ -8,17 +8,29 @@ Projeto desenvolvido como parte integrante do curso Full Stack Javascript Develo
 ### O projeto
 - [x] Fork do projeto em Vuejs do repositório em Front-end.
 - [x] Responsividade das telas (público): 414px e 1024px em portrait; e 915px e 1194px em landscape.
+- [ ] Responsividade das telas administrativas.
 - [x] Páginas públicas e administrativas com restrição de acesso a determinadas páginas.
-- [x] Rotas administrativas de usuários, quartos e reservas com cadastro, edição e inativação de dados no banco de dados.
+- [ ] Rotas administrativas de usuários, quartos e reservas com cadastro, edição e inativação de dados no banco de dados.
 - [x] Consumo das API's no front-end.
-- [ ] Rotas com cadastro, login, logout, criação e exclusão de reserva do usuário público.
+- [x] Rotas com cadastro, login, logout, criação e exclusão de reserva do usuário público.
 
 ### Backlog
 O que não foi possível concluir nesta Sprint:
+- [ ]  Filtro de reservas por períodos.
+- [ ]  Atualização automática de status de reserva.
+- [ ]  Exclusão de quartos.
+- [ ]  Criação, edição e exclusão de tipos de acomodações.
+- [ ]  Implementação de upload de imagens.
+  
+Features futuras:
+- [ ]  Fazer filtros e verificar disponibilidades de quartos em datas específicas.
 - [ ]  Consumo de serviços adicionais pelo back-end.
 - [ ]  Cupom de desconto. 
 - [ ]  Avaliação das acomodações.
-- [ ]  Consumo.
+- [ ]  Consumo no hotel.
+- [ ]  Login com redes sociais.
+- [ ]  Recuperação da senha.
+- [ ]  Formulário de contato.
 
 
 ## Parte inicial do projeto

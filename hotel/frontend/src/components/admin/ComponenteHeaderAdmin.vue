@@ -19,7 +19,7 @@
               </li>
               <li>
                 <router-link :to="{ path: '/admin/acomodacoes' }"
-                  >Acomodações</router-link
+                  >Quartos</router-link
                 >
               </li>
               <li>
