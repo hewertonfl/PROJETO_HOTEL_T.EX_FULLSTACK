@@ -28,10 +28,6 @@
                         com a natureza
                     </h1>
                 </div>
-
-                <div class="responsive-menu">
-                    <i class="fa-solid fa-bars"></i>
-                </div>
             </div>
 
             <!-- ComponenteNavbar -->

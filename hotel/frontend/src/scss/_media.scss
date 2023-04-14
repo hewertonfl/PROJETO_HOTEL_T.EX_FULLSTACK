@@ -104,7 +104,9 @@
     }
 
     /*Página reserva*/
-    .reserva form {
+    .reserva {
+    z-index: 0;
+    form {
         padding: 5px 10px;
         ul {
             flex-direction: column;
@@ -118,7 +120,7 @@
         input {
             width: 40%;
         }
-    }
+    }}
     .todos-os-quartos-reserva {
         width: 100%;
     }
@@ -142,6 +144,7 @@
         width: 100%;
         margin-bottom: 20px;
         padding: 5px 10px;
+        z-index: 0;
         h2 {
             margin-bottom: 2px;
             font-size: 1rem;

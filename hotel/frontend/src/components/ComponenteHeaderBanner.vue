@@ -39,26 +39,27 @@
             {{ texto }}
           </h1>
         </div>
-
-        <div class="responsive-menu">
-          <i class="fa-solid fa-bars"></i>
-        </div>
+        <div class="mobile">
+    <PublicMenuHamburguer/>
+  </div>
       </div>
       <!-- ComponenteNavbar -->
       <div style="font-size: 50px; color: #ffffff">
         <ComponenteNavbar :autenticacao="autenticadoUsuario" />
       </div>
+      
     </div>
   </header>
 </template>
 
 <script>
 import ComponenteNavbar from "./ComponenteNavbar.vue";
+import PublicMenuHamburguer from "./PublicMenuHamburguer.vue";
 import axios from 'axios'
 
 export default {
   name: "ComponenteHeaderBanner",
-  components: { ComponenteNavbar },
+  components: { ComponenteNavbar, PublicMenuHamburguer },
   data() {
     return {
       imagem: "",
@@ -158,7 +159,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #banner {
   background: v-bind(imagem);
   background-size: cover;
@@ -166,5 +167,17 @@ export default {
 }
 .titulo-h1 {
   text-align: right;
+}
+.mobile{
+  display: none;
+}
+
+@media (max-width: 417px) and (orientation: portrait) {
+  .mobile {
+    display: flex;
+  }
+  .navbar {
+    display: none;
+  }  
 }
 </style>
