@@ -38,14 +38,7 @@
             <option value="ativo">Ativo</option>
             <option value="inativo">Inativo</option>
             </select>
-
-            <!-- <label for="senha">Senha:</label>
-            <input
-            type="text"
-            id="senha"
-            placeholder="Digite uma senha"
-            v-model="senha"
-            />                -->
+   
             <button @click="this.atualizar">Editar Hóspede</button>
         </form>
 </template>
@@ -63,7 +56,6 @@ export default{
            email: null,
            status: null,
            nivel: null,
-           senha: null,
         }
     },
     methods:{
@@ -75,7 +67,6 @@ export default{
                 this.email = response.data[0].email
                 this.status = response.data[0].status
                 this.nivel = response.data[0].nivel
-                this.senha = response.data[0].senha
             })
             .catch((error) => error)
         },
@@ -86,7 +77,6 @@ export default{
                 email: this.email,
                 status: this.status,
                 nivel: this.nivel,
-                senha: this.senha,
             }
             axios.patch(`/api/usuarios/${id}`, dados)
             .then(response => console.log(response))

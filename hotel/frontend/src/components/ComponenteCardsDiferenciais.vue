@@ -1,5 +1,5 @@
 <template>
-    <section id="diferenciais" class="box-diferenciais">
+     <section id="diferenciais" class="box-diferenciais">
         <div class="container">
             <h2 class="titulo-h2 courier">
                 <span class="link-border-bottom">Diferenciais</span>

@@ -190,7 +190,7 @@ const routes = [
         },
     },
     {
-        path: '/admin/editar-acomodacao',
+        path: '/admin/editar-acomodacao/:id',
         name: 'admin-editar-acomodacao',
         components: {
             default: EditarAcomodacaoView,

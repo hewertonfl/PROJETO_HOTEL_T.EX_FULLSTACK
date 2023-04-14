@@ -14,6 +14,8 @@ router.post(
     acomodacoesController.cadastrarQuarto
 )
 router.patch('/:id', acomodacoesController.atualizarAcomodacao)
+router.patch('/quartos/:id', acomodacoesController.atualizarQuarto)
 router.delete('/:id', acomodacoesController.removerAcomodacao)
+router.delete('/quartos/:id', acomodacoesController.removerQuarto)
 
 module.exports = router

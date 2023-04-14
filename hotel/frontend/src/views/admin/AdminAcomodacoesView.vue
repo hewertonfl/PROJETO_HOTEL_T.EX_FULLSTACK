@@ -55,51 +55,66 @@
         >Cadastrar Quarto</router-link
       >
     </div>
-
-    <div
-      class="box-usuario"
-      v-if="!quartosFiltrados && !numero && !checked && !quartoTipo"
-    >
-      <div v-for="quarto in quartos" :key="quarto.id">
-        <ul>
-          <li class="bold"><span>Número:</span> {{ quarto.numero }}</li>
-          <li><span>Tipo:</span> {{ quarto.tipo }}</li>
-          <li>
-            <span>Preço:</span> {{ formatarMoeda(parseFloat(quarto.preco)) }}
-          </li>
-          <li><span>Status:</span> {{ quarto.status }}</li>
-          <li>
-            <router-link
-              :to="{ path: '/admin/editar-acomodacao' }"
-              class="button"
-              >Editar</router-link
-            >
-            <button class="button">Remover</button>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div v-else class="box-usuario">
-      <div v-for="quarto in quartosFiltrados" :key="quarto.id">
-        <ul>
-          <li class="bold"><span>Número:</span> {{ quarto.numero }}</li>
-          <li><span>Tipo:</span> {{ quarto.tipo }}</li>
-          <li>
-            <span>Preço:</span> {{ formatarMoeda(parseFloat(quarto.preco)) }}
-          </li>
-          <li><span>Status:</span> {{ quarto.status }}</li>
-          <li>
-            <router-link
-              :to="{ path: '/admin/editar-acomodacao' }"
-              class="button"
-              >Editar</router-link
-            >
-            <button class="button">Remover</button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </main>
+    
+        <div
+            class="box-usuario"
+            v-if="!quartosFiltrados && !numero && !checked && !quartoTipo"
+        >
+            <div v-for="quarto in quartos" :key="quarto.id">
+                <ul>
+                    <li class="bold">
+                        <span>Número:</span> {{ quarto.numero }}
+                    </li>
+                    <li><span>Tipo:</span> {{ quarto.tipo }}</li>
+                    <li>
+                        <span>Preço:</span>
+                        {{ formatarMoeda(parseFloat(quarto.preco)) }}
+                    </li>
+                    <li><span>Status:</span> {{ quarto.status }}</li>
+                    <li>
+                        <router-link
+                            :to="{
+                                path: `/admin/editar-acomodacao/${quarto.id_quarto}`,
+                            }"
+                            class="button"
+                            >Editar</router-link
+                        >
+                        <button @click="this.deletarQuarto(quarto.id_quarto)" class="button">Remover</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div v-else class="box-usuario">
+            <div v-for="quarto in quartosFiltrados" :key="quarto.id">
+                <ul>
+                    <li class="bold">
+                        <span>Número:</span> {{ quarto.numero }}
+                    </li>
+                    <li><span>Tipo:</span> {{ quarto.tipo }}</li>
+                    <li>
+                        <span>Preço:</span>
+                        {{ formatarMoeda(parseFloat(quarto.preco)) }}
+                    </li>
+                    <li><span>Status:</span> {{ quarto.status }}</li>
+                    <li>
+                        <router-link
+                            :to="{
+                                path: `/admin/editar-acomodacao/${quarto.id_quarto}`,
+                            }"
+                            class="button"
+                            >Editar</router-link
+                        >
+                        <button
+                            @click="this.deletarQuarto(quarto.id_quarto)"
+                            class="button"
+                        >
+                            Remover
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
 </template>
 
 <script>
@@ -132,51 +147,61 @@ export default {
     itensFiltrados() {
       const [...quartosArray] = this.quartos;
 
-      if (this.checked === "livre") {
-        const filtro = quartosArray.filter(
-          (status) => status.status == "livre"
-        );
-        this.quartosFiltrados = filtro;
-        this.quartoTipo = null;
-        this.numero = null;
-      } else if (this.checked === "ocupado") {
-        const filtro = quartosArray.filter(
-          (status) => status.status == "ocupado"
-        );
-        this.quartosFiltrados = filtro;
-        this.quartoTipo = null;
-        this.numero = null;
-      }
+            if (this.checked === 'livre') {
+                const filtro = quartosArray.filter(
+                    (status) => status.status == 'livre'
+                )
+                this.quartosFiltrados = filtro
+                this.quartoTipo = null
+                this.numero = null
+            } else if (this.checked === 'ocupado') {
+                const filtro = quartosArray.filter(
+                    (status) => status.status == 'ocupado'
+                )
+                this.quartosFiltrados = filtro
+                this.quartoTipo = null
+                this.numero = null
+            }
+        },
+        filtrarTipos(quartoTipo) {
+            const [...quartosArray] = this.quartos
+            const filtro = quartosArray.filter(
+                (tipo) => tipo.tipo == quartoTipo
+            )
+            this.quartosFiltrados = filtro
+            this.checked = null
+            this.numero = null
+        },
+        filtrarNumero() {
+            if (this.numero) {
+                const [...quartosArray] = this.quartos
+                const filtro = quartosArray.filter(
+                    (numero) => numero.numero == this.numero
+                )
+                this.quartosFiltrados = filtro
+                this.vazio = 1
+                this.quartoTipo = null
+                this.checked = null
+            } else {
+                this.$router.go()
+            }
+        },
+        deletarQuarto(id) {
+            if (confirm('Tem certeza que deseja excluir este quarto?')) {
+                axios.delete(`/api/acomodacoes/quartos/${id}`).then((response) => {
+                    alert(response.data.message)
+                })
+                this.$router.push('/admin/acomodacoes')
+            }
+        },
+        formatarMoeda(valor) {
+            const moeda = valor.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+            })
+            return moeda
+        },
     },
-    filtrarTipos(quartoTipo) {
-      const [...quartosArray] = this.quartos;
-      const filtro = quartosArray.filter((tipo) => tipo.tipo == quartoTipo);
-      this.quartosFiltrados = filtro;
-      this.checked = null;
-      this.numero = null;
-    },
-    filtrarNumero() {
-      if (this.numero) {
-        const [...quartosArray] = this.quartos;
-        const filtro = quartosArray.filter(
-          (numero) => numero.numero == this.numero
-        );
-        this.quartosFiltrados = filtro;
-        this.vazio = 1;
-        this.quartoTipo = null;
-        this.checked = null;
-      } else {
-        this.$router.go();
-      }
-    },
-    formatarMoeda(valor) {
-      const moeda = valor.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      });
-      return moeda;
-    },
-  },
   mounted() {
     axios
       .get("/api/acomodacoes")

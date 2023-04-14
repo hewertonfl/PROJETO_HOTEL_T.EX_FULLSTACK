@@ -1,140 +1,129 @@
 <template>
-  <main class="container-contato">
-    <div class="titulo-form-contato header">
-      <h2>Reservas</h2>
-      <div>
-        <fieldset>
-          <legend>Status</legend>
-          <input
-            @click="carregarDados()"
-            type="radio"
-            v-model="checked"
-            name="status"
-            value="confirmados"
-            id="confirmados"
-          />
-          Confirmados
-          <input
-            @click="carregarDados()"
-            type="radio"
-            v-model="checked"
-            name="status"
-            value="aguardando"
-            id="aguardando"
-          />
-          Aguardando
-          <input
-            @click="carregarDados()"
-            type="radio"
-            v-model="checked"
-            name="status"
-            value="arquivados"
-            id="arquivados"
-          />
-          Arquivados
-          <input
-            @click="carregarDados()"
-            type="radio"
-            v-model="checked"
-            name="status"
-            value="cancelados"
-            id="cancelados"
-          />
-          Cancelados
-        </fieldset>
-      </div>
-      <router-link :to="{ path: '/admin/cadastrar-reserva' }" class="button"
-        >Cadastrar Reserva</router-link
-      >
-    </div>
+    <main class="container-contato">
+        <div class="titulo-form-contato header">
+            <h2>Reservas</h2>
+            <div>
+                <fieldset>
+                <legend>Status</legend>
+                <input
+                    @click="carregarDados()"
+                    type="radio"
+                    v-model="checked"
+                    name="status"
+                    value="confirmados"
+                    id="confirmados"
+                />
+                Confirmados
+                <!-- <input
+                    @click="carregarDados()"
+                    type="radio"
+                    v-model="checked"
+                    name="status"
+                    value="aguardando"
+                    id="aguardando"
+                />
+                Aguardando -->
+                <input
+                    @click="carregarDados()"
+                    type="radio"
+                    v-model="checked"
+                    name="status"
+                    value="arquivados"
+                    id="arquivados"
+                />
+                Arquivados
+                <input
+                    @click="carregarDados()"
+                    type="radio"
+                    v-model="checked"
+                    name="status"
+                    value="cancelados"
+                    id="cancelados"
+                />
+                Cancelados
+                </fieldset>
+            </div>
+            <router-link
+                :to="{ path: '/admin/cadastrar-reserva' }"
+                class="button"
+                >Cadastrar Reserva</router-link
+            >
+        </div>
 
-    <div class="box-reservas">
-      <div
-        class="cada-box"
-        v-for="reserva in reservasFiltradas"
-        :key="reserva.id"
-      >
-        <div class="destaque1">
-          <span>Hóspede:</span>
-          {{ reserva.nome }} {{ reserva.sobrenome }}<br />
-          <span>Número do quarto:</span>
-          {{ reserva.numero }}
+        <div class="box-reservas">
+            <div class="cada-box" v-for="reserva in reservasFiltradas" :key="reserva.id">
+                <div class="destaque1">
+                    <span>Hóspede:</span>
+                    {{ reserva.nome }} {{ reserva.sobrenome }}<br />
+                    <span>Número do quarto:</span>
+                    {{ reserva.numero }}
+                </div>
+                <div>
+                    <ul>
+                        <li>
+                            <span>Quarto:</span>
+                            {{ reserva.tipo }}
+                        </li>
+                        <li>
+                            <span>Check-in:</span>
+                            {{ this.formatarData(reserva.checkin) }}
+                        </li>
+                        <li>
+                            <span>Check-out:</span>
+                            {{ this.formatarData(reserva.checkout) }}
+                        </li>
+                        <li>
+                            <span>Quantidade de pessoas:</span>
+                            {{ reserva.qtdpessoas }}
+                        </li>
+                        <li>
+                            <span>Status:</span>
+                            {{ reserva.confirmacao }} 
+                        </li>
+                        <li>
+                            <span>Data da reserva:</span>
+                            {{ this.formatarData(reserva.data) }}
+                        </li>
+                        <li class="destaque2">
+                            <span>Total:</span>
+                            {{ this.formatarMoeda(parseFloat(reserva.total)) }}
+                        </li>
+                        <li v-if="reserva.totaldesconto" class="destaque2">
+                            <span>Total com desconto:</span>
+                            {{
+                                this.formatarMoeda(
+                                    calcularDesconto(
+                                        reserva.total,
+                                        reserva.totaldesconto
+                                    )
+                                )
+                            }}
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-editar-remover">
+                    <router-link
+                        :to="{
+                            path: `/admin/editar-reserva/${reserva.id_reserva}`,
+                        }"
+                        class="button button-editar"
+                        >Editar</router-link
+                    >
+                    <button v-if='!(reserva.confirmacao == "arquivado") && !(reserva.confirmacao == "cancelado")'
+                        @click="this.arquivarReserva(reserva.id_reserva)"
+                        class="button"
+                    >
+                        Arquivar
+                    </button>
+                    <button v-if='!(reserva.confirmacao == "cancelado") && !(reserva.confirmacao == "arquivado")'
+                        @click="this.inativarReserva(reserva.id_reserva)"
+                        class="button btn-cancelar"
+                    >
+                        Cancelar
+                    </button>
+                </div>
+            </div>
         </div>
-        <div>
-          <ul>
-            <li>
-              <span>Quarto:</span>
-              {{ reserva.tipo }}
-            </li>
-            <li>
-              <span>Check-in:</span>
-              {{ this.formatarData(reserva.checkin) }}
-            </li>
-            <li>
-              <span>Check-out:</span>
-              {{ this.formatarData(reserva.checkout) }}
-            </li>
-            <li>
-              <span>Quantidade de pessoas:</span>
-              {{ reserva.qtdpessoas }}
-            </li>
-            <li>
-              <span>Status:</span>
-              {{ reserva.confirmacao }}
-            </li>
-            <li>
-              <span>Data da reserva:</span>
-              {{ this.formatarData(reserva.data) }}
-            </li>
-            <li v-if="reserva.confirmacao == 'confirmado'">
-              <span>Data da confirmação:</span>
-              {{ this.formatarData(reserva.dataconfirmacao) }}
-            </li>
-            <li class="destaque2">
-              <span>Total:</span>
-              {{ this.formatarMoeda(parseFloat(reserva.total)) }}
-            </li>
-            <li v-if="reserva.totaldesconto" class="destaque2">
-              <span>Total com desconto:</span>
-              {{
-                this.formatarMoeda(
-                  calcularDesconto(reserva.total, reserva.totaldesconto)
-                )
-              }}
-            </li>
-          </ul>
-        </div>
-        <div class="btn-editar-remover">
-          <router-link
-            :to="{
-              path: `/admin/editar-reserva/${reserva.id_reserva}`,
-            }"
-            class="button button-editar"
-            >Editar</router-link
-          >
-          <button
-            v-if="
-              !(reserva.confirmacao == 'arquivado') &&
-              !(reserva.confirmacao == 'cancelado')
-            "
-            @click="this.arquivarReserva(reserva.id_reserva)"
-            class="button"
-          >
-            Arquivar
-          </button>
-          <button
-            v-if="
-              !(reserva.confirmacao == 'cancelado') &&
-              !(reserva.confirmacao == 'arquivado')
-            "
-            @click="this.inativarReserva(reserva.id_reserva)"
-            class="button btn-cancelar"
-          >
-            Cancelar
-          </button>
-        </div>
-      </div>
-    </div>
   </main>
 </template>
 
@@ -186,33 +175,33 @@ export default {
     itensFiltrados() {
       const [...reservasArray] = this.reservas;
 
-      if (this.checked === "confirmados") {
-        const filtro = reservasArray.filter(
-          (status) => status.confirmacao == "confirmado"
-        );
-        this.reservasFiltradas = filtro;
-      } else if (this.checked === "aguardando") {
-        const filtro = reservasArray.filter(
-          (status) => status.confirmacao == "aguardando"
-        );
-        this.reservasFiltradas = filtro;
-      } else if (this.checked === "arquivados") {
-        const filtro = reservasArray.filter(
-          (status) => status.confirmacao == "arquivado"
-        );
-        this.reservasFiltradas = filtro;
-      } else if (this.checked === "cancelados") {
-        const filtro = reservasArray.filter(
-          (status) => status.confirmacao == "cancelado"
-        );
-        this.reservasFiltradas = filtro;
-      }
-    },
-    formatarData(data) {
-      const dataS = new Date(data);
-      var formatarData = dataS.toLocaleDateString("pt-BR");
-      return formatarData;
-    },
+           if (this.checked === 'confirmados') {
+                const filtro = reservasArray.filter(
+                    (status) => status.confirmacao == 'confirmado'
+                )
+                this.reservasFiltradas = filtro
+            // } else if (this.checked === 'aguardando') {
+            //     const filtro = reservasArray.filter(
+            //         (status) => status.confirmacao == 'aguardando'
+            //     )
+            //     this.reservasFiltradas = filtro
+            } else if (this.checked === 'arquivados') {
+                const filtro = reservasArray.filter(
+                    (status) => status.confirmacao == 'arquivado'
+                )
+                this.reservasFiltradas = filtro
+            } else if (this.checked === 'cancelados') {
+                const filtro = reservasArray.filter(
+                    (status) => status.confirmacao == 'cancelado'
+                )
+                this.reservasFiltradas = filtro
+            } 
+        },
+        formatarData(data) {
+            const dataS = new Date(data)
+            var formatarData = dataS.toLocaleDateString('pt-BR')
+            return formatarData
+        },
 
     formatarMoeda(valor) {
       const moeda = valor.toLocaleString("pt-BR", {

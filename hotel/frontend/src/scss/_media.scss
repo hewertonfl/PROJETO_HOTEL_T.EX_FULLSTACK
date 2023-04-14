@@ -59,49 +59,58 @@
     .links {
         margin-bottom: 10px;
     }
-    /* Sobre */
-    .sobre-container-img-txt,
-    .container-comodidades,
-    .container-img ul,
-    .container-time ul {
-        flex-direction: column;
-    }
-    .sobre-container-img-txt img.sobre-img,
-    .container-comodidades img {
-        width: 100%;
-        height: auto;
-    }
-    .legenda-diferenciais-style {
-        display: flex;
-        width: 100%;
-        margin: 0 auto;
-        text-align: justify;
-        padding: 0 20px 20px 20px;
-        justify-content: center;
-    }
-    .img-hero {
-        height: 300px;
-        align-items: center;
-        width: 100%;
-    }
-    .container-time {
-        gap: 20px;
-        figcaption {
-            margin-bottom: 20px;
-        }
-    }
-    .fa-size {
-        font-size: 6rem;
-    }
-    .container-comodidades div {
-        width: 100%;
-    }
-    .container-comodidades {
-        gap: 20px;
-    }
-    .img-hero .img-hero-title {
-        padding: 10px 0;
-    }
+         /* Sobre */
+         .sobre-container-img-txt,
+         .container-comodidades,
+         .container-img ul,
+         .container-time ul {
+             flex-direction: column;
+         }
+    
+         .sobre-container-img-txt img.sobre-img,
+         .container-comodidades img {
+             width: 100%;
+             height: auto;
+         }
+    
+         .legenda-diferenciais-style {
+             display: flex;
+             width: 100%;
+             margin: 0 auto;
+             text-align: justify;
+             padding: 0 20px 20px 20px;
+             justify-content: center;
+         }
+    
+         .img-hero {
+             height: 300px;
+             align-items: center;
+             width: 100%;
+         }
+    
+         .container-time {
+             gap: 20px;
+    
+             figcaption {
+                 margin-bottom: 20px;
+             }
+         }
+    
+         .fa-size {
+             font-size: 6rem;
+         }
+    
+         .container-comodidades div {
+             width: 100%;
+         }
+    
+         .container-comodidades {
+             gap: 20px;
+         }
+    
+         .img-hero .img-hero-title {
+             padding: 10px 0;
+         }
 
     /*Página reserva*/
     .reserva {
@@ -269,51 +278,60 @@
     .links {
         margin-bottom: 10px;
     }
-    /* Sobre */
+   /* Sobre */
 
-    .sobre-container-img-txt,
-    .container-img ul {
-        flex-direction: column;
-    }
-    .box-comodidade div {
-        justify-content: center;
-        flex-direction: column;
-    }
-    .container-time ul {
-        column-gap: 50px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .sobre-container-img-txt img.sobre-img,
-    .container-comodidades img {
-        width: 100%;
-        height: auto;
-    }
-    .legenda-diferenciais-style {
-        display: flex;
-        width: 70%;
-        margin: 0 auto;
-        text-align: justify;
-        padding: 0 20px 20px 20px;
-        justify-content: center;
-    }
-    .img-hero {
-        height: 300px;
-        align-items: center;
-        width: 100%;
-    }
-    .container-time {
-        gap: 20px;
-    }
-    .fa-size {
-        font-size: 6rem;
-    }
-    .container-comodidades div {
-        width: 100%;
-    }
-    .container-comodidades {
-        gap: 20px;
-    }
+   .sobre-container-img-txt,
+   .container-img ul {
+       flex-direction: column;
+   }
+
+   .box-comodidade div {
+       justify-content: center;
+       flex-direction: column;
+   }
+
+   .container-time ul {
+       column-gap: 50px;
+       flex-wrap: wrap;
+       justify-content: center;
+   }
+
+   .sobre-container-img-txt img.sobre-img,
+   .container-comodidades img {
+       width: 100%;
+       height: auto;
+   }
+
+   .legenda-diferenciais-style {
+       display: flex;
+       width: 70%;
+       margin: 0 auto;
+       text-align: justify;
+       padding: 0 20px 20px 20px;
+       justify-content: center;
+   }
+
+   .img-hero {
+       height: 300px;
+       align-items: center;
+       width: 100%;
+   }
+
+   .container-time {
+       gap: 20px;
+   }
+
+   .fa-size {
+       font-size: 6rem;
+   }
+
+   .container-comodidades div {
+       width: 100%;
+   }
+
+   .container-comodidades {
+       gap: 20px;
+   }
 
     /*Página reserva*/
     .todos-os-quartos-reserva {
@@ -481,62 +499,71 @@
     .links {
         margin-bottom: 10px;
     }
-    /* Sobre */
-    header {
-        height: 20vh;
-    }
-    .box-header {
-        height: 20vh;
-        justify-content: center;
-    }
-    .sobre-container-img-txt,
-    .container-comodidades,
-    .container-img,
-    .container-time {
-        flex-direction: column;
-    }
-    .sobre-container-img-txt img.sobre-img,
-    .container-comodidades img {
-        width: 100%;
-        height: auto;
-    }
-    .legenda-diferenciais-style {
-        display: flex;
-        width: 100%;
-        text-align: justify;
-        padding: 0 20px 20px 20px;
-        justify-content: center;
-    }
-    .img-hero {
-        height: 300px;
-        align-items: center;
-        width: 100%;
-    }
-    .container-time {
-        gap: 20px;
-    }
-    .fa-size {
-        font-size: 6rem;
-    }
-    .container-comodidades div {
-        width: 100%;
-    }
-    .container-comodidades {
-        gap: 20px;
-    }
-
-    .produtos-destaque {
-        flex-direction: column;
-    }
-
-    .produtos-destaque img {
-        width: 100%;
-    }
-
-    .description {
-        border-top: 5px solid #063f57;
-        border-left: none;
-    }
+        /* Sobre */
+        header {
+            height: 20vh;
+        }
+    
+        .box-header {
+            height: 20vh;
+            justify-content: center;
+        }
+    
+        .sobre-container-img-txt,
+        .container-comodidades,
+        .container-img,
+        .container-time {
+            flex-direction: column;
+        }
+    
+        .sobre-container-img-txt img.sobre-img,
+        .container-comodidades img {
+            width: 100%;
+            height: auto;
+        }
+               
+        .legenda-diferenciais-style {
+            display: flex;
+            width: 100%;
+            text-align: justify;
+            padding: 0 20px 20px 20px;
+            justify-content: center;
+        }
+    
+        .img-hero {
+            height: 300px;
+            align-items: center;
+            width: 100%;
+        }
+    
+        .container-time {
+            gap: 20px;
+        }
+    
+        .fa-size {
+            font-size: 6rem;
+        }
+    
+        .container-comodidades div {
+            width: 100%;
+        }
+    
+        .container-comodidades {
+            gap: 20px;
+        }
+    
+        .produtos-destaque {
+            flex-direction: column;
+        }
+    
+        .produtos-destaque img {
+            width: 100%;
+        }
+    
+        .description {
+            border-top: 5px solid #063f57;
+            border-left: none;
+        }
 
     /* Contato */
     .form-contato {
@@ -604,15 +631,15 @@
     }
     .legenda-diferenciais-style {
         display: flex;
-        width: 70%;
+        // width: 70%;
         margin: 0 auto;
         text-align: justify;
         padding: 0 20px 20px 20px;
         justify-content: center;
     }
     .img-hero {
-        height: 300px;
-        align-items: center;
+        height: 520px;
+        // align-items: center;
         width: 100%;
     }
     .container-time {

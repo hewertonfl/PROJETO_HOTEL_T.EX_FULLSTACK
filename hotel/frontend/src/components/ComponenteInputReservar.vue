@@ -41,19 +41,8 @@ export default {
     methods: {
         updateDadosReserva: function (name, value) {
             name = name[0].toUpperCase() + name.substring(1)
-            name != 'Adultos' ? (value = this.formatDates(value)) : null
+            name != 'Adultos' ? value : null
             this.$store.commit(`store${name}`, value)
-        },
-
-        formatDates: function (value) {
-            let date = value
-            date =
-                date.slice(date.length - 2, date.length) +
-                '/' +
-                date.slice(date.length - 5, date.length - 3) +
-                '/' +
-                date.slice(0, 4)
-            return date
         },
 
         noites: function () {
@@ -61,14 +50,11 @@ export default {
                 this.$store.getters.bookingData.checkout &&
                 this.$store.getters.bookingData.checkin
             ) {
-                const noites = this.$store.getters.bookingData.checkout
-                    ? Number(
-                          this.$store.getters.bookingData.checkout.slice(0, 2)
-                      ) -
-                      Number(
-                          this.$store.getters.bookingData.checkin.slice(0, 2)
-                      )
-                    : ''
+                const dataCheckin = new Date(this.$store.getters.bookingData.checkin)
+            const dataCheckout = new Date(this.$store.getters.bookingData.checkout)
+            const milissegundos = dataCheckout - dataCheckin
+            const diferencaDias = milissegundos/(1000*60*60*24)
+                const noites = dataCheckout ? diferencaDias : ''
                 this.$store.commit('storeNoites', noites)
             }
         },

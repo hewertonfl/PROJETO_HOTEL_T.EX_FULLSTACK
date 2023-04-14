@@ -115,11 +115,39 @@ const atualizarAcomodacao = async (
     }
 }
 
+const atualizarQuarto = async (
+    id,
+    { idAcomodacao, status, numero }
+) => {
+    try {
+        const conn = await conexao()
+        const values = [idAcomodacao, status, numero]
+        console.log(values, id);
+        return await conn.query(
+            `UPDATE quarto SET id_acomodacao=?, status=?, numero=? WHERE id_quarto = ${id}`,
+            values
+        )
+    } catch (error) {
+        return error
+    }
+}
+
 const removerAcomodacao = async (id) => {
     try {
         const conn = await conexao()
         return await conn.query(
             `DELETE FROM acomodacao WHERE id_acomodacao = ${id}`
+        )
+    } catch (error) {
+        return error
+    }
+}
+
+const removerQuarto = async (id) => {
+    try {
+        const conn = await conexao()
+        return await conn.query(
+            `DELETE FROM quarto WHERE id_quarto = ${id}`
         )
     } catch (error) {
         return error
@@ -135,5 +163,7 @@ module.exports = {
     cadastrarAcomodacao,
     cadastrarQuarto,
     atualizarAcomodacao,
+    atualizarQuarto,
     removerAcomodacao,
+    removerQuarto,
 }

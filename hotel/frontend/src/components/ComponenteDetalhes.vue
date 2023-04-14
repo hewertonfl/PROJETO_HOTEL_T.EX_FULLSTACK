@@ -22,25 +22,25 @@
           ></i>
           <div v-for="item in this.reserva" :key="item" class="detalhes">
             <div class="modal__detalhes__itens__img">
-              <img :src="item.img" :alt="item.title" />
+              <img :src="item.imagem" :alt="item.tipo" />
             </div>
             <div class="modal__detalhes__itens__descricao">
               <h2><span>Detalhes da Reserva</span></h2>
-              <p><span>Acomodação:</span> {{ item.acomodacao }}</p>
-              <p><span>Descrição:</span> {{ item.description }}</p>
-              <p><span>Checkin:</span> {{ item.checkin }}</p>
-              <p><span>Checkout:</span> {{ item.checkout }}</p>
+              <p><span>Acomodação:</span> {{ item.tipo }}</p>
+              <p><span>Descrição:</span> {{ item.descricao }}</p>
+              <p><span>Checkin:</span> {{ formatarData(item.checkin) }}</p>
+              <p><span>Checkout:</span> {{ formatarData(item.checkout) }}</p>
               <p><span>Noites:</span> {{ item.noites }}</p>
-              <p><span>Pessoas:</span> {{ item.adultos }}</p>
-              <p><span>Preço Quarto:</span> {{ this.moeda(item.quartoPreco) }}</p>
+              <p><span>Pessoas:</span> {{ item.qtdpessoas }}</p>
+              <p><span>Preço Quarto:</span> {{ moeda(parseFloat(item.preco)) }}</p>
               <p>
                 <span>Serviços Adicionais:</span> 
                 <ul>
-                  <li v-for="servico in item.servicos" :key="servico.nome">✅ {{ servico.nome }} -
-                {{ this.moeda(servico.preco) }}</li>
+                  <li v-for="servico in JSON.parse(item.servicos)" :key="servico.nome">✅ {{ servico.nome }} -
+                {{ moeda(servico.preco) }}</li>
                 </ul>
               </p>
-              <p class="total"><span>Total:</span> {{ this.moeda(item.valorTotal) }}</p>
+              <p class="total"><span>Total:</span> {{ moeda(parseFloat(item.totalcomdesconto)) }}</p>
             </div>
           </div>
           <button type="button" @click="showModal = false">Sair</button>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "ComponenteDetalhes",
   props: ["codigo"],
@@ -61,22 +62,31 @@ export default {
     };
   },
   methods: {
-    obterDados(chave) {
-      const dados = localStorage.getItem(chave)
-        ? JSON.parse(localStorage.getItem(chave))
-        : null;
-      const detalhes = dados.filter((item) => item.codigo === this.codigo);
-      return detalhes;
-    },
     moeda(valor) {
       return valor.toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
-      });
-    },    
+      })
+    },
+    formatarData(data) {
+            const dataS = new Date(data)
+            var formatarData = dataS.toLocaleDateString('pt-BR')
+            return formatarData
+        },
+    async fillBookings() {
+            const id = JSON.parse(localStorage.getItem('token')).userID
+            console.log(id)
+            await axios
+                .get(`/api/reservas/mybookings/${id}`)
+                .then((res) => {
+                    this.reserva = res.data
+                    this.reserva = this.reserva.filter(element => element.id_reserva == this.codigo)
+                })
+                .catch((error) => console.log(error))
+        },   
   },
   mounted() {
-    this.reserva = this.obterDados("reserva");
+    this.fillBookings()
   },
 };
 </script>

@@ -15,7 +15,7 @@
                 </div>
                 <div class="text-valor-reserva">
                     {{
-                        dado.price.toLocaleString('pt-BR', {
+                        (parseFloat(dado.price)).toLocaleString('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
                         })

@@ -52,7 +52,6 @@
         <label for="confirmacao">Confirmação:</label>
         <select v-model="confirmacao" id="confirmacao">
             <option value="confirmado">Confirmado</option>
-            <option value="aguardando">Aguardando confirmação</option>
             <option value="cancelado">Cancelado</option>
         </select>
         <label for="total">Total:</label>

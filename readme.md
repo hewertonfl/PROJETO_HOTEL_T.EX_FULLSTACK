@@ -9,20 +9,20 @@ Projeto desenvolvido como parte integrante do curso Full Stack Javascript Develo
 - [x] Fork do projeto em Vuejs do repositório em Front-end.
 - [x] Responsividade das telas (público): 414px e 1024px em portrait; e 915px e 1194px em landscape.
 - [x] Páginas públicas e administrativas com restrição de acesso a determinadas páginas.
-- [x] Rotas administrativas de usuários, acomodações e reservas com cadastro, edição e inativação de dados no banco de dados.
+- [x] Rotas administrativas de usuários, quartos e reservas com cadastro, edição e inativação de dados no banco de dados.
 - [x] Consumo das API's no front-end.
-- [ ] Rotas com cadastro, login, logout, criação, edição e exclusão de reserva do usuário público.
+- [ ] Rotas com cadastro, login, logout, criação e exclusão de reserva do usuário público.
 
 ### Backlog
 O que não foi possível concluir nesta Sprint:
-- [ ]  Consumo de adicionais pelo back-end.
+- [ ]  Consumo de serviços adicionais pelo back-end.
 - [ ]  Cupom de desconto. 
 - [ ]  Avaliação das acomodações.
 - [ ]  Consumo.
 
 
 ## Parte inicial do projeto
-Parte 1 deste projeto somente em Front-end: 
+Parte inicial deste projeto somente em Front-end: 
 
 - [Link do repositório](https://github.com/Tetezw/hotel_T.EX)
 

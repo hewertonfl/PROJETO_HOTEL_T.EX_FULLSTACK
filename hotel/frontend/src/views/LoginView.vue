@@ -2,10 +2,7 @@
     <main>
         <div class="container-form-image display-f">
             <div class="container-login">
-                <form
-                    class="form-login"
-                    id="formLogin"
-                >
+                <form class="form-login" id="formLogin">
                     <h2>FAÇA LOGIN</h2>
 
                     <label for="username">E-mail</label>
@@ -35,7 +32,13 @@
                         >
                     </div>
 
-                    <button @click.prevent="Login" class="btn-entrar" id="btnLogin">Entrar</button>
+                    <button
+                        @click.prevent="Login"
+                        class="btn-entrar"
+                        id="btnLogin"
+                    >
+                        Entrar
+                    </button>
 
                     <h3>Entre com suas redes sociais</h3>
                     <div class="social-login display-f">
@@ -78,22 +81,20 @@ const Login = async () => {
     }
     const res = await fetch('api/usuarios/login', {
         method: 'POST',
-        withCredentials: true ,
+        withCredentials: true,
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
-            
         },
         body: JSON.stringify({ email: email.value, senha: senha.value }),
-    }).then((res) => res.json()) 
+    }).then((res) => res.json())
 
     if (res.ativo && res.session.userNivel == 1) {
-        console.log(res.message);
+        console.log(res.message)
         localStorage.setItem('token', JSON.stringify(res.session))
         router.push('/')
         router.go()
     } else {
-        alert("Senha ou email incorretos!")
+        alert('Senha ou email incorretos!')
     }
-
 }
 </script>
