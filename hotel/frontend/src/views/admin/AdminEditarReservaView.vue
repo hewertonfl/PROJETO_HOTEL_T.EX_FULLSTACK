@@ -29,8 +29,6 @@
                 {{ quarto.numero }}
             </option>
         </select>
-            
-        <!-- <input type="text" id="numero" v-model="numero" required /> -->
 
         <label for="checkin">Check-in:</label>
         <input type="date" id="checkin" v-model="checkin" required />
@@ -81,6 +79,8 @@ export default {
             desconto: null,
             idQuarto: null,
             idQuartoAnterior: null,
+            totalcomdesconto: null,
+            servicos: null,
             // idUsuario: null,
 
             totaldesconto: null,
@@ -114,12 +114,10 @@ export default {
                     this.checkin = this.formatarData(response.data[0].checkin)
                     this.checkout = this.formatarData(response.data[0].checkout)
                     this.confirmacao = response.data[0].confirmacao
-                    // this.data = response.data[0].data
-                    // this.dataConfirmacao = response.data[0].dataconfirmacao
                     this.qtdpessoas = response.data[0].qtdpessoas
                     this.total = parseFloat(response.data[0].total)
                     this.desconto = response.data[0].totaldesconto
-                    // this.idUsuario = response.data[0].id_usuario
+                    this.servicos = JSON.parse(response.data[0].servicos)
                     this.idQuarto = response.data[0].id_quarto
                     this.idQuartoAnterior = response.data[0].id_quarto
                     //*Quarto
@@ -142,9 +140,8 @@ export default {
                 qtdpessoas: parseInt(this.qtdpessoas),
                 total: this.total,
                 totaldesconto: this.desconto,
-                // data: this.data,
+                totalcomdesconto: this.totalcomdesconto,
                 confirmacao: this.confirmacao,
-                // dataconfirmacao: this.dataConfirmacao,
                 // idUsuario: this.idUsuario,
                 idQuarto: this.idQuarto,
                 idQuartoAnterior: this.idQuartoAnterior,
@@ -155,6 +152,14 @@ export default {
                 .catch((error) => error)
 
             this.$router.push('/admin/reservas')
+        },
+        totalServicos() {
+            const servicos = this.servicos
+            let totalServicos = 0
+            for (let total of servicos) {
+                totalServicos += total.preco
+            }
+            return totalServicos
         },
         filtrarNumero(id_acomodacao) {
             axios
@@ -180,12 +185,13 @@ export default {
             }
             if(totalPessoas > 1) {
             const preco = this.quartoPreco
-            this.quartoPreco = ((preco * 0.05)*totalPessoas) + (preco*diferencaDias)
+            this.quartoPreco = (preco + ((preco * 0.05)*totalPessoas))*diferencaDias 
             }
-            const preco = this.quartoPreco
+            const preco = this.quartoPreco + this.totalServicos()
+            this.totalcomdesconto = this.calcularDesconto(preco, this.desconto) //para banco de dados
             this.totaldesconto = this.formatarMoeda(this.calcularDesconto(preco, this.desconto))
-            this.total = this.quartoPreco
-            this.totaltela = this.formatarMoeda(this.quartoPreco)
+            this.total = preco
+            this.totaltela = this.formatarMoeda(preco)
         },
         calcularDesconto(total, desconto) {
             const calculo = total * (1 - desconto / 100)

@@ -212,18 +212,16 @@ export default {
         total() {
             let adultos
             if (this.$store.getters.bookingData.qtdpessoas == 1) {
-                adultos = 1
+                adultos = 0
             } else {
                 adultos =
-                    1 +
-                    (Number(this.$store.getters.bookingData.qtdpessoas) - 1) *
-                        0.1
+                    Number(this.$store.getters.bookingData.qtdpessoas) *
+                        0.05
             }
             const totalReserva =
                 (this.totalServicos() +
-                    Number(this.$store.getters.bookingData.quartoPreco) *
-                        this.$store.getters.bookingData.noites) *
-                adultos
+                   Number(this.$store.getters.bookingData.quartoPreco) + ((Number(this.$store.getters.bookingData.quartoPreco) * adultos)*
+                        this.$store.getters.bookingData.noites) )
             return totalReserva ? totalReserva : 0
         },
         totalGeral() {

@@ -19,7 +19,7 @@ const listarReserva = async (id) => {
     try {
         const conn = await conexao()
         const [rows] = await conn.query(
-            `SELECT r.id_reserva, r.checkin, r.checkout, r.confirmacao, r.data, r. dataconfirmacao, r.qtdpessoas, r.total, r.totaldesconto, r.id_usuario, r.id_quarto, u.nome, u.sobrenome, a.tipo, a.preco, q.status, q.numero, q.id_acomodacao FROM hotel_recanto.reserva r INNER JOIN usuario u ON r.id_usuario = u.id_usuario INNER JOIN quarto q ON r.id_quarto = q.id_quarto INNER JOIN acomodacao a ON q.id_acomodacao = a.id_acomodacao WHERE id_reserva = ${id}`
+            `SELECT r.id_reserva, r.checkin, r.checkout, r.confirmacao, r.data, r.qtdpessoas, r.total, r.totaldesconto, r.totalcomdesconto, r.servicos, r.id_usuario, r.id_quarto, u.nome, u.sobrenome, a.tipo, a.preco, q.status, q.numero, q.id_acomodacao FROM hotel_recanto.reserva r INNER JOIN usuario u ON r.id_usuario = u.id_usuario INNER JOIN quarto q ON r.id_quarto = q.id_quarto INNER JOIN acomodacao a ON q.id_acomodacao = a.id_acomodacao WHERE id_reserva = ${id}`
         )
         conn.end()
         return rows
@@ -36,9 +36,9 @@ const atualizarReserva = async (
         qtdpessoas,
         total,
         totaldesconto,
+        totalcomdesconto,
         data,
         confirmacao,
-        dataconfirmacao,
         idUsuario,
         idQuarto,
         idQuartoAnterior,
@@ -49,23 +49,22 @@ const atualizarReserva = async (
         const checkin1 = moment(checkin).format('YYYY-MM-DD')
         const checkout1 = moment(checkout).format('YYYY-MM-DD')
         const data1 = moment(data).format('YYYY-MM-DD')
-        const dataconfirmacao1 = moment(dataconfirmacao).format('YYYY-MM-DD')
         const values = [
             checkin1,
             checkout1,
             qtdpessoas,
             total,
             totaldesconto,
+            totalcomdesconto,
             data1,
             confirmacao,
-            dataconfirmacao1,
             idUsuario,
             idQuarto,
             idQuartoAnterior,
         ]
         console.log(values)
         await conn.query(
-            `UPDATE reserva SET checkin=?, checkout=?, qtdpessoas=?, total=?, totaldesconto=?, data=?, confirmacao=?, dataconfirmacao=?, id_usuario=?, id_quarto=? WHERE id_reserva = ${id}`,
+            `UPDATE reserva SET checkin=?, checkout=?, qtdpessoas=?, total=?, totaldesconto=?, totalcomdesconto=?, data=?, confirmacao=?, id_usuario=?, id_quarto=? WHERE id_reserva = ${id}`,
             values
         )
         await conn.query(

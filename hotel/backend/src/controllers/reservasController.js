@@ -34,11 +34,9 @@ const atualizarReserva = async (req, res) => {
             ? dados.qtdpessoas
             : reserva[0].qtdpessoas,
         total: dados.total ? dados.total : reserva[0].total,
+        totalcomdesconto: dados.totalcomdesconto ? dados.totalcomdesconto : dados.total,
         totaldesconto: dados.totaldesconto,
         data: dados.data ? dados.data : reserva[0].data,
-        dataconfirmacao: dados.dataconfirmacao
-            ? dados.dataconfirmacao
-            : reserva[0].dataconfirmacao,
         confirmacao: dados.confirmacao
             ? dados.confirmacao
             : reserva[0].confirmacao,
