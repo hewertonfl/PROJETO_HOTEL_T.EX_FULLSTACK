@@ -105,7 +105,10 @@ const cadastrarReserva = async (req, res) => {
 
     try {
         const reserva = await reservasModel.cadastrarReserva(obj)
-        res.status(201).json({ obj })
+        if (reserva == 'erro'){
+           return res.status(400).json({message: 'Não foi possível realizar a reserva. Não há quartos desse tipo disponíveis.'})
+        } 
+        return res.status(201).json({ obj })
     } catch (error) {
         console.log(error)
         return error

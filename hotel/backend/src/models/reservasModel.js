@@ -137,8 +137,9 @@ const cadastrarReserva = async (data) => {
         )
         conn.end()
     } catch (error) {
-        console.log(error)
-        return error
+        // throw error
+        // console.log(error)
+        return 'erro'
     }
 }
 

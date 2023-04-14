@@ -206,8 +206,8 @@ export default {
             //this.salvar('reserva', reservas)
 
             this.limpar()
-            alert('Reserva realizada com sucesso!')
-            this.$router.push('/minhasreservas')
+            
+            
         },
         total() {
             let adultos
@@ -293,7 +293,11 @@ export default {
             }
         },
         async saveBookingDB(data) {
-            await axios.post('/api/reservas', data)
+            await axios.post('/api/reservas', data).then((response) => {
+                console.log(response);
+                alert('Reserva realizada com sucesso!')
+                this.$router.push('/minhasreservas')
+            }).catch((erro) => alert(erro.response.data.message))
         },
     },
     updated() {

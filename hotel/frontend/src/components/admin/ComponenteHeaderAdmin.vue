@@ -11,7 +11,7 @@
         </router-link>
         <div class="navbar-div">
           <nav class="navbar">
-            <ul class="ul-navbar">
+            <ul v-show="!mobile" class="ul-navbar">
               <li>
                 <router-link :to="{ path: '/admin/usuarios' }"
                   >Usuários</router-link
@@ -35,28 +35,9 @@
             </ul>
           </nav>
         </div>
-        <div class="responsive-menu" @click="showMenu = !showMenu">
-          <i class="fa-solid fa-bars"></i>
-        </div>
-        <div class="menu-hamburguer" v-if="showMenu">
-          <ul>
-            <li>
-              <router-link :to="{ path: '/admin/usuarios' }"
-                >Usuários</router-link
-              >
-            </li>
-            <li>
-              <router-link :to="{ path: '/admin/acomodacoes' }"
-                >Acomodações</router-link
-              >
-            </li>
-            <li>
-              <router-link :to="{ path: '/admin/reservas' }"
-                >Reservas</router-link
-              >
-            </li>
-          </ul>
-        </div>
+        <div class="mobile">
+        <AdminMenuHamburguer/>
+    </div>
       </div>
     </div>
 
@@ -71,6 +52,7 @@
 
 <script>
 import axios from "axios";
+import AdminMenuHamburguer from "@/views/admin/AdminMenuHamburguer.vue";
 export default {
   name: "ComponenteHeaderAdmin",
   data() {
@@ -79,6 +61,9 @@ export default {
       botao: "",
       showMenu: false,
     };
+  },
+  components:{
+    AdminMenuHamburguer
   },
   methods: {
     obterLocalStorage() {
@@ -160,21 +145,16 @@ ul {
   color: white;
   font-size: 1rem;
 }
-.responsive-menu {
+.mobile {
   display: none;
 }
 
 @media (max-width: 417px) and (orientation: portrait) {
-  .responsive-menu {
+  .mobile {
     display: flex;
-    color: white;
   }
   .navbar {
     display: none;
-  }
-  .menu-hamburguer {
-    display: flex;
-    height: 30px;
-  }
+  }  
 }
 </style>
