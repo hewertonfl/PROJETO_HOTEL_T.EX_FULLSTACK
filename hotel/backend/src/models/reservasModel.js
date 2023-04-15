@@ -1,5 +1,4 @@
 const conexao = require('../database/conexao')
-const formatarData = require('../helpers/index')
 const moment = require('moment')
 
 const listarReservas = async () => {
@@ -147,7 +146,7 @@ const myBookings = async (id) => {
     try {
         const conn = await conexao()
         const [rows] = await conn.query(
-            "SELECT r.id_reserva, r.checkin, r.checkout, r.data, r.qtdpessoas, r.totalcomdesconto, r.servicos, r.noites, a.tipo, a.preco, a.imagem, a.descricao FROM hotel_recanto.reserva r INNER JOIN usuario u ON r.id_usuario = u.id_usuario INNER JOIN quarto q ON r.id_quarto = q.id_quarto INNER JOIN acomodacao a ON q.id_acomodacao = a.id_acomodacao WHERE u.id_usuario = ? and r.confirmacao= 'confirmado'",
+            "SELECT r.id_reserva, r.checkin, r.checkout, r.data, r.qtdpessoas, r.totalcomdesconto, r.servicos, r.total, r.totaldesconto, r.noites, a.tipo, a.preco, a.imagem, a.descricao FROM hotel_recanto.reserva r INNER JOIN usuario u ON r.id_usuario = u.id_usuario INNER JOIN quarto q ON r.id_quarto = q.id_quarto INNER JOIN acomodacao a ON q.id_acomodacao = a.id_acomodacao WHERE u.id_usuario = ? and r.confirmacao= 'confirmado'",
             id
         )
         conn.end()

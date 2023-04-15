@@ -177,8 +177,7 @@ export default {
   padding: 5px;
   margin-right: 2px;
   cursor: pointer;
+  background: #063f57;
 }
-.visualizar {
-  background: blue;
-}
+
 </style>
