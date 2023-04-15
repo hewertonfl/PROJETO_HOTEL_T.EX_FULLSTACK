@@ -25,4 +25,8 @@ export default {
 section {
     margin-bottom: 500px;
 }
+.titulo-h2{
+    display: flex;
+    justify-content: center;
+}
 </style>
