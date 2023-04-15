@@ -60,6 +60,7 @@ export default{
            sobrenome: null,
            email: null,
            senha: null,
+           senhaConfirma: null,
            status: null,
            nivel: null
         }
@@ -84,9 +85,9 @@ export default{
             })
             .catch(error => error)
 
-            this.$router.push('/')
+            this.$router.push('/login')
         } else {
-            console.log("As senhas não são iguais. Digite novamente.");
+            alert("As senhas não são iguais. Digite novamente.");
         }
     }
     },

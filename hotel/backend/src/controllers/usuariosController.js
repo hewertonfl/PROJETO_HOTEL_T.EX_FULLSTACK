@@ -153,19 +153,19 @@ const inativarUsuario = async (req, res) => {
         return error
     }
 }
-const pesquisarUsuario = async (req, res) => {
-    const {nome, sobrenome} = req.params
-    console.log(req.params);
-    console.log(nome,sobrenome);
-    try {
-        const usuario = await usuariosModel.pesquisarUsuario(nome,sobrenome)
-        return res
-            .status(201)
-            .json({ message: 'Usuário cadastrado.' })
-    } catch (error) {
-        return res.status(404).json({ message: "Usuário não cadastrado!"})
-    }
-}
+// const pesquisarUsuario = async (req, res) => {
+//     const {nome, sobrenome} = req.params
+//     console.log(req.params);
+//     console.log(nome,sobrenome);
+//     try {
+//         const usuario = await usuariosModel.pesquisarUsuario(nome,sobrenome)
+//         return res
+//             .status(201)
+//             .json({ message: 'Usuário cadastrado.' })
+//     } catch (error) {
+//         return res.status(404).json({ message: "Usuário não cadastrado!"})
+//     }
+// }
 
 module.exports = {
     listarUsuarios,
@@ -176,5 +176,5 @@ module.exports = {
     session,
     atualizarUsuario,
     inativarUsuario,
-    pesquisarUsuario,
+    // pesquisarUsuario,
 }

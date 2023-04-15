@@ -73,8 +73,26 @@
                             {{ this.formatarData(reserva.checkout) }}
                         </li>
                         <li>
+                            <span>Noites:</span>
+                            {{ reserva.noites }}
+                        </li>
+                        <li>
                             <span>Quantidade de pessoas:</span>
                             {{ reserva.qtdpessoas }}
+                        </li>
+                        <li>
+                            <span>Serviços adicionais:</span>
+                           
+                    <ul>
+                        <li
+                            v-for="servico in JSON.parse(reserva.servicos)"
+                            :key="servico.nome"
+                        >
+                            
+                                ✅ {{ servico.nome }} -
+                                {{ servico.preco }}
+                        </li>
+                    </ul>
                         </li>
                         <li>
                             <span>Status:</span>
@@ -287,7 +305,7 @@ legend {
 
 .box-reservas .cada-box {
   width: 300px;
-  height: 320px;
+  height: fit-content;
   padding: 10px;
   display: flex;
   background: #063f5710;

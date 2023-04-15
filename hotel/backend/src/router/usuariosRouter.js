@@ -9,7 +9,7 @@ router.get('/:id', usuariosController.listarUsuario)
 router.post('/', usuariosController.cadastrarUsuario)
 router.patch('/:id', usuariosController.atualizarUsuario)
 router.delete('/:id', usuariosController.inativarUsuario)
-router.get('/pesquisar/:nome/:sobrenome', usuariosController.pesquisarUsuario)
+// router.get('/pesquisar/:nome/:sobrenome', usuariosController.pesquisarUsuario)
 
 router.post('/login', usuariosController.loginUsuario)
 

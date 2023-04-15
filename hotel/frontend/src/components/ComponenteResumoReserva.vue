@@ -57,7 +57,7 @@
                     placeholder="Digite o código"
                 />
             </details>
-            <p>Valor total: {{ moeda(this.totalGeral()) }}</p>
+            <p>Valor total: {{ moeda(this.total()) }}</p>
         </div>
         <button
             @click="cadastrarReserva"
@@ -179,12 +179,6 @@ export default {
                     return
                 }
             }
-
-            // this.$store.commit(
-            //     'storeCupomDesconto',
-            //     String(Math.random()).slice(2)
-            // )
-
             const reservas = []
 
             // const local = this.obterDados('reserva')
@@ -201,13 +195,10 @@ export default {
             })
             let data = reservas[0]
             data.servicos = JSON.stringify(data.servicos)
-            //console.log(typeof data.servicos)
             this.saveBookingDB(data)
-            //this.salvar('reserva', reservas)
 
             this.limpar()
-            
-            
+                        
         },
         total() {
             let adultos
@@ -220,17 +211,17 @@ export default {
             }
             const totalReserva =
                 (this.totalServicos() +
-                   Number(this.$store.getters.bookingData.quartoPreco) + ((Number(this.$store.getters.bookingData.quartoPreco) * adultos)*
+                   ((Number(this.$store.getters.bookingData.quartoPreco) + (Number(this.$store.getters.bookingData.quartoPreco) * adultos))*
                         this.$store.getters.bookingData.noites) )
             return totalReserva ? totalReserva : 0
         },
-        totalGeral() {
-            if (this.precoComDesconto) {
-                return this.precoComDesconto
-            } else {
-                return this.total()
-            }
-        },
+        // totalGeral() {
+        //     if (this.precoComDesconto) {
+        //         return this.precoComDesconto
+        //     } else {
+        //         return this.total()
+        //     }
+        // },
         async carregarAcomodacoes() {
             await axios
                 .get('/api/acomodacoes')
@@ -260,9 +251,6 @@ export default {
                 })
                 .catch((erro) => console.log(erro))
         },
-        // filtrarNumero(id_acomodacao) {
-
-        // },
         limpar() {
             const bookingData = {
                 checkin: '',
@@ -313,7 +301,6 @@ export default {
             this.temCupom = true
         }
         this.carregarAcomodacoes()
-        console.log(this.acomodacoes)
     },
     watch: {
         checkout(vl) {
@@ -322,15 +309,6 @@ export default {
         },
     },
     mounted() {
-        // if (localStorage.getItem('cardContent')) {
-        //     const cardContent = localStorage.getItem('cardContent')
-        //     const cardContentparse = JSON.parse(cardContent)
-        //     console.log(cardContentparse[0].title);
-        //     this.tipoAcomodacao = cardContentparse[0].title
-        //     if (this.tipoAcomodacao) {
-        //         this.filtrarIdAcomodacao(this.tipoAcomodacao)
-        //     }
-        // }
     },
 }
 </script>

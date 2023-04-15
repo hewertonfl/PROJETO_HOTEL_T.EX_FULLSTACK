@@ -29,6 +29,24 @@
                 {{ quarto.numero }}
             </option>
         </select>
+        <label for="tipo">Serviços adicionais:</label>
+        <div class="servicos">
+            <div>
+        <input class='checkbox' type="checkbox" value='Spa' v-model="servicosAdicionados" > Spa
+            </div>
+            <div>
+        <input class='checkbox' type="checkbox" value='Trilha Ecológica' v-model="servicosAdicionados" > Trilha Ecológica
+            </div>
+            <div>
+        <input class='checkbox' type="checkbox" value='Passeio de Barco' v-model="servicosAdicionados" > Passeio de barco
+            </div>
+            <div>
+        <input class='checkbox' type="checkbox" value='Passeio Entre Ilhas ' v-model="servicosAdicionados" > Passeio entre ilhas
+            </div>
+            <div>
+        <input class='checkbox' type="checkbox" value='Café da Manhã no Quarto' v-model="servicosAdicionados" > Café da manhã no quarto
+            </div>
+        </div>
 
         <label for="checkin">Check-in:</label>
         <input type="date" id="checkin" v-model="checkin" required />
@@ -81,6 +99,7 @@ export default {
             idQuartoAnterior: null,
             totalcomdesconto: null,
             servicos: null,
+            servicosAdicionados: [],
             // idUsuario: null,
 
             totaldesconto: null,
@@ -104,6 +123,9 @@ export default {
             //*Usuário
             nome: null,
             sobrenome: null,
+
+            //*Serviços
+            servicosEscolhidos: null,
         }
     },
     methods: {
@@ -130,10 +152,12 @@ export default {
                     //*Acomodacão
                     this.preco = parseFloat(response.data[0].preco)
                     this.filtrarNumero(this.idAcomodacao)
+                    this.carregarServicos()
                 })
                 .catch((error) => error)
         },
         async atualizarReserva(id) {
+            
             const dados = {
                 checkin: this.checkin,
                 checkout: this.checkout,
@@ -142,7 +166,7 @@ export default {
                 totaldesconto: this.desconto,
                 totalcomdesconto: this.totalcomdesconto,
                 confirmacao: this.confirmacao,
-                // idUsuario: this.idUsuario,
+                servicos: JSON.stringify(this.atualizarServicos()),
                 idQuarto: this.idQuarto,
                 idQuartoAnterior: this.idQuartoAnterior,
             }
@@ -154,12 +178,17 @@ export default {
             this.$router.push('/admin/reservas')
         },
         totalServicos() {
-            const servicos = this.servicos
+            const servicos = this.atualizarServicos()
             let totalServicos = 0
+            console.log(totalServicos);
             for (let total of servicos) {
                 totalServicos += total.preco
             }
             return totalServicos
+        },
+        atualizarServicos() {
+            const servicos = this.servicosAdicionados.map((item) => {return {nome:item, preco: 100}})
+            return servicos
         },
         filtrarNumero(id_acomodacao) {
             axios
@@ -208,9 +237,19 @@ export default {
             })
             return moeda
         },
+        carregarServicos(){
+            const servicos = this.servicos
+            console.log(servicos);
+            if (servicos) {
+                 servicos.forEach ((cadanome) => {
+                    console.log(cadanome);
+                    this.servicosAdicionados.push(cadanome.nome)
+                })
+            }
+        }
     },
     updated() {
-        console.log(this.idQuarto)
+        console.log(this.servicosAdicionados)
         this.calcularTotal(this.idQuarto,this.qtdpessoas, this.checkin, this.checkout)
     },
     mounted() {
@@ -226,7 +265,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 option[default] {
   display: none;
 }
@@ -257,6 +296,18 @@ option[default] {
     color: #ffffff;
     margin: 5px 0;
 }
+.servicos {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: white;
+    flex-direction: column;
+}
+.formulario .checkbox{
+    flex-direction: column;
+    height: 10px;
+    width: 25px;
+}
 .formulario input,
 .formulario select {
     width: 100%;
@@ -276,4 +327,5 @@ option[default] {
     font-weight: bold;
     font-size: 1.2rem;
 }
+
 </style>

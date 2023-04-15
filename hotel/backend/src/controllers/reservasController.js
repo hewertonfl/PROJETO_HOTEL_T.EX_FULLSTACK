@@ -40,6 +40,7 @@ const atualizarReserva = async (req, res) => {
         confirmacao: dados.confirmacao
             ? dados.confirmacao
             : reserva[0].confirmacao,
+            servicos: dados.servicos,
         idUsuario: dados.idUsuario
             ? dados.idUsuario
             : reserva[0].id_usuario,

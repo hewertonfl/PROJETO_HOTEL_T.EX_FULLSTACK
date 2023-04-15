@@ -39,6 +39,7 @@ const atualizarReserva = async (
         totalcomdesconto,
         data,
         confirmacao,
+        servicos,
         idUsuario,
         idQuarto,
         idQuartoAnterior,
@@ -58,13 +59,14 @@ const atualizarReserva = async (
             totalcomdesconto,
             data1,
             confirmacao,
+            servicos,
             idUsuario,
             idQuarto,
             idQuartoAnterior,
         ]
         console.log(values)
         await conn.query(
-            `UPDATE reserva SET checkin=?, checkout=?, qtdpessoas=?, total=?, totaldesconto=?, totalcomdesconto=?, data=?, confirmacao=?, id_usuario=?, id_quarto=? WHERE id_reserva = ${id}`,
+            `UPDATE reserva SET checkin=?, checkout=?, qtdpessoas=?, total=?, totaldesconto=?, totalcomdesconto=?, data=?, confirmacao=?, servicos=?, id_usuario=?, id_quarto=? WHERE id_reserva = ${id}`,
             values
         )
         await conn.query(
