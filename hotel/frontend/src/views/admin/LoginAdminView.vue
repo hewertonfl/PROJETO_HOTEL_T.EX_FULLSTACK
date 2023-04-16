@@ -64,7 +64,8 @@ const Login = async () => {
         localStorage.setItem('token', JSON.stringify(res.session))
         // router.push('/admin/login')
     } else {
-        alert('Senha ou email incorretos!')
+        // alert('Senha ou email incorretos!')
+        alert(res.message)
     }
     router.go()
 }

@@ -7,11 +7,10 @@ Projeto desenvolvido como parte integrante do curso Full Stack Javascript Develo
 
 ### O projeto
 - [x] Fork do projeto em Vuejs do repositório em Front-end.
-- [x] Responsividade das telas (público): 414px e 1024px em portrait; e 915px e 1194px em landscape.
-- [ ] Responsividade das telas administrativas.
+- [x] Responsividade das telas públicas: 415px e 1024px em portrait; e 915px e 1194px em landscape e responsividade das telas administrativas: 415px.
 - [x] Páginas públicas e administrativas com restrição de acesso a determinadas páginas.
-- [ ] Rotas administrativas de usuários, quartos e reservas com cadastro, edição e inativação de dados no banco de dados.
 - [x] Consumo das API's no front-end.
+- [x] Rotas administrativas com cadastro, edição e inativação de dados no banco de dados.
 - [x] Rotas com cadastro, login, logout, criação e exclusão de reserva do usuário público.
 
 ### Backlog
@@ -31,7 +30,6 @@ Features futuras:
 - [ ]  Login com redes sociais.
 - [ ]  Recuperação da senha.
 - [ ]  Formulário de contato.
-
 
 ## Parte inicial do projeto
 Parte inicial deste projeto somente em Front-end: 

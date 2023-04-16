@@ -102,7 +102,8 @@ const Login = async () => {
         router.push('/')
         router.go()
     } else {
-        alert('Senha ou email incorretos!')
+        // alert('Senha ou email incorretos!')
+        alert(res.message)
     }
 }
 </script>

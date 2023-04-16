@@ -149,7 +149,7 @@ ul {
   display: none;
 }
 
-@media (max-width: 417px) and (orientation: portrait) {
+@media (max-width: 415px) and (orientation: portrait) {
   .mobile {
     display: flex;
   }

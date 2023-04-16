@@ -58,9 +58,13 @@ const loginUsuario = async (req, res) => {
     const sobrenome = user.sobrenome
     const nivel = user.nivel
     const id = user.id_usuario
+    const status = user.status
 
     if (!user) {
         return res.status(400).json({ message: 'Usuário não encontrado.' })
+    }
+        if (status == "inativo") {
+        return res.status(400).json({ message: 'Usuário bloqueado. Entre em contato com a central: (71) 3365-0000.' })
     } else {
         //Verificar Status
 

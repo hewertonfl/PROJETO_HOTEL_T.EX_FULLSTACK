@@ -97,11 +97,11 @@
                 <option value="4">4</option>
             </select>
 
-            <label for="totaldesconto">Total de Desconto (%):</label>
+            <label for="totaldesconto">Desconto (%):</label>
             <input type="text" id="totaldesconto" v-model="desconto" />
 
             <label for="total">Total:</label>
-            <input type="text" id="total" v-model="total" disabled required />
+            <input type="text" id="total" v-model="totaltela" disabled required />
             <label for="total">Total com desconto:</label>
             <input
                 type="text"
@@ -137,6 +137,7 @@ export default {
             servicosAdicionados: [],
 
             totaldesconto: null,
+            totaltela: null,
 
             //*Quarto
             quartoPreco: null,
